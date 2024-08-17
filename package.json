@@ -1,0 +1,22 @@
+{
+  "name": "lan-ai",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/Maryna-Serhiichuk/lan-ai.git",
+  "author": "Maryna Serhiichuk <marina.serhiichuk@gmail.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/frontend",
+    "packages/backend"
+  ],
+  "scripts": {
+    "start": "yarn workspaces run start",
+    "start:frontend": "yarn workspace frontend run start",
+    "start:backend": "yarn workspace backend run develop"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "dayjs": "^1.11.12"
+  }
+}

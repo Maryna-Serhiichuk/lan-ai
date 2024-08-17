@@ -2,8 +2,8 @@ import { GraphQLFieldResolver } from "graphql"
 import { me } from "./me"
 
 const lists: GraphQLFieldResolver<null, Graphql.ResolverContext, null> = async (root, args, ctx, info) => {
-  const user = await me(null, null, ctx, info)
-  if (!user.id) return []
+  const user: any = await me(null, null, ctx, info)
+  if (!user?.id) return []
 
   if(!user?.setting?.id) throw new TypeError("Settings identifier is missing")
 

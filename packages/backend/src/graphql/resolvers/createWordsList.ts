@@ -2,8 +2,8 @@ import { GraphQLFieldResolver } from "graphql"
 import { me } from "./me"
 
 const createWordsList: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = async (root, args, ctx, info) => {
-  const user = await me(null, null, ctx, info)
-  if (!user.id) throw new TypeError("Token is already executing.")
+  const user: any = await me(null, null, ctx, info)
+  if (!user?.id) throw new TypeError("Token is already executing.")
   if (!user?.setting?.id) throw new TypeError("Settings identifier is missing")
 
   const { name, words } = args.input

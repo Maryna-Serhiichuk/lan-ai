@@ -3,8 +3,8 @@ import { me } from "./me"
 import dayjs from "dayjs"
 
 const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = async (root, args, ctx, info) => {
-    const user = await me(null, null, ctx, info)
-    if (!user.id) throw new TypeError("Token is already executing.");
+    const user: any = await me(null, null, ctx, info)
+    if (!user?.id) throw new TypeError("Token is already executing.");
     if (!user?.setting?.id) throw new TypeError("Settings identifier is missing");
 
     const lastDate = dayjs(user?.lastAttendanceDate ?? undefined)
