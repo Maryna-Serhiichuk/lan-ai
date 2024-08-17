@@ -1,0 +1,10 @@
+query settings {
+    settings {
+        data {
+        id
+            attributes {
+                ...Setting
+            }
+        }
+    }
+}

@@ -1,0 +1,7 @@
+fragment Word on Word {
+    word
+    translation
+    active
+    studied
+    point
+}

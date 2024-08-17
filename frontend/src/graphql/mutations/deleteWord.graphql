@@ -1,0 +1,10 @@
+mutation deleteWord($id: ID!) {
+    deleteWord(id: $id) {
+        data {
+            id
+            attributes {
+                ...Word
+            }
+        }
+    }
+}

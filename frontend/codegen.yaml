@@ -1,0 +1,33 @@
+schema: ../backend/src/graphql/schema.graphql
+documents:
+  - src/graphql/*/*.graphql
+config:
+  namingConvention:
+    transformUnderscore: true
+  maybeValue: T | null | undefined
+  inputMaybeValue: T | null | undefined
+  experimentalFragmentVariables: true
+  scalars:
+    Date: string
+    DateTime: Date
+    I18NLocaleCode: string | 'en'
+    JSON: Record<string, any|any[]|string|number|boolean|null|undefined>|any[]
+    Long: number
+    Time: string
+    Upload: unknown
+generates:
+  src/graphql/index.tsx:
+    plugins:
+      - typescript-react-apollo:
+          addDocBlocks: false
+          withComponent: true
+          withHooks: true
+          withMutationOptionsType: false
+  src/types/graphql.d.ts:
+    config:
+      noExport: true
+      skipTypename: true
+      enumsAsTypes: true
+    plugins:
+      - typescript
+      - typescript-operations

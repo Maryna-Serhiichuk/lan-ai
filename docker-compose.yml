@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/the/workdir/path
+  cms:
+    build:
+      context: ./backend
+      dockerfile: ../Dockerfile.cms
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./backend:/the/workdir/path

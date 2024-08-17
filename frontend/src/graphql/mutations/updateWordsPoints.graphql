@@ -1,0 +1,10 @@
+mutation updateWordsPoints {
+    updateWordsPoints {
+        data {
+            id
+            attributes {
+                ...Word
+            }
+        }
+    }
+}

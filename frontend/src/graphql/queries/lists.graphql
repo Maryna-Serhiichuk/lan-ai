@@ -1,0 +1,10 @@
+query lists {
+    lists {
+        data {
+        id
+            attributes {
+                ...List
+            }
+        }
+    }
+}

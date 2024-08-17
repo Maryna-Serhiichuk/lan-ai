@@ -1,0 +1,11 @@
+FROM node:18
+
+WORKDIR /the/workdir/path
+
+COPY package*.json ./
+
+RUN yarn
+
+COPY . .
+
+CMD ["yarn", "start"]

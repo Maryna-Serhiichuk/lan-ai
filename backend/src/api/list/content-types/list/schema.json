@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "lists",
+  "info": {
+    "singularName": "list",
+    "pluralName": "lists",
+    "displayName": "List",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "words": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::word.word",
+      "mappedBy": "list"
+    },
+    "setting": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::setting.setting",
+      "inversedBy": "lists"
+    }
+  }
+}

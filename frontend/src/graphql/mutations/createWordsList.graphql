@@ -1,0 +1,10 @@
+mutation createWordsList($input: WordsListInput!) {
+    createWordsList(input: $input){
+        data {
+            id
+            attributes {
+                ...List
+            }
+        }
+    }
+}

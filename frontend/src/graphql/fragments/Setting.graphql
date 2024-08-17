@@ -1,0 +1,7 @@
+fragment Setting on Setting {
+    name
+    theme
+    level
+    language
+    tenses
+}

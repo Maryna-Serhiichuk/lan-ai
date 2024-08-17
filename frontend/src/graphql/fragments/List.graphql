@@ -1,0 +1,11 @@
+fragment List on List {
+    name
+    words {
+        data {
+            id
+            attributes {
+                ...Word
+            }
+        }
+    }
+}

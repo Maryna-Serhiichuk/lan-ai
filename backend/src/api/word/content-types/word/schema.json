@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "words",
+  "info": {
+    "singularName": "word",
+    "pluralName": "words",
+    "displayName": "Word",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "word": {
+      "type": "string"
+    },
+    "translation": {
+      "type": "string"
+    },
+    "list": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::list.list",
+      "inversedBy": "words"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "studied": {
+      "type": "boolean",
+      "default": false
+    },
+    "point": {
+      "type": "biginteger"
+    }
+  }
+}

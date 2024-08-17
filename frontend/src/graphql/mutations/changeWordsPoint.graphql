@@ -1,0 +1,10 @@
+mutation changeWordsPoint($input: [WordsPointListInput]) {
+    changeWordsPoint(input: $input) {
+        data {
+            id
+            attributes {
+                ...Word
+            }
+        }
+    }
+}
