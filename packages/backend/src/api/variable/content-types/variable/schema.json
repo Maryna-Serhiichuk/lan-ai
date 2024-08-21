@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "variables",
+  "info": {
+    "singularName": "variable",
+    "pluralName": "variables",
+    "displayName": "Variable",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "prompt": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prompt.prompt"
+    }
+  }
+}

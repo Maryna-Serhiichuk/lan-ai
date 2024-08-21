@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_context_dynamics",
+  "info": {
+    "displayName": "Dynamic",
+    "icon": "repeat",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "words": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "tenses": {
+      "type": "string"
+    },
+    "theme": {
+      "type": "string"
+    },
+    "native": {
+      "type": "string"
+    },
+    "study": {
+      "type": "string"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { FC, lazy, useEffect, useState } from 'react'
 import { createBrowserRouter, RouteObject, RouterProvider, Navigate } from 'react-router-dom'
-import { Common, Auth } from './../components/layouts'
+import { Common, Auth, Default } from './../components/layouts'
 import { useMeQuery } from './../graphql'
 
 const Login = lazy<FC>(() => import('./login'))
@@ -10,6 +10,7 @@ const Lists = lazy<FC>(() => import('./lists'))
 const List = lazy<FC>(() => import('./list'))
 const Word = lazy<FC>(() => import('./word'))
 const CreateList = lazy<FC>(() => import('./create-list'))
+const Sentences = lazy<FC>(() => import('./sentences'))
 
 const guestRoutes: RouteObject[] = [
   {
@@ -49,24 +50,34 @@ const authRoutes: RouteObject[] = [
         children: [{path: ''},{path: '*'}]
       },
       {
-        path: 'settings',
-        element: <Settings />,
-      },
-      {
-        path: 'list',
-        element: <Lists />,
-      },
-      {
-        path: 'list/:id',
-        element: <List />,
-      },
-      {
-        path: 'list/:id/:mode',
-        element: <Word />,
-      },
-      {
-        path: 'create-list',
-        element: <CreateList />,
+        path: '',
+        element: <Default />,
+        children: [
+          {
+            path: 'settings',
+            element: <Settings />,
+          },
+          {
+            path: 'list',
+            element: <Lists />,
+          },
+          {
+            path: 'list/:id',
+            element: <List />,
+          },
+          {
+            path: 'list/:id/:mode',
+            element: <Word />,
+          },
+          {
+            path: 'create-list',
+            element: <CreateList />,
+          },
+          {
+            path: 'sentences/:id',
+            element: <Sentences />,
+          },
+        ]
       },
     ],
   },

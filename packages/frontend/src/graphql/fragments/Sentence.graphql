@@ -1,0 +1,3 @@
+fragment Sentence on Sentence {
+    text
+}

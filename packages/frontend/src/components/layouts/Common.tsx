@@ -1,5 +1,4 @@
-import { useUpdateWordsPointsMutation } from "./../../graphql"
-import { FC, Suspense, useEffect, useLayoutEffect } from "react"
+import { FC, Suspense, useLayoutEffect } from "react"
 import { useLocation } from "react-router"
 import { Outlet } from "react-router-dom"
 
@@ -9,12 +8,6 @@ export const Common: FC = () => {
     useLayoutEffect(() => {
       window.scrollTo(0, 0)
     }, [pathname])
-
-    const [initUpdate] = useUpdateWordsPointsMutation()
-
-    useEffect(() => {
-      initUpdate()
-    }, [])
 
     return <Suspense>
         <Outlet/>

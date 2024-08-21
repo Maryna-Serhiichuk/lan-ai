@@ -7,8 +7,11 @@ import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import { AddWord } from "./AddWord.form";
 import { Link } from "react-router-dom";
 import { UpdateWord } from "./UpdateWord.form";
+import { useParams } from "react-router-dom"
 
 export const ListActions: FC = () => {
+    const { id } = useParams()
+
     return <Stack direction="column" spacing={2} style={{ maxWidth: 250, width: '100%' }}>
         <Link to={'random'}>
             <Button fullWidth variant="outlined" startIcon={<ShuffleOutlinedIcon />}>
@@ -20,9 +23,11 @@ export const ListActions: FC = () => {
                 Study
             </Button>
         </Link>
-        <Button variant="contained" startIcon={<SubtitlesOutlinedIcon />}>
-            Sentences
-        </Button>
+        <Link to={`/sentences/${id}`}>
+            <Button fullWidth variant="contained" startIcon={<SubtitlesOutlinedIcon />}>
+                Sentences
+            </Button>
+        </Link>
         <AddWord/>
         <UpdateWord/>
     </Stack>

@@ -76,6 +76,62 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
         })
       },
     }),
+    nexus.extendType({
+      type: 'Query',
+      definition: t => {
+        t.field('sentences', {
+          type: 'SentencesResponse',
+          args: {
+            id: nexus.nonNull("ID")
+          },
+        })
+      },
+    }),
+    nexus.extendType<"SentencesResponse">({
+      type: "SentencesResponse",
+      definition: t => {
+        t.list.field("data", { type: "Sentence" })
+      },
+    }),
+    nexus.extendType<"Sentence">({
+      type: "Sentence",
+      definition: t => {
+        t.field("text", { type: "String" })
+      },
+    }),
+
+    nexus.extendType({
+      type: "Mutation",
+      definition: t => {
+        t.field("checkSentences", {
+          type: "SentencesResultResponse",
+          args: {
+            data: nexus.list("SentenceInput"),
+          },
+        })
+      },
+    }),
+    nexus.extendInputType<"SentenceInput">({
+      type: "SentenceInput",
+      definition: t => {
+        t.string("original")
+        t.string("sentences")
+        t.id("id")
+      },
+    }),
+    nexus.extendType<"SentencesResultResponse">({
+      type: "SentencesResultResponse",
+      definition: t => {
+        t.list.field("data", { type: "SentenceResponse" })
+      },
+    }),
+    nexus.extendType<"SentenceResponse">({
+      type: "SentenceResponse",
+      definition: t => {
+        t.id("id")
+        t.string("explain")
+      },
+    }),
   ],
   resolvers,
   resolversConfig,

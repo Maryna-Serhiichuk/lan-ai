@@ -38,6 +38,28 @@ export interface NexusGenInputs {
     or?: Array<boolean | null> | null; // [Boolean]
     startsWith?: boolean | null; // Boolean
   }
+  ComponentContextDynamicFiltersInput: { // input type
+    and?: Array<NexusGenInputs['ComponentContextDynamicFiltersInput'] | null> | null; // [ComponentContextDynamicFiltersInput]
+    language?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    level?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    native?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    not?: NexusGenInputs['ComponentContextDynamicFiltersInput'] | null; // ComponentContextDynamicFiltersInput
+    or?: Array<NexusGenInputs['ComponentContextDynamicFiltersInput'] | null> | null; // [ComponentContextDynamicFiltersInput]
+    study?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    tenses?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    theme?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    words?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+  }
+  ComponentContextDynamicInput: { // input type
+    id?: string | null; // ID
+    language?: string | null; // String
+    level?: string | null; // String
+    native?: string | null; // String
+    study?: string | null; // String
+    tenses?: string | null; // String
+    theme?: string | null; // String
+    words?: string | null; // String
+  }
   DateFilterInput: { // input type
     and?: Array<NexusGenScalars['Date'] | null> | null; // [Date]
     between?: Array<NexusGenScalars['Date'] | null> | null; // [Date]
@@ -246,6 +268,33 @@ export interface NexusGenInputs {
     page?: number | null; // Int
     pageSize?: number | null; // Int
     start?: number | null; // Int
+  }
+  PromptFiltersInput: { // input type
+    and?: Array<NexusGenInputs['PromptFiltersInput'] | null> | null; // [PromptFiltersInput]
+    ask?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    check?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    description?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    id?: NexusGenInputs['IDFilterInput'] | null; // IDFilterInput
+    name?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    not?: NexusGenInputs['PromptFiltersInput'] | null; // PromptFiltersInput
+    or?: Array<NexusGenInputs['PromptFiltersInput'] | null> | null; // [PromptFiltersInput]
+    publishedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    variable?: NexusGenInputs['ComponentContextDynamicFiltersInput'] | null; // ComponentContextDynamicFiltersInput
+  }
+  PromptInput: { // input type
+    ask?: string | null; // String
+    check?: string | null; // String
+    description?: string | null; // String
+    name?: string | null; // String
+    publishedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    variable?: NexusGenInputs['ComponentContextDynamicInput'] | null; // ComponentContextDynamicInput
+  }
+  SentenceInput: { // input type
+    id?: string | null; // ID
+    original?: string | null; // String
+    sentences?: string | null; // String
   }
   SettingFiltersInput: { // input type
     account?: NexusGenInputs['UsersPermissionsUserFiltersInput'] | null; // UsersPermissionsUserFiltersInput
@@ -463,6 +512,17 @@ export interface NexusGenInputs {
     settings?: Array<string | null> | null; // [ID]
     username?: string | null; // String
   }
+  VariableFiltersInput: { // input type
+    and?: Array<NexusGenInputs['VariableFiltersInput'] | null> | null; // [VariableFiltersInput]
+    createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    not?: NexusGenInputs['VariableFiltersInput'] | null; // VariableFiltersInput
+    or?: Array<NexusGenInputs['VariableFiltersInput'] | null> | null; // [VariableFiltersInput]
+    prompt?: NexusGenInputs['PromptFiltersInput'] | null; // PromptFiltersInput
+    updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+  }
+  VariableInput: { // input type
+    prompt?: string | null; // ID
+  }
   WordFiltersInput: { // input type
     active?: NexusGenInputs['BooleanFilterInput'] | null; // BooleanFilterInput
     and?: Array<NexusGenInputs['WordFiltersInput'] | null> | null; // [WordFiltersInput]
@@ -517,6 +577,16 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  ComponentContextDynamic: { // root type
+    id: string; // ID!
+    language?: string | null; // String
+    level?: string | null; // String
+    native?: string | null; // String
+    study?: string | null; // String
+    tenses?: string | null; // String
+    theme?: string | null; // String
+    words?: string | null; // String
+  }
   Error: { // root type
     message?: string | null; // String
   }
@@ -546,8 +616,34 @@ export interface NexusGenObjects {
     pageSize: number; // Int!
     total: number; // Int!
   }
+  Prompt: { // root type
+    ask?: string | null; // String
+    check?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    description?: string | null; // String
+    name?: string | null; // String
+    publishedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  PromptEntity: {};
+  PromptEntityResponse: {};
+  PromptEntityResponseCollection: {};
+  PromptRelationResponseCollection: {};
   Query: {};
   ResponseCollectionMeta: {};
+  Sentence: { // root type
+    text?: string | null; // String
+  }
+  SentenceResponse: { // root type
+    explain?: string | null; // String
+    id?: string | null; // ID
+  }
+  SentencesResponse: { // root type
+    data?: Array<NexusGenRootTypes['Sentence'] | null> | null; // [Sentence]
+  }
+  SentencesResultResponse: { // root type
+    data?: Array<NexusGenRootTypes['SentenceResponse'] | null> | null; // [SentenceResponse]
+  }
   Setting: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     language?: NexusGenEnums['ENUM_SETTING_LANGUAGE'] | null; // ENUM_SETTING_LANGUAGE
@@ -658,6 +754,14 @@ export interface NexusGenObjects {
   UsersPermissionsUserEntityResponse: {};
   UsersPermissionsUserEntityResponseCollection: {};
   UsersPermissionsUserRelationResponseCollection: {};
+  Variable: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  VariableEntity: {};
+  VariableEntityResponse: {};
+  VariableEntityResponseCollection: {};
+  VariableRelationResponseCollection: {};
   Word: { // root type
     active?: boolean | null; // Boolean
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -677,7 +781,7 @@ export interface NexusGenInterfaces {
 }
 
 export interface NexusGenUnions {
-  GenericMorph: NexusGenRootTypes['I18NLocale'] | NexusGenRootTypes['List'] | NexusGenRootTypes['Setting'] | NexusGenRootTypes['UploadFile'] | NexusGenRootTypes['UploadFolder'] | NexusGenRootTypes['UsersPermissionsPermission'] | NexusGenRootTypes['UsersPermissionsRole'] | NexusGenRootTypes['UsersPermissionsUser'] | NexusGenRootTypes['Word'];
+  GenericMorph: NexusGenRootTypes['ComponentContextDynamic'] | NexusGenRootTypes['I18NLocale'] | NexusGenRootTypes['List'] | NexusGenRootTypes['Prompt'] | NexusGenRootTypes['Setting'] | NexusGenRootTypes['UploadFile'] | NexusGenRootTypes['UploadFolder'] | NexusGenRootTypes['UsersPermissionsPermission'] | NexusGenRootTypes['UsersPermissionsRole'] | NexusGenRootTypes['UsersPermissionsUser'] | NexusGenRootTypes['Variable'] | NexusGenRootTypes['Word'];
 }
 
 export type NexusGenRootTypes = NexusGenObjects & NexusGenUnions
@@ -685,6 +789,16 @@ export type NexusGenRootTypes = NexusGenObjects & NexusGenUnions
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  ComponentContextDynamic: { // field return type
+    id: string; // ID!
+    language: string | null; // String
+    level: string | null; // String
+    native: string | null; // String
+    study: string | null; // String
+    tenses: string | null; // String
+    theme: string | null; // String
+    words: string | null; // String
+  }
   Error: { // field return type
     code: string; // String!
     message: string | null; // String
@@ -733,7 +847,9 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     changePassword: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     changeWordsPoint: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
+    checkSentences: NexusGenRootTypes['SentencesResultResponse'] | null; // SentencesResultResponse
     createList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
+    createPrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     createSetting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
     createUploadFile: NexusGenRootTypes['UploadFileEntityResponse'] | null; // UploadFileEntityResponse
     createUploadFolder: NexusGenRootTypes['UploadFolderEntityResponse'] | null; // UploadFolderEntityResponse
@@ -742,11 +858,13 @@ export interface NexusGenFieldTypes {
     createWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     createWordsList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     deleteList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
+    deletePrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     deleteSetting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
     deleteUploadFile: NexusGenRootTypes['UploadFileEntityResponse'] | null; // UploadFileEntityResponse
     deleteUploadFolder: NexusGenRootTypes['UploadFolderEntityResponse'] | null; // UploadFolderEntityResponse
     deleteUsersPermissionsRole: NexusGenRootTypes['UsersPermissionsDeleteRolePayload'] | null; // UsersPermissionsDeleteRolePayload
     deleteUsersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse']; // UsersPermissionsUserEntityResponse!
+    deleteVariable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
     deleteWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     emailConfirmation: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     forgotPassword: NexusGenRootTypes['UsersPermissionsPasswordPayload'] | null; // UsersPermissionsPasswordPayload
@@ -757,11 +875,13 @@ export interface NexusGenFieldTypes {
     resetPassword: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     updateFileInfo: NexusGenRootTypes['UploadFileEntityResponse']; // UploadFileEntityResponse!
     updateList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
+    updatePrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     updateSetting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
     updateUploadFile: NexusGenRootTypes['UploadFileEntityResponse'] | null; // UploadFileEntityResponse
     updateUploadFolder: NexusGenRootTypes['UploadFolderEntityResponse'] | null; // UploadFolderEntityResponse
     updateUsersPermissionsRole: NexusGenRootTypes['UsersPermissionsUpdateRolePayload'] | null; // UsersPermissionsUpdateRolePayload
     updateUsersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse']; // UsersPermissionsUserEntityResponse!
+    updateVariable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
     updateWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     updateWordsPoints: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     upload: NexusGenRootTypes['UploadFileEntityResponse']; // UploadFileEntityResponse!
@@ -772,12 +892,39 @@ export interface NexusGenFieldTypes {
     pageSize: number; // Int!
     total: number; // Int!
   }
+  Prompt: { // field return type
+    ask: string | null; // String
+    check: string | null; // String
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    description: string | null; // String
+    name: string | null; // String
+    publishedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    variable: NexusGenRootTypes['ComponentContextDynamic'] | null; // ComponentContextDynamic
+  }
+  PromptEntity: { // field return type
+    attributes: NexusGenRootTypes['Prompt'] | null; // Prompt
+    id: string | null; // ID
+  }
+  PromptEntityResponse: { // field return type
+    data: NexusGenRootTypes['PromptEntity'] | null; // PromptEntity
+  }
+  PromptEntityResponseCollection: { // field return type
+    data: NexusGenRootTypes['PromptEntity'][]; // [PromptEntity!]!
+    meta: NexusGenRootTypes['ResponseCollectionMeta']; // ResponseCollectionMeta!
+  }
+  PromptRelationResponseCollection: { // field return type
+    data: NexusGenRootTypes['PromptEntity'][]; // [PromptEntity!]!
+  }
   Query: { // field return type
     i18NLocale: NexusGenRootTypes['I18NLocaleEntityResponse'] | null; // I18NLocaleEntityResponse
     i18NLocales: NexusGenRootTypes['I18NLocaleEntityResponseCollection'] | null; // I18NLocaleEntityResponseCollection
     list: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     lists: NexusGenRootTypes['ListEntityResponseCollection'] | null; // ListEntityResponseCollection
     me: NexusGenRootTypes['UsersPermissionsUser'] | null; // UsersPermissionsUser
+    prompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
+    prompts: NexusGenRootTypes['PromptEntityResponseCollection'] | null; // PromptEntityResponseCollection
+    sentences: NexusGenRootTypes['SentencesResponse'] | null; // SentencesResponse
     setting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
     settings: NexusGenRootTypes['SettingEntityResponseCollection'] | null; // SettingEntityResponseCollection
     uploadFile: NexusGenRootTypes['UploadFileEntityResponse'] | null; // UploadFileEntityResponse
@@ -788,11 +935,25 @@ export interface NexusGenFieldTypes {
     usersPermissionsRoles: NexusGenRootTypes['UsersPermissionsRoleEntityResponseCollection'] | null; // UsersPermissionsRoleEntityResponseCollection
     usersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse'] | null; // UsersPermissionsUserEntityResponse
     usersPermissionsUsers: NexusGenRootTypes['UsersPermissionsUserEntityResponseCollection'] | null; // UsersPermissionsUserEntityResponseCollection
+    variable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
     word: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     words: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
   }
   ResponseCollectionMeta: { // field return type
     pagination: NexusGenRootTypes['Pagination']; // Pagination!
+  }
+  Sentence: { // field return type
+    text: string | null; // String
+  }
+  SentenceResponse: { // field return type
+    explain: string | null; // String
+    id: string | null; // ID
+  }
+  SentencesResponse: { // field return type
+    data: Array<NexusGenRootTypes['Sentence'] | null> | null; // [Sentence]
+  }
+  SentencesResultResponse: { // field return type
+    data: Array<NexusGenRootTypes['SentenceResponse'] | null> | null; // [SentenceResponse]
   }
   Setting: { // field return type
     account: NexusGenRootTypes['UsersPermissionsUserEntityResponse'] | null; // UsersPermissionsUserEntityResponse
@@ -977,6 +1138,25 @@ export interface NexusGenFieldTypes {
   UsersPermissionsUserRelationResponseCollection: { // field return type
     data: NexusGenRootTypes['UsersPermissionsUserEntity'][]; // [UsersPermissionsUserEntity!]!
   }
+  Variable: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    prompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  VariableEntity: { // field return type
+    attributes: NexusGenRootTypes['Variable'] | null; // Variable
+    id: string | null; // ID
+  }
+  VariableEntityResponse: { // field return type
+    data: NexusGenRootTypes['VariableEntity'] | null; // VariableEntity
+  }
+  VariableEntityResponseCollection: { // field return type
+    data: NexusGenRootTypes['VariableEntity'][]; // [VariableEntity!]!
+    meta: NexusGenRootTypes['ResponseCollectionMeta']; // ResponseCollectionMeta!
+  }
+  VariableRelationResponseCollection: { // field return type
+    data: NexusGenRootTypes['VariableEntity'][]; // [VariableEntity!]!
+  }
   Word: { // field return type
     active: boolean | null; // Boolean
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -1004,6 +1184,16 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  ComponentContextDynamic: { // field return type name
+    id: 'ID'
+    language: 'String'
+    level: 'String'
+    native: 'String'
+    study: 'String'
+    tenses: 'String'
+    theme: 'String'
+    words: 'String'
+  }
   Error: { // field return type name
     code: 'String'
     message: 'String'
@@ -1052,7 +1242,9 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     changePassword: 'UsersPermissionsLoginPayload'
     changeWordsPoint: 'WordEntityResponseCollection'
+    checkSentences: 'SentencesResultResponse'
     createList: 'ListEntityResponse'
+    createPrompt: 'PromptEntityResponse'
     createSetting: 'SettingEntityResponse'
     createUploadFile: 'UploadFileEntityResponse'
     createUploadFolder: 'UploadFolderEntityResponse'
@@ -1061,11 +1253,13 @@ export interface NexusGenFieldTypeNames {
     createWord: 'WordEntityResponse'
     createWordsList: 'ListEntityResponse'
     deleteList: 'ListEntityResponse'
+    deletePrompt: 'PromptEntityResponse'
     deleteSetting: 'SettingEntityResponse'
     deleteUploadFile: 'UploadFileEntityResponse'
     deleteUploadFolder: 'UploadFolderEntityResponse'
     deleteUsersPermissionsRole: 'UsersPermissionsDeleteRolePayload'
     deleteUsersPermissionsUser: 'UsersPermissionsUserEntityResponse'
+    deleteVariable: 'VariableEntityResponse'
     deleteWord: 'WordEntityResponse'
     emailConfirmation: 'UsersPermissionsLoginPayload'
     forgotPassword: 'UsersPermissionsPasswordPayload'
@@ -1076,11 +1270,13 @@ export interface NexusGenFieldTypeNames {
     resetPassword: 'UsersPermissionsLoginPayload'
     updateFileInfo: 'UploadFileEntityResponse'
     updateList: 'ListEntityResponse'
+    updatePrompt: 'PromptEntityResponse'
     updateSetting: 'SettingEntityResponse'
     updateUploadFile: 'UploadFileEntityResponse'
     updateUploadFolder: 'UploadFolderEntityResponse'
     updateUsersPermissionsRole: 'UsersPermissionsUpdateRolePayload'
     updateUsersPermissionsUser: 'UsersPermissionsUserEntityResponse'
+    updateVariable: 'VariableEntityResponse'
     updateWord: 'WordEntityResponse'
     updateWordsPoints: 'WordEntityResponseCollection'
     upload: 'UploadFileEntityResponse'
@@ -1091,12 +1287,39 @@ export interface NexusGenFieldTypeNames {
     pageSize: 'Int'
     total: 'Int'
   }
+  Prompt: { // field return type name
+    ask: 'String'
+    check: 'String'
+    createdAt: 'DateTime'
+    description: 'String'
+    name: 'String'
+    publishedAt: 'DateTime'
+    updatedAt: 'DateTime'
+    variable: 'ComponentContextDynamic'
+  }
+  PromptEntity: { // field return type name
+    attributes: 'Prompt'
+    id: 'ID'
+  }
+  PromptEntityResponse: { // field return type name
+    data: 'PromptEntity'
+  }
+  PromptEntityResponseCollection: { // field return type name
+    data: 'PromptEntity'
+    meta: 'ResponseCollectionMeta'
+  }
+  PromptRelationResponseCollection: { // field return type name
+    data: 'PromptEntity'
+  }
   Query: { // field return type name
     i18NLocale: 'I18NLocaleEntityResponse'
     i18NLocales: 'I18NLocaleEntityResponseCollection'
     list: 'ListEntityResponse'
     lists: 'ListEntityResponseCollection'
     me: 'UsersPermissionsUser'
+    prompt: 'PromptEntityResponse'
+    prompts: 'PromptEntityResponseCollection'
+    sentences: 'SentencesResponse'
     setting: 'SettingEntityResponse'
     settings: 'SettingEntityResponseCollection'
     uploadFile: 'UploadFileEntityResponse'
@@ -1107,11 +1330,25 @@ export interface NexusGenFieldTypeNames {
     usersPermissionsRoles: 'UsersPermissionsRoleEntityResponseCollection'
     usersPermissionsUser: 'UsersPermissionsUserEntityResponse'
     usersPermissionsUsers: 'UsersPermissionsUserEntityResponseCollection'
+    variable: 'VariableEntityResponse'
     word: 'WordEntityResponse'
     words: 'WordEntityResponseCollection'
   }
   ResponseCollectionMeta: { // field return type name
     pagination: 'Pagination'
+  }
+  Sentence: { // field return type name
+    text: 'String'
+  }
+  SentenceResponse: { // field return type name
+    explain: 'String'
+    id: 'ID'
+  }
+  SentencesResponse: { // field return type name
+    data: 'Sentence'
+  }
+  SentencesResultResponse: { // field return type name
+    data: 'SentenceResponse'
   }
   Setting: { // field return type name
     account: 'UsersPermissionsUserEntityResponse'
@@ -1296,6 +1533,25 @@ export interface NexusGenFieldTypeNames {
   UsersPermissionsUserRelationResponseCollection: { // field return type name
     data: 'UsersPermissionsUserEntity'
   }
+  Variable: { // field return type name
+    createdAt: 'DateTime'
+    prompt: 'PromptEntityResponse'
+    updatedAt: 'DateTime'
+  }
+  VariableEntity: { // field return type name
+    attributes: 'Variable'
+    id: 'ID'
+  }
+  VariableEntityResponse: { // field return type name
+    data: 'VariableEntity'
+  }
+  VariableEntityResponseCollection: { // field return type name
+    data: 'VariableEntity'
+    meta: 'ResponseCollectionMeta'
+  }
+  VariableRelationResponseCollection: { // field return type name
+    data: 'VariableEntity'
+  }
   Word: { // field return type name
     active: 'Boolean'
     createdAt: 'DateTime'
@@ -1339,8 +1595,14 @@ export interface NexusGenArgTypes {
     changeWordsPoint: { // args
       input?: Array<NexusGenInputs['WordsPointListInput'] | null> | null; // [WordsPointListInput]
     }
+    checkSentences: { // args
+      data?: Array<NexusGenInputs['SentenceInput'] | null> | null; // [SentenceInput]
+    }
     createList: { // args
       data: NexusGenInputs['ListInput']; // ListInput!
+    }
+    createPrompt: { // args
+      data: NexusGenInputs['PromptInput']; // PromptInput!
     }
     createSetting: { // args
       data: NexusGenInputs['SettingInput']; // SettingInput!
@@ -1364,6 +1626,9 @@ export interface NexusGenArgTypes {
       input: NexusGenInputs['WordsListInput']; // WordsListInput!
     }
     deleteList: { // args
+      id: string; // ID!
+    }
+    deletePrompt: { // args
       id: string; // ID!
     }
     deleteSetting: { // args
@@ -1418,6 +1683,10 @@ export interface NexusGenArgTypes {
       data: NexusGenInputs['ListInput']; // ListInput!
       id: string; // ID!
     }
+    updatePrompt: { // args
+      data: NexusGenInputs['PromptInput']; // PromptInput!
+      id: string; // ID!
+    }
     updateSetting: { // args
       data: NexusGenInputs['SettingInput']; // SettingInput!
       id: string; // ID!
@@ -1437,6 +1706,9 @@ export interface NexusGenArgTypes {
     updateUsersPermissionsUser: { // args
       data: NexusGenInputs['UsersPermissionsUserInput']; // UsersPermissionsUserInput!
       id: string; // ID!
+    }
+    updateVariable: { // args
+      data: NexusGenInputs['VariableInput']; // VariableInput!
     }
     updateWord: { // args
       data: NexusGenInputs['WordInput']; // WordInput!
@@ -1466,6 +1738,18 @@ export interface NexusGenArgTypes {
       filters?: NexusGenInputs['ListFiltersInput'] | null; // ListFiltersInput
       pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
       sort: Array<string | null> | null; // [String]
+    }
+    prompt: { // args
+      id?: string | null; // ID
+    }
+    prompts: { // args
+      filters?: NexusGenInputs['PromptFiltersInput'] | null; // PromptFiltersInput
+      pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
+      publicationState: NexusGenEnums['PublicationState'] | null; // PublicationState
+      sort: Array<string | null> | null; // [String]
+    }
+    sentences: { // args
+      id: string; // ID!
     }
     setting: { // args
       id?: string | null; // ID
@@ -1557,7 +1841,7 @@ export interface NexusGenArgTypes {
 }
 
 export interface NexusGenAbstractTypeMembers {
-  GenericMorph: "I18NLocale" | "List" | "Setting" | "UploadFile" | "UploadFolder" | "UsersPermissionsPermission" | "UsersPermissionsRole" | "UsersPermissionsUser" | "Word"
+  GenericMorph: "ComponentContextDynamic" | "I18NLocale" | "List" | "Prompt" | "Setting" | "UploadFile" | "UploadFolder" | "UsersPermissionsPermission" | "UsersPermissionsRole" | "UsersPermissionsUser" | "Variable" | "Word"
 }
 
 export interface NexusGenTypeInterfaces {

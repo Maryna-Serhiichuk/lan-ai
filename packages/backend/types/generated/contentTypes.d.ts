@@ -362,110 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiListList extends Schema.CollectionType {
-  collectionName: 'lists';
-  info: {
-    singularName: 'list';
-    pluralName: 'lists';
-    displayName: 'List';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String;
-    words: Attribute.Relation<'api::list.list', 'oneToMany', 'api::word.word'>;
-    setting: Attribute.Relation<
-      'api::list.list',
-      'manyToOne',
-      'api::setting.setting'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::list.list', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::list.list', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiSettingSetting extends Schema.CollectionType {
-  collectionName: 'settings';
-  info: {
-    singularName: 'setting';
-    pluralName: 'settings';
-    displayName: 'Setting';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    name: Attribute.String;
-    theme: Attribute.String;
-    level: Attribute.Enumeration<['A1', 'A2', 'B1', 'B2', 'C1', 'C2']>;
-    language: Attribute.Enumeration<['english']>;
-    user: Attribute.Relation<
-      'api::setting.setting',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    tenses: Attribute.Text;
-    lists: Attribute.Relation<
-      'api::setting.setting',
-      'oneToMany',
-      'api::list.list'
-    >;
-    account: Attribute.Relation<
-      'api::setting.setting',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::setting.setting',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::setting.setting',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiWordWord extends Schema.CollectionType {
-  collectionName: 'words';
-  info: {
-    singularName: 'word';
-    pluralName: 'words';
-    displayName: 'Word';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    word: Attribute.String;
-    translation: Attribute.String;
-    list: Attribute.Relation<'api::word.word', 'manyToOne', 'api::list.list'>;
-    active: Attribute.Boolean & Attribute.DefaultTo<true>;
-    studied: Attribute.Boolean & Attribute.DefaultTo<false>;
-    point: Attribute.BigInteger;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::word.word', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::word.word', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -902,6 +798,179 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiListList extends Schema.CollectionType {
+  collectionName: 'lists';
+  info: {
+    singularName: 'list';
+    pluralName: 'lists';
+    displayName: 'List';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    words: Attribute.Relation<'api::list.list', 'oneToMany', 'api::word.word'>;
+    setting: Attribute.Relation<
+      'api::list.list',
+      'manyToOne',
+      'api::setting.setting'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::list.list', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::list.list', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPromptPrompt extends Schema.CollectionType {
+  collectionName: 'prompts';
+  info: {
+    singularName: 'prompt';
+    pluralName: 'prompts';
+    displayName: 'Prompt';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.Text;
+    ask: Attribute.Text;
+    check: Attribute.Text;
+    variable: Attribute.Component<'context.dynamic'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prompt.prompt',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::prompt.prompt',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSettingSetting extends Schema.CollectionType {
+  collectionName: 'settings';
+  info: {
+    singularName: 'setting';
+    pluralName: 'settings';
+    displayName: 'Setting';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    theme: Attribute.String;
+    level: Attribute.Enumeration<['A1', 'A2', 'B1', 'B2', 'C1', 'C2']>;
+    language: Attribute.Enumeration<['english']>;
+    user: Attribute.Relation<
+      'api::setting.setting',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    tenses: Attribute.Text;
+    lists: Attribute.Relation<
+      'api::setting.setting',
+      'oneToMany',
+      'api::list.list'
+    >;
+    account: Attribute.Relation<
+      'api::setting.setting',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::setting.setting',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::setting.setting',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVariableVariable extends Schema.SingleType {
+  collectionName: 'variables';
+  info: {
+    singularName: 'variable';
+    pluralName: 'variables';
+    displayName: 'Variable';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    prompt: Attribute.Relation<
+      'api::variable.variable',
+      'oneToOne',
+      'api::prompt.prompt'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::variable.variable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::variable.variable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiWordWord extends Schema.CollectionType {
+  collectionName: 'words';
+  info: {
+    singularName: 'word';
+    pluralName: 'words';
+    displayName: 'Word';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    word: Attribute.String;
+    translation: Attribute.String;
+    list: Attribute.Relation<'api::word.word', 'manyToOne', 'api::list.list'>;
+    active: Attribute.Boolean & Attribute.DefaultTo<true>;
+    studied: Attribute.Boolean & Attribute.DefaultTo<false>;
+    point: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::word.word', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::word.word', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -912,9 +981,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::list.list': ApiListList;
-      'api::setting.setting': ApiSettingSetting;
-      'api::word.word': ApiWordWord;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -923,6 +989,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::list.list': ApiListList;
+      'api::prompt.prompt': ApiPromptPrompt;
+      'api::setting.setting': ApiSettingSetting;
+      'api::variable.variable': ApiVariableVariable;
+      'api::word.word': ApiWordWord;
     }
   }
 }

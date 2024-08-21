@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
-import { useListQuery } from "./../../../graphql";
+import { useNavigate, useParams } from "react-router-dom"
+import { useListQuery } from "../../../graphql";
 import { FormikConfig  } from 'formik';
 import { ButtonOwnProps } from "@mui/material";
 import { useWordsPoint } from "pages/list/hooks/useWordsPoint";
@@ -15,6 +15,9 @@ export type IUseWord = {
     wordPoints: (WordPointsObject & { word?: string })[]
     openModal: boolean
     setOpenModal: Dispatch<SetStateAction<boolean>>
+    studyModal: boolean
+    setStudyModal: Dispatch<SetStateAction<boolean>>
+    studyWord: Maybe<string>
 }
 
 export type IWord = {
@@ -24,6 +27,7 @@ export type IWord = {
 }
 
 export const useWord = (): IUseWord => {
+    const navigate = useNavigate()
     const { id, mode } = useParams()
     const { data } = useListQuery({ variables: { id: id ?? '' } })
     const { saveLocalStorage } = useWordsPoint()
@@ -38,6 +42,7 @@ export const useWord = (): IUseWord => {
     const [wordPoints, setWordPoints] = useState<WordPointsObject[]>([])
 
     const [openModal, setOpenModal] = useState<IUseWord['openModal']>(false)
+    const [studyModal, setStudyModal] = useState<IUseWord['studyModal']>(false)
 
     useEffect(() => {
         setWordsState(data?.list?.data?.attributes?.words?.data?.filter(it => it?.attributes?.active) ?? [])
@@ -103,38 +108,53 @@ export const useWord = (): IUseWord => {
 
     const setWord = () => {
         if(wordsState && wordsState?.length){
-            const index = findWord()
+            const index = findWordIndex()
 
             if(typeof index !== 'number') return
             
             const chosen = wordsState[index]
+            if(!chosen) {
+                setOpenModal(true)
+                return
+            }
             wordFormater(chosen)
         }
     }
 
-    const findWord = (): number | null => {
+    useEffect(() => {
+        wordsState && wordsState[studyWordIndex] && setStudyModalInfo()
+    }, [studyWordIndex])
+
+    const findWordIndex = (): number | null => {
         if(wordsState && wordsState?.length){
             if(mode === 'study') {
                 if(indexWord < studyWordIndex){
-                    if(!useNewWord){
+                    if(useNewWord){
+                        setIsuseNewWord(false)
+                        return studyWordIndex
+                    } else {
                         setIsuseNewWord(true)
                         setIndexWord(indexWord + 1)
                         return indexWord
-                    } else {
-                        setIsuseNewWord(false)
-                        return studyWordIndex
                     }
                 } else {
-                    // TODO: поп ап який повідомляє про успішне слово і з часом пише яке наступне нове слово і самостійно закритись
+                    setIsuseNewWord(false)
                     setStudyWordIndex(studyWordIndex + 1)
                     setIndexWord(0)
-                    return studyWordIndex
+                    return studyWordIndex + 1
                 }
             }
     
             return Math.floor(Math.random() * wordsState?.length)
         }
         return null
+    }
+
+    const setStudyModalInfo = () => {
+        setStudyModal(true)
+        setTimeout(() => {
+            setStudyModal(false)
+        }, 2000)
     }
 
     const wordFormater = (value: WordEntity): void => {
@@ -150,6 +170,11 @@ export const useWord = (): IUseWord => {
         word: wordsState?.find(it => it?.id === item?.id)?.attributes?.word
     })) as IUseWord['wordPoints']
 
+    const informText = () => {
+        const studyItem = wordsState?.find((_, i) => i === studyWordIndex ?? undefined)
+        return studyItem?.attributes?.word + ' - ' + studyItem?.attributes?.translation
+    }
+
     return {
         chosenWord,
         checkWord,
@@ -158,5 +183,8 @@ export const useWord = (): IUseWord => {
         wordPoints: wordsPointsForModal,
         openModal,
         setOpenModal,
+        studyModal,
+        setStudyModal,
+        studyWord: informText()
     }
 }

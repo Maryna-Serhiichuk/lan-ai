@@ -348,6 +348,7 @@ type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
+  checkSentences?: Maybe<SentencesResultResponse>;
   createList?: Maybe<ListEntityResponse>;
   createSetting?: Maybe<SettingEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
@@ -402,6 +403,11 @@ type MutationChangePasswordArgs = {
 
 type MutationChangeWordsPointArgs = {
   input?: InputMaybe<Array<InputMaybe<WordsPointListInput>>>;
+};
+
+
+type MutationCheckSentencesArgs = {
+  data?: InputMaybe<Array<InputMaybe<SentenceInput>>>;
 };
 
 
@@ -600,6 +606,7 @@ type Query = {
   list?: Maybe<ListEntityResponse>;
   lists?: Maybe<ListEntityResponseCollection>;
   me?: Maybe<UsersPermissionsUser>;
+  sentences?: Maybe<SentencesResponse>;
   setting?: Maybe<SettingEntityResponse>;
   settings?: Maybe<SettingEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
@@ -636,6 +643,11 @@ type QueryListsArgs = {
   filters?: InputMaybe<ListFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+type QuerySentencesArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -712,6 +724,29 @@ type QueryWordsArgs = {
 
 type ResponseCollectionMeta = {
   pagination: Pagination;
+};
+
+type Sentence = {
+  text?: Maybe<Scalars['String']['output']>;
+};
+
+type SentenceInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  original?: InputMaybe<Scalars['String']['input']>;
+  sentences?: InputMaybe<Scalars['String']['input']>;
+};
+
+type SentenceResponse = {
+  explain?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+type SentencesResponse = {
+  data?: Maybe<Array<Maybe<Sentence>>>;
+};
+
+type SentencesResultResponse = {
+  data?: Maybe<Array<Maybe<SentenceResponse>>>;
 };
 
 type Setting = {
@@ -1276,6 +1311,11 @@ type ListFragment = { name?: string | null | undefined, words?: { data: Array<{ 
 
 type ListFragmentVariables = Exact<{ [key: string]: never; }>;
 
+type SentenceFragment = { text?: string | null | undefined };
+
+
+type SentenceFragmentVariables = Exact<{ [key: string]: never; }>;
+
 type SettingFragment = { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined };
 
 
@@ -1292,6 +1332,13 @@ type ChangeWordsPointMutationVariables = Exact<{
 
 
 type ChangeWordsPointMutation = { changeWordsPoint?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
+
+type CheckSentencesMutationVariables = Exact<{
+  data?: InputMaybe<Array<InputMaybe<SentenceInput>> | InputMaybe<SentenceInput>>;
+}>;
+
+
+type CheckSentencesMutation = { checkSentences?: { data?: Array<{ id?: string | null | undefined, explain?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 type CreateWordMutationVariables = Exact<{
   data: WordInput;
@@ -1357,6 +1404,13 @@ type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type MeQuery = { me?: { email: string } | null | undefined };
+
+type SentencesQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type SentencesQuery = { sentences?: { data?: Array<{ text?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 type SettingsQueryVariables = Exact<{ [key: string]: never; }>;
 

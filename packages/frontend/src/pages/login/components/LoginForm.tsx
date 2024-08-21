@@ -9,7 +9,7 @@ import { AuthContainer } from "components/containers/AuthContainer";
 import { useLoginMutation } from "./../../../graphql";
 
 export const LoginForm: FC = () => {
-    const [login] = useLoginMutation()
+    const [login, { loading }] = useLoginMutation()
 
     const signIn: FormikConfig<UsersPermissionsLoginInput>['onSubmit'] = async (input, onSubmitProps) => {
         try {
@@ -48,7 +48,7 @@ export const LoginForm: FC = () => {
                     <TextField onChange={handleChange} fullWidth name="password" label="Password" type="password" variant="outlined" />
                 </Grid>
                 <Grid item xs={12}>
-                    <Button type="submit" fullWidth variant="contained">Login</Button>
+                    <Button disabled={loading} type="submit" fullWidth variant="contained">Login</Button>
                 </Grid>
                 <ErrorMessage component="div" name="password">{msg => (
                     <Grid item xs={12}>

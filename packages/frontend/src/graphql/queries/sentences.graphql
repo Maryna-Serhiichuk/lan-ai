@@ -1,0 +1,7 @@
+query sentences($id: ID!){
+    sentences(id: $id){
+        data {
+            ...Sentence
+        }
+    }
+}

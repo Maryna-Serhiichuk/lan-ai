@@ -27,6 +27,41 @@ input BooleanFilterInput {
   startsWith: Boolean
 }
 
+type ComponentContextDynamic {
+  id: ID!
+  language: String
+  level: String
+  native: String
+  study: String
+  tenses: String
+  theme: String
+  words: String
+}
+
+input ComponentContextDynamicFiltersInput {
+  and: [ComponentContextDynamicFiltersInput]
+  language: StringFilterInput
+  level: StringFilterInput
+  native: StringFilterInput
+  not: ComponentContextDynamicFiltersInput
+  or: [ComponentContextDynamicFiltersInput]
+  study: StringFilterInput
+  tenses: StringFilterInput
+  theme: StringFilterInput
+  words: StringFilterInput
+}
+
+input ComponentContextDynamicInput {
+  id: ID
+  language: String
+  level: String
+  native: String
+  study: String
+  tenses: String
+  theme: String
+  words: String
+}
+
 """
 A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -136,7 +171,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = I18NLocale | List | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Word
+union GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Word
 
 type I18NLocale {
   code: String
@@ -340,7 +375,9 @@ type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   changeWordsPoint(input: [WordsPointListInput]): WordEntityResponseCollection
+  checkSentences(data: [SentenceInput]): SentencesResultResponse
   createList(data: ListInput!): ListEntityResponse
+  createPrompt(data: PromptInput!): PromptEntityResponse
   createSetting(data: SettingInput!): SettingEntityResponse
   createUploadFile(data: UploadFileInput!): UploadFileEntityResponse
   createUploadFolder(data: UploadFolderInput!): UploadFolderEntityResponse
@@ -353,6 +390,7 @@ type Mutation {
   createWord(data: WordInput!): WordEntityResponse
   createWordsList(input: WordsListInput!): ListEntityResponse
   deleteList(id: ID!): ListEntityResponse
+  deletePrompt(id: ID!): PromptEntityResponse
   deleteSetting(id: ID!): SettingEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
   deleteUploadFolder(id: ID!): UploadFolderEntityResponse
@@ -362,6 +400,7 @@ type Mutation {
 
   """Delete an existing user"""
   deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
+  deleteVariable: VariableEntityResponse
   deleteWord(id: ID!): WordEntityResponse
 
   """Confirm an email users email address"""
@@ -382,6 +421,7 @@ type Mutation {
   resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   updateList(data: ListInput!, id: ID!): ListEntityResponse
+  updatePrompt(data: PromptInput!, id: ID!): PromptEntityResponse
   updateSetting(data: SettingInput!, id: ID!): SettingEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
   updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
@@ -391,6 +431,7 @@ type Mutation {
 
   """Update an existing user"""
   updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
+  updateVariable(data: VariableInput!): VariableEntityResponse
   updateWord(data: WordInput!, id: ID!): WordEntityResponse
   updateWordsPoints: WordEntityResponseCollection
   upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
@@ -410,6 +451,59 @@ input PaginationArg {
   start: Int
 }
 
+type Prompt {
+  ask: String
+  check: String
+  createdAt: DateTime
+  description: String
+  name: String
+  publishedAt: DateTime
+  updatedAt: DateTime
+  variable: ComponentContextDynamic
+}
+
+type PromptEntity {
+  attributes: Prompt
+  id: ID
+}
+
+type PromptEntityResponse {
+  data: PromptEntity
+}
+
+type PromptEntityResponseCollection {
+  data: [PromptEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input PromptFiltersInput {
+  and: [PromptFiltersInput]
+  ask: StringFilterInput
+  check: StringFilterInput
+  createdAt: DateTimeFilterInput
+  description: StringFilterInput
+  id: IDFilterInput
+  name: StringFilterInput
+  not: PromptFiltersInput
+  or: [PromptFiltersInput]
+  publishedAt: DateTimeFilterInput
+  updatedAt: DateTimeFilterInput
+  variable: ComponentContextDynamicFiltersInput
+}
+
+input PromptInput {
+  ask: String
+  check: String
+  description: String
+  name: String
+  publishedAt: DateTime
+  variable: ComponentContextDynamicInput
+}
+
+type PromptRelationResponseCollection {
+  data: [PromptEntity!]!
+}
+
 enum PublicationState {
   LIVE
   PREVIEW
@@ -421,6 +515,9 @@ type Query {
   list(id: ID): ListEntityResponse
   lists(filters: ListFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): ListEntityResponseCollection
   me: UsersPermissionsUser
+  prompt(id: ID): PromptEntityResponse
+  prompts(filters: PromptFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): PromptEntityResponseCollection
+  sentences(id: ID!): SentencesResponse
   setting(id: ID): SettingEntityResponse
   settings(filters: SettingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): SettingEntityResponseCollection
   uploadFile(id: ID): UploadFileEntityResponse
@@ -431,12 +528,36 @@ type Query {
   usersPermissionsRoles(filters: UsersPermissionsRoleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsRoleEntityResponseCollection
   usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
+  variable: VariableEntityResponse
   word(id: ID): WordEntityResponse
   words(filters: WordFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): WordEntityResponseCollection
 }
 
 type ResponseCollectionMeta {
   pagination: Pagination!
+}
+
+type Sentence {
+  text: String
+}
+
+input SentenceInput {
+  id: ID
+  original: String
+  sentences: String
+}
+
+type SentenceResponse {
+  explain: String
+  id: ID
+}
+
+type SentencesResponse {
+  data: [Sentence]
+}
+
+type SentencesResultResponse {
+  data: [SentenceResponse]
 }
 
 type Setting {
@@ -895,6 +1016,43 @@ input UsersPermissionsUserInput {
 
 type UsersPermissionsUserRelationResponseCollection {
   data: [UsersPermissionsUserEntity!]!
+}
+
+type Variable {
+  createdAt: DateTime
+  prompt: PromptEntityResponse
+  updatedAt: DateTime
+}
+
+type VariableEntity {
+  attributes: Variable
+  id: ID
+}
+
+type VariableEntityResponse {
+  data: VariableEntity
+}
+
+type VariableEntityResponseCollection {
+  data: [VariableEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input VariableFiltersInput {
+  and: [VariableFiltersInput]
+  createdAt: DateTimeFilterInput
+  not: VariableFiltersInput
+  or: [VariableFiltersInput]
+  prompt: PromptFiltersInput
+  updatedAt: DateTimeFilterInput
+}
+
+input VariableInput {
+  prompt: ID
+}
+
+type VariableRelationResponseCollection {
+  data: [VariableEntity!]!
 }
 
 type Word {

@@ -25,7 +25,7 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
     for(const word of words){
         const pointParseToInt = word?.point ? parseInt(word?.point) : 0
 
-        if(word?.point <= 0) break
+        if(pointParseToInt <= 0) continue
 
         const resultPoint = pointParseToInt - 1
 

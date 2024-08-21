@@ -1,0 +1,8 @@
+mutation checkSentences($data: [SentenceInput]){
+    checkSentences(data: $data) {
+        data {
+            id
+            explain
+        }
+    }
+}
