@@ -77,9 +77,9 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
       },
     }),
     nexus.extendType({
-      type: 'Query',
+      type: 'Mutation',
       definition: t => {
-        t.field('sentences', {
+        t.field('getSentences', {
           type: 'SentencesResponse',
           args: {
             id: nexus.nonNull("ID")

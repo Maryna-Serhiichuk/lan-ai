@@ -408,6 +408,7 @@ type Mutation {
 
   """Request a reset password token"""
   forgotPassword(email: String!): UsersPermissionsPasswordPayload
+  getSentences(id: ID!): SentencesResponse
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
   multipleUpload(field: String, files: [Upload]!, ref: String, refId: ID): [UploadFileEntityResponse]!
 
@@ -517,7 +518,6 @@ type Query {
   me: UsersPermissionsUser
   prompt(id: ID): PromptEntityResponse
   prompts(filters: PromptFiltersInput, pagination: PaginationArg = {}, publicationState: PublicationState = LIVE, sort: [String] = []): PromptEntityResponseCollection
-  sentences(id: ID!): SentencesResponse
   setting(id: ID): SettingEntityResponse
   settings(filters: SettingFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): SettingEntityResponseCollection
   uploadFile(id: ID): UploadFileEntityResponse

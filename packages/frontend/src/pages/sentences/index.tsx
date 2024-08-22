@@ -1,13 +1,14 @@
 import Grid from '@mui/material/Grid';
+import { useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { TextareaField } from './../../components/textarea';
 import Button from '@mui/material/Button';
-import { useCheckSentencesMutation, useSentencesLazyQuery } from './../../graphql';
-import { useEffect, useState } from 'react';
+import { useCheckSentencesMutation, useGetSentencesMutation } from './../../graphql';
+import { useState } from 'react';
 import { Typography } from '@mui/material';
-import { Formik, Form, Field, FormikConfig, FieldArray, FieldProps } from 'formik';
+import { Formik, Form, FormikConfig, FieldArray } from 'formik';
 import { Markdown } from 'components/markdown';
-import styled from '@emotion/styled';
+import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 
 // Did you buy me a bread?
 // Do you want to do with me in cinema tomorrow?
@@ -15,15 +16,16 @@ import styled from '@emotion/styled';
 
 const Sentences = () => {
     const { id } = useParams()
+    const navigation = useNavigate()
     const [sentences, setSentences] = useState<Sentence[]>([])
-    const [getSentences, { loading }] = useSentencesLazyQuery()
+    const [getSentences, { loading }] = useGetSentencesMutation()
     const [checkSentences, { loading: checkLoading }] = useCheckSentencesMutation()
     const [result, setResult] = useState<SentenceResponse[]>([])
 
     const getSentencesData = async () => {
         if(id) {
             const resultData = await getSentences({ variables: { id } })
-            setSentences((resultData?.data?.sentences?.data ?? []) as Sentence[]) // TODO: ще раз не запускається
+            setSentences((resultData?.data?.getSentences?.data ?? []) as Sentence[]) // TODO: ще раз не запускається
         }
     }
 
@@ -40,11 +42,17 @@ const Sentences = () => {
 
     const again = async () => {
         setResult([])
+        setSentences([])
         await getSentencesData()
     }
 
-    return <Grid container direction="row" justifyContent="center" style={{ minWidth: '100%', paddingTop: 200 }}>
-        <Grid container style={{ maxWidth: 800 }}>
+    return <Grid container direction="row" justifyContent="center" style={{ minWidth: '100%', paddingTop: 100 }}>
+        <Grid container direction={'column'} rowSpacing={5} style={{ maxWidth: 800 }}>
+            <Grid item container direction="column" justifyContent="center" style={{ maxWidth: 200 }}>
+                <Button startIcon={<KeyboardBackspaceOutlinedIcon />} size="large" variant="outlined" onClick={() => navigation(-1)}>
+                    Return
+                </Button>
+            </Grid>
             {sentences?.length <= 0
                 ? <Grid item container direction="column" justifyContent="center">
                     <Button disabled={loading} size="large" variant="contained" onClick={getSentencesData}>
@@ -53,6 +61,7 @@ const Sentences = () => {
                 </Grid>
                 : <Grid item style={{ width: '100%' }}>
                     <Formik 
+                        enableReinitialize={true}
                         initialValues={{ data: sentences?.map((it, i) => ({ id: i.toString(),  original: it?.text ?? '', sentences: '' })) as Maybe<SentenceInput[]> }}
                         onSubmit={check}
                     >

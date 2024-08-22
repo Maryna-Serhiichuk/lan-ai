@@ -868,6 +868,7 @@ export interface NexusGenFieldTypes {
     deleteWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     emailConfirmation: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     forgotPassword: NexusGenRootTypes['UsersPermissionsPasswordPayload'] | null; // UsersPermissionsPasswordPayload
+    getSentences: NexusGenRootTypes['SentencesResponse'] | null; // SentencesResponse
     login: NexusGenRootTypes['UsersPermissionsLoginPayload']; // UsersPermissionsLoginPayload!
     multipleUpload: Array<NexusGenRootTypes['UploadFileEntityResponse'] | null>; // [UploadFileEntityResponse]!
     register: NexusGenRootTypes['UsersPermissionsLoginPayload']; // UsersPermissionsLoginPayload!
@@ -924,7 +925,6 @@ export interface NexusGenFieldTypes {
     me: NexusGenRootTypes['UsersPermissionsUser'] | null; // UsersPermissionsUser
     prompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     prompts: NexusGenRootTypes['PromptEntityResponseCollection'] | null; // PromptEntityResponseCollection
-    sentences: NexusGenRootTypes['SentencesResponse'] | null; // SentencesResponse
     setting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
     settings: NexusGenRootTypes['SettingEntityResponseCollection'] | null; // SettingEntityResponseCollection
     uploadFile: NexusGenRootTypes['UploadFileEntityResponse'] | null; // UploadFileEntityResponse
@@ -1263,6 +1263,7 @@ export interface NexusGenFieldTypeNames {
     deleteWord: 'WordEntityResponse'
     emailConfirmation: 'UsersPermissionsLoginPayload'
     forgotPassword: 'UsersPermissionsPasswordPayload'
+    getSentences: 'SentencesResponse'
     login: 'UsersPermissionsLoginPayload'
     multipleUpload: 'UploadFileEntityResponse'
     register: 'UsersPermissionsLoginPayload'
@@ -1319,7 +1320,6 @@ export interface NexusGenFieldTypeNames {
     me: 'UsersPermissionsUser'
     prompt: 'PromptEntityResponse'
     prompts: 'PromptEntityResponseCollection'
-    sentences: 'SentencesResponse'
     setting: 'SettingEntityResponse'
     settings: 'SettingEntityResponseCollection'
     uploadFile: 'UploadFileEntityResponse'
@@ -1655,6 +1655,9 @@ export interface NexusGenArgTypes {
     forgotPassword: { // args
       email: string; // String!
     }
+    getSentences: { // args
+      id: string; // ID!
+    }
     login: { // args
       input: NexusGenInputs['UsersPermissionsLoginInput']; // UsersPermissionsLoginInput!
     }
@@ -1747,9 +1750,6 @@ export interface NexusGenArgTypes {
       pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
       publicationState: NexusGenEnums['PublicationState'] | null; // PublicationState
       sort: Array<string | null> | null; // [String]
-    }
-    sentences: { // args
-      id: string; // ID!
     }
     setting: { // args
       id?: string | null; // ID

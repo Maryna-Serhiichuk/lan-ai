@@ -11,6 +11,7 @@ const studyLevel: { [key in StudyLevelName]: WordPointStateType } = {
     good: { label: '', color: 'green' },
 }
 
+
 export const wordPointState = (point: number): WordPointStateType => {
     if(point < 10) {
         return studyLevel['bad']

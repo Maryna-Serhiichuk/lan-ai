@@ -8,6 +8,7 @@ import { AddWord } from "./AddWord.form";
 import { Link } from "react-router-dom";
 import { UpdateWord } from "./UpdateWord.form";
 import { useParams } from "react-router-dom"
+import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 
 export const ListActions: FC = () => {
     const { id } = useParams()
@@ -21,6 +22,11 @@ export const ListActions: FC = () => {
         <Link to={'study'}>
             <Button fullWidth variant="contained" startIcon={<PsychologyOutlinedIcon />}>
                 Study
+            </Button>
+        </Link>
+        <Link to={'list'}>
+            <Button fullWidth variant="contained" startIcon={<FormatLineSpacingIcon />}>
+                List
             </Button>
         </Link>
         <Link to={`/sentences/${id}`}>

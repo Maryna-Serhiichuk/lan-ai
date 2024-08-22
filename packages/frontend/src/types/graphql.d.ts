@@ -53,6 +53,41 @@ type BooleanFilterInput = {
   startsWith?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+type ComponentContextDynamic = {
+  id: Scalars['ID']['output'];
+  language?: Maybe<Scalars['String']['output']>;
+  level?: Maybe<Scalars['String']['output']>;
+  native?: Maybe<Scalars['String']['output']>;
+  study?: Maybe<Scalars['String']['output']>;
+  tenses?: Maybe<Scalars['String']['output']>;
+  theme?: Maybe<Scalars['String']['output']>;
+  words?: Maybe<Scalars['String']['output']>;
+};
+
+type ComponentContextDynamicFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ComponentContextDynamicFiltersInput>>>;
+  language?: InputMaybe<StringFilterInput>;
+  level?: InputMaybe<StringFilterInput>;
+  native?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ComponentContextDynamicFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ComponentContextDynamicFiltersInput>>>;
+  study?: InputMaybe<StringFilterInput>;
+  tenses?: InputMaybe<StringFilterInput>;
+  theme?: InputMaybe<StringFilterInput>;
+  words?: InputMaybe<StringFilterInput>;
+};
+
+type ComponentContextDynamicInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
+  level?: InputMaybe<Scalars['String']['input']>;
+  native?: InputMaybe<Scalars['String']['input']>;
+  study?: InputMaybe<Scalars['String']['input']>;
+  tenses?: InputMaybe<Scalars['String']['input']>;
+  theme?: InputMaybe<Scalars['String']['input']>;
+  words?: InputMaybe<Scalars['String']['input']>;
+};
+
 type DateFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
@@ -150,7 +185,7 @@ type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-type GenericMorph = I18NLocale | List | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Word;
+type GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Word;
 
 type I18NLocale = {
   code?: Maybe<Scalars['String']['output']>;
@@ -350,6 +385,7 @@ type Mutation = {
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
   checkSentences?: Maybe<SentencesResultResponse>;
   createList?: Maybe<ListEntityResponse>;
+  createPrompt?: Maybe<PromptEntityResponse>;
   createSetting?: Maybe<SettingEntityResponse>;
   createUploadFile?: Maybe<UploadFileEntityResponse>;
   createUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -360,6 +396,7 @@ type Mutation = {
   createWord?: Maybe<WordEntityResponse>;
   createWordsList?: Maybe<ListEntityResponse>;
   deleteList?: Maybe<ListEntityResponse>;
+  deletePrompt?: Maybe<PromptEntityResponse>;
   deleteSetting?: Maybe<SettingEntityResponse>;
   deleteUploadFile?: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -367,11 +404,13 @@ type Mutation = {
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteVariable?: Maybe<VariableEntityResponse>;
   deleteWord?: Maybe<WordEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
   forgotPassword?: Maybe<UsersPermissionsPasswordPayload>;
+  getSentences?: Maybe<SentencesResponse>;
   login: UsersPermissionsLoginPayload;
   multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
   /** Register a user */
@@ -381,6 +420,7 @@ type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateFileInfo: UploadFileEntityResponse;
   updateList?: Maybe<ListEntityResponse>;
+  updatePrompt?: Maybe<PromptEntityResponse>;
   updateSetting?: Maybe<SettingEntityResponse>;
   updateUploadFile?: Maybe<UploadFileEntityResponse>;
   updateUploadFolder?: Maybe<UploadFolderEntityResponse>;
@@ -388,6 +428,7 @@ type Mutation = {
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  updateVariable?: Maybe<VariableEntityResponse>;
   updateWord?: Maybe<WordEntityResponse>;
   updateWordsPoints?: Maybe<WordEntityResponseCollection>;
   upload: UploadFileEntityResponse;
@@ -413,6 +454,11 @@ type MutationCheckSentencesArgs = {
 
 type MutationCreateListArgs = {
   data: ListInput;
+};
+
+
+type MutationCreatePromptArgs = {
+  data: PromptInput;
 };
 
 
@@ -456,6 +502,11 @@ type MutationDeleteListArgs = {
 };
 
 
+type MutationDeletePromptArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 type MutationDeleteSettingArgs = {
   id: Scalars['ID']['input'];
 };
@@ -493,6 +544,11 @@ type MutationEmailConfirmationArgs = {
 
 type MutationForgotPasswordArgs = {
   email: Scalars['String']['input'];
+};
+
+
+type MutationGetSentencesArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -538,6 +594,12 @@ type MutationUpdateListArgs = {
 };
 
 
+type MutationUpdatePromptArgs = {
+  data: PromptInput;
+  id: Scalars['ID']['input'];
+};
+
+
 type MutationUpdateSettingArgs = {
   data: SettingInput;
   id: Scalars['ID']['input'];
@@ -565,6 +627,11 @@ type MutationUpdateUsersPermissionsRoleArgs = {
 type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID']['input'];
+};
+
+
+type MutationUpdateVariableArgs = {
+  data: VariableInput;
 };
 
 
@@ -596,6 +663,59 @@ type PaginationArg = {
   start?: InputMaybe<Scalars['Int']['input']>;
 };
 
+type Prompt = {
+  ask?: Maybe<Scalars['String']['output']>;
+  check?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  variable?: Maybe<ComponentContextDynamic>;
+};
+
+type PromptEntity = {
+  attributes?: Maybe<Prompt>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+type PromptEntityResponse = {
+  data?: Maybe<PromptEntity>;
+};
+
+type PromptEntityResponseCollection = {
+  data: Array<PromptEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type PromptFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PromptFiltersInput>>>;
+  ask?: InputMaybe<StringFilterInput>;
+  check?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  description?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<PromptFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PromptFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  variable?: InputMaybe<ComponentContextDynamicFiltersInput>;
+};
+
+type PromptInput = {
+  ask?: InputMaybe<Scalars['String']['input']>;
+  check?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  variable?: InputMaybe<ComponentContextDynamicInput>;
+};
+
+type PromptRelationResponseCollection = {
+  data: Array<PromptEntity>;
+};
+
 type PublicationState =
   | 'LIVE'
   | 'PREVIEW';
@@ -606,7 +726,8 @@ type Query = {
   list?: Maybe<ListEntityResponse>;
   lists?: Maybe<ListEntityResponseCollection>;
   me?: Maybe<UsersPermissionsUser>;
-  sentences?: Maybe<SentencesResponse>;
+  prompt?: Maybe<PromptEntityResponse>;
+  prompts?: Maybe<PromptEntityResponseCollection>;
   setting?: Maybe<SettingEntityResponse>;
   settings?: Maybe<SettingEntityResponseCollection>;
   uploadFile?: Maybe<UploadFileEntityResponse>;
@@ -617,6 +738,7 @@ type Query = {
   usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  variable?: Maybe<VariableEntityResponse>;
   word?: Maybe<WordEntityResponse>;
   words?: Maybe<WordEntityResponseCollection>;
 };
@@ -646,8 +768,16 @@ type QueryListsArgs = {
 };
 
 
-type QuerySentencesArgs = {
-  id: Scalars['ID']['input'];
+type QueryPromptArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+type QueryPromptsArgs = {
+  filters?: InputMaybe<PromptFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -1243,6 +1373,43 @@ type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
+type Variable = {
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  prompt?: Maybe<PromptEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+type VariableEntity = {
+  attributes?: Maybe<Variable>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+type VariableEntityResponse = {
+  data?: Maybe<VariableEntity>;
+};
+
+type VariableEntityResponseCollection = {
+  data: Array<VariableEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type VariableFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<VariableFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  not?: InputMaybe<VariableFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<VariableFiltersInput>>>;
+  prompt?: InputMaybe<PromptFiltersInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+type VariableInput = {
+  prompt?: InputMaybe<Scalars['ID']['input']>;
+};
+
+type VariableRelationResponseCollection = {
+  data: Array<VariableEntity>;
+};
+
 type Word = {
   active?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1361,6 +1528,13 @@ type DeleteWordMutationVariables = Exact<{
 
 type DeleteWordMutation = { deleteWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type GetSentencesMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type GetSentencesMutation = { getSentences?: { data?: Array<{ text?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 type LoginMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
@@ -1404,13 +1578,6 @@ type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type MeQuery = { me?: { email: string } | null | undefined };
-
-type SentencesQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
-}>;
-
-
-type SentencesQuery = { sentences?: { data?: Array<{ text?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 type SettingsQueryVariables = Exact<{ [key: string]: never; }>;
 

@@ -36,7 +36,7 @@ const ListItemStyled = styled(ListItem, {
 export const ListElement: FC = () => {
     // if(!id) navigate('/list')
 
-    const { data, setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
+    const { data, setUpdateWord, setChosenWord, setDeleteWord, title } = List.useContext()
 
     const [updateWord] = useUpdateWordMutation()
 
@@ -48,7 +48,7 @@ export const ListElement: FC = () => {
 
     return <ListUI sx={{ width: '100%', maxWidth: 450, bgcolor: 'transparent' }}>
         <Typography variant="h3" gutterBottom align="center">
-            Turn
+            {title}
         </Typography>
         {data?.attributes?.words?.data?.map((value) => {
             return (

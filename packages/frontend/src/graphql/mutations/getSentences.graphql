@@ -1,0 +1,7 @@
+mutation getSentences($id: ID!){
+    getSentences(id: $id){
+        data {
+            ...Sentence
+        }
+    }
+}

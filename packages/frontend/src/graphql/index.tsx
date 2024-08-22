@@ -163,6 +163,28 @@ export function useDeleteWordMutation(baseOptions?: Apollo.MutationHookOptions<D
       }
 export type DeleteWordMutationHookResult = ReturnType<typeof useDeleteWordMutation>;
 export type DeleteWordMutationResult = Apollo.MutationResult<DeleteWordMutation>;
+export const GetSentencesDocument = gql`
+    mutation getSentences($id: ID!) {
+  getSentences(id: $id) {
+    data {
+      ...Sentence
+    }
+  }
+}
+    ${SentenceFragmentDoc}`;
+export type GetSentencesMutationFn = Apollo.MutationFunction<GetSentencesMutation, GetSentencesMutationVariables>;
+export type GetSentencesComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<GetSentencesMutation, GetSentencesMutationVariables>, 'mutation'>;
+
+    export const GetSentencesComponent = (props: GetSentencesComponentProps) => (
+      <ApolloReactComponents.Mutation<GetSentencesMutation, GetSentencesMutationVariables> mutation={GetSentencesDocument} {...props} />
+    );
+    
+export function useGetSentencesMutation(baseOptions?: Apollo.MutationHookOptions<GetSentencesMutation, GetSentencesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetSentencesMutation, GetSentencesMutationVariables>(GetSentencesDocument, options);
+      }
+export type GetSentencesMutationHookResult = ReturnType<typeof useGetSentencesMutation>;
+export type GetSentencesMutationResult = Apollo.MutationResult<GetSentencesMutation>;
 export const LoginDocument = gql`
     mutation login($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
@@ -358,37 +380,6 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
-export const SentencesDocument = gql`
-    query sentences($id: ID!) {
-  sentences(id: $id) {
-    data {
-      ...Sentence
-    }
-  }
-}
-    ${SentenceFragmentDoc}`;
-export type SentencesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SentencesQuery, SentencesQueryVariables>, 'query'> & ({ variables: SentencesQueryVariables; skip?: boolean; } | { skip: boolean; });
-
-    export const SentencesComponent = (props: SentencesComponentProps) => (
-      <ApolloReactComponents.Query<SentencesQuery, SentencesQueryVariables> query={SentencesDocument} {...props} />
-    );
-    
-export function useSentencesQuery(baseOptions: Apollo.QueryHookOptions<SentencesQuery, SentencesQueryVariables> & ({ variables: SentencesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SentencesQuery, SentencesQueryVariables>(SentencesDocument, options);
-      }
-export function useSentencesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SentencesQuery, SentencesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SentencesQuery, SentencesQueryVariables>(SentencesDocument, options);
-        }
-export function useSentencesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SentencesQuery, SentencesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SentencesQuery, SentencesQueryVariables>(SentencesDocument, options);
-        }
-export type SentencesQueryHookResult = ReturnType<typeof useSentencesQuery>;
-export type SentencesLazyQueryHookResult = ReturnType<typeof useSentencesLazyQuery>;
-export type SentencesSuspenseQueryHookResult = ReturnType<typeof useSentencesSuspenseQuery>;
-export type SentencesQueryResult = Apollo.QueryResult<SentencesQuery, SentencesQueryVariables>;
 export const SettingsDocument = gql`
     query settings {
   settings {

@@ -44,6 +44,9 @@ export const useWord = (): IUseWord => {
     const [openModal, setOpenModal] = useState<IUseWord['openModal']>(false)
     const [studyModal, setStudyModal] = useState<IUseWord['studyModal']>(false)
 
+    const [listCount, setListCount] = useState<number[]>([])
+    const [listIndex, setListIndex] = useState<number>(0)
+
     useEffect(() => {
         setWordsState(data?.list?.data?.attributes?.words?.data?.filter(it => it?.attributes?.active) ?? [])
     }, [data])
@@ -51,6 +54,10 @@ export const useWord = (): IUseWord => {
     useEffect(() => {
         setWord()
         createPointsObject()
+
+        if(mode === 'list') {
+            setListCount([...Array.from({ length: 10 }, (_, index) => index)].sort(() => Math.random() - 0.5))
+        }
     }, [wordsState])
 
     const point = {
@@ -73,6 +80,7 @@ export const useWord = (): IUseWord => {
     }
 
     const checkWord: IUseWord['checkWord'] = async (data, onSubmitProps) => {
+        setListIndex(prev => prev + 1)
         if(data?.word === chosenWord?.word) {
             await successAnswer()
         } else {
@@ -109,14 +117,17 @@ export const useWord = (): IUseWord => {
     const setWord = () => {
         if(wordsState && wordsState?.length){
             const index = findWordIndex()
-
-            if(typeof index !== 'number') return
+            if(typeof index !== 'number') {
+                setOpenModal(true)
+                return
+            }
             
             const chosen = wordsState[index]
             if(!chosen) {
                 setOpenModal(true)
                 return
             }
+            
             wordFormater(chosen)
         }
     }
@@ -143,6 +154,10 @@ export const useWord = (): IUseWord => {
                     setIndexWord(0)
                     return studyWordIndex + 1
                 }
+            }
+
+            if(mode === 'list') {
+                return listCount[listIndex]
             }
     
             return Math.floor(Math.random() * wordsState?.length)

@@ -12,12 +12,13 @@ const sentencesArray = [
 
 const splitter = '\n'
 
-const sentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = async (root, args, ctx, info) => {
+const getSentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = async (root, args, ctx, info) => {
     const replaceFunc: any  = await promptsContext(null, null, ctx, info)
 
     const { id } = args
 
     // return {
+    //     // data: sentencesArray?.reverse()?.map(item => ({
     //     data: sentencesArray?.map(item => ({
     //         text: item
     //     }))
@@ -25,7 +26,8 @@ const sentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = asyn
 
     const words = await strapi.entityService.findMany("api::word.word", {
         filters: {
-            list: id
+            list: id,
+            active: true
         },
     })
 
@@ -44,7 +46,7 @@ const sentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = asyn
 
     const answer = response?.choices?.[0]?.message?.content
     const ss = answer?.split(splitter)
-
+    console.log(answer)
     return {
         data: ss?.map(item => ({
             text: item
@@ -52,4 +54,4 @@ const sentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = asyn
     }
 }
 
-export { sentences }
+export { getSentences }

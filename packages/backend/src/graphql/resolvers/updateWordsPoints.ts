@@ -27,7 +27,9 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
 
         if(pointParseToInt <= 0) continue
 
-        const resultPoint = pointParseToInt - 1
+        const diffInDays = dayjs().diff(lastDate, 'day')
+
+        const resultPoint = pointParseToInt - diffInDays
 
         const wordsUpdates = await strapi.entityService.update("api::word.word", {
             data: {
