@@ -1,2 +1,8 @@
 node_modules
 gitlab-ci.yml
+
+package.json
+yarm.lock
+docker-compose.yml
+Dockerfile.cms
+Dockerfile.frontend
