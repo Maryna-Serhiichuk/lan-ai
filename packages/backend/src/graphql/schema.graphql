@@ -298,6 +298,7 @@ input JSONFilterInput {
 }
 
 type List {
+  closed: Boolean
   createdAt: DateTime
   name: String
   setting: SettingEntityResponse
@@ -321,6 +322,7 @@ type ListEntityResponseCollection {
 
 input ListFiltersInput {
   and: [ListFiltersInput]
+  closed: BooleanFilterInput
   createdAt: DateTimeFilterInput
   id: IDFilterInput
   name: StringFilterInput
@@ -332,6 +334,7 @@ input ListFiltersInput {
 }
 
 input ListInput {
+  closed: Boolean
   name: String
   setting: ID
   words: [ID]

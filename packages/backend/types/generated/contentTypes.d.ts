@@ -817,6 +817,7 @@ export interface ApiListList extends Schema.CollectionType {
       'manyToOne',
       'api::setting.setting'
     >;
+    closed: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::list.list', 'oneToOne', 'admin::user'> &

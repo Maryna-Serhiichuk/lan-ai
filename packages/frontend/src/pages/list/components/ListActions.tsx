@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { UpdateWord } from "./UpdateWord.form";
 import { useParams } from "react-router-dom"
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
+import { LockButton } from "./Lock.button";
 
 export const ListActions: FC = () => {
     const { id } = useParams()
@@ -19,14 +20,14 @@ export const ListActions: FC = () => {
                 Random
             </Button>
         </Link>
+        <Link to={'list'}>
+            <Button fullWidth variant="outlined" startIcon={<FormatLineSpacingIcon />}>
+                List
+            </Button>
+        </Link>
         <Link to={'study'}>
             <Button fullWidth variant="contained" startIcon={<PsychologyOutlinedIcon />}>
                 Study
-            </Button>
-        </Link>
-        <Link to={'list'}>
-            <Button fullWidth variant="contained" startIcon={<FormatLineSpacingIcon />}>
-                List
             </Button>
         </Link>
         <Link to={`/sentences/${id}`}>
@@ -35,6 +36,7 @@ export const ListActions: FC = () => {
             </Button>
         </Link>
         <AddWord/>
+        <LockButton/>
         <UpdateWord/>
     </Stack>
 }

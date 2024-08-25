@@ -26,6 +26,10 @@
       "relation": "manyToOne",
       "target": "api::setting.setting",
       "inversedBy": "lists"
+    },
+    "closed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

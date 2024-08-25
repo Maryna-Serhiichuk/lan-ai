@@ -6,7 +6,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColor';
@@ -15,6 +14,7 @@ import { useUpdateWordMutation } from "./../../../graphql";
 import List from "..";
 import styled from "@emotion/styled";
 import { wordPointState } from "components/untils/wordPointState";
+import { ListName } from "./ListName";
 
 const ListItemStyled = styled(ListItem, {
     shouldForwardProp: (prop) => prop !== 'color',
@@ -34,9 +34,7 @@ const ListItemStyled = styled(ListItem, {
 `
 
 export const ListElement: FC = () => {
-    // if(!id) navigate('/list')
-
-    const { data, setUpdateWord, setChosenWord, setDeleteWord, title } = List.useContext()
+    const { data, setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
 
     const [updateWord] = useUpdateWordMutation()
 
@@ -47,9 +45,7 @@ export const ListElement: FC = () => {
     }
 
     return <ListUI sx={{ width: '100%', maxWidth: 450, bgcolor: 'transparent' }}>
-        <Typography variant="h3" gutterBottom align="center">
-            {title}
-        </Typography>
+        <ListName />
         {data?.attributes?.words?.data?.map((value) => {
             return (
             <ListItemStyled

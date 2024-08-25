@@ -3,11 +3,11 @@ import { FC, Suspense, useEffect } from "react"
 import { Outlet } from "react-router-dom"
 
 export const Default: FC = () => {
-    // const [initUpdate] = useUpdateWordsPointsMutation()
+    const [initUpdate] = useUpdateWordsPointsMutation()
 
-    // useEffect(() => {
-    //   initUpdate()
-    // }, [])
+    useEffect(() => {
+      initUpdate()
+    }, [])
 
     return <Suspense>
         <Outlet/>

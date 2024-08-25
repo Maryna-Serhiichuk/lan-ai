@@ -225,6 +225,7 @@ export interface NexusGenInputs {
   }
   ListFiltersInput: { // input type
     and?: Array<NexusGenInputs['ListFiltersInput'] | null> | null; // [ListFiltersInput]
+    closed?: NexusGenInputs['BooleanFilterInput'] | null; // BooleanFilterInput
     createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
     id?: NexusGenInputs['IDFilterInput'] | null; // IDFilterInput
     name?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
@@ -235,6 +236,7 @@ export interface NexusGenInputs {
     words?: NexusGenInputs['WordFiltersInput'] | null; // WordFiltersInput
   }
   ListInput: { // input type
+    closed?: boolean | null; // Boolean
     name?: string | null; // String
     setting?: string | null; // ID
     words?: Array<string | null> | null; // [ID]
@@ -601,6 +603,7 @@ export interface NexusGenObjects {
   I18NLocaleEntityResponseCollection: {};
   I18NLocaleRelationResponseCollection: {};
   List: { // root type
+    closed?: boolean | null; // Boolean
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     name?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -824,6 +827,7 @@ export interface NexusGenFieldTypes {
     data: NexusGenRootTypes['I18NLocaleEntity'][]; // [I18NLocaleEntity!]!
   }
   List: { // field return type
+    closed: boolean | null; // Boolean
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     name: string | null; // String
     setting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
@@ -1219,6 +1223,7 @@ export interface NexusGenFieldTypeNames {
     data: 'I18NLocaleEntity'
   }
   List: { // field return type name
+    closed: 'Boolean'
     createdAt: 'DateTime'
     name: 'String'
     setting: 'SettingEntityResponse'

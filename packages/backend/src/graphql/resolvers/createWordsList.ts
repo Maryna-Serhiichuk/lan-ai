@@ -7,7 +7,7 @@ const createWordsList: GraphQLFieldResolver<null, Graphql.ResolverContext, any> 
   if (!user?.setting?.id) throw new TypeError("Settings identifier is missing")
 
   const { name, words } = args.input
-  
+  console.log(words)
   let createdWords
 
   if(words?.length){

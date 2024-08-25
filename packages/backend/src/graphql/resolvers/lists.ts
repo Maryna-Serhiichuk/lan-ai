@@ -13,6 +13,7 @@ const lists: GraphQLFieldResolver<null, Graphql.ResolverContext, null> = async (
     filters: {
       setting: user?.setting?.id,
     },
+    sort: { createdAt: 'desc' },
   })
 
   return toEntityResponseCollection(list ?? [])

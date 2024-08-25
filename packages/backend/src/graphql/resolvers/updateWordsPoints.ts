@@ -7,6 +7,14 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
     if (!user?.id) throw new TypeError("Token is already executing.");
     if (!user?.setting?.id) throw new TypeError("Settings identifier is missing");
 
+    if(!user?.lastAttendanceDate) {
+        await strapi.entityService.update("plugin::users-permissions.user", user.id, {
+            data: {
+                lastAttendanceDate: dayjs().format('YYYY-MM-DD')
+            },
+        })
+    }
+
     const lastDate = dayjs(user?.lastAttendanceDate ?? undefined)
     const isSameDate = lastDate.isSame(dayjs(), 'day')
 
@@ -22,6 +30,8 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
         }
     });
 
+    let wordsResponse = []
+
     for(const word of words){
         const pointParseToInt = word?.point ? parseInt(word?.point) : 0
 
@@ -31,13 +41,12 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
 
         const resultPoint = pointParseToInt - diffInDays
 
-        const wordsUpdates = await strapi.entityService.update("api::word.word", {
+        const wordsUpdates = await strapi.entityService.update("api::word.word", word?.id, {
             data: {
                 point: resultPoint
             }
         })
-
-        return toEntityResponseCollection(wordsUpdates ?? [])
+        wordsResponse.push(wordsUpdates)
     }
 
     await strapi.entityService.update("plugin::users-permissions.user", user.id, {
@@ -46,7 +55,7 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
         },
     })
 
-    return toEntityResponseCollection([])
+    return toEntityResponseCollection(wordsResponse ?? [])
 }
 
 export { updateWordsPoints }

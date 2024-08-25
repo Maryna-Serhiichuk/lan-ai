@@ -1,5 +1,7 @@
 fragment List on List {
     name
+    closed
+    createdAt
     words {
         data {
             id

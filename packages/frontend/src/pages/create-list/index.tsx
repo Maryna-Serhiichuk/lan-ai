@@ -17,6 +17,7 @@ const CreateList: FC = () => {
     const [_, { refetch }] = useListsLazyQuery()
 
     const addList: FormikConfig<WordsListInput>['onSubmit'] = async (input, onSubmitProps) => {
+        console.log(1)
         try {
             const data = await createWordsList({ variables: { input } })
             await refetch()
@@ -66,7 +67,7 @@ const CreateList: FC = () => {
                                                 </Grid>
                                             ))}
                                             <Grid item>
-                                                <Button onClick={() => push({})} type="submit" variant="contained" startIcon={<AddBoxOutlinedIcon />}>
+                                                <Button onClick={() => push({ word: '', translation: '' })} variant="contained" startIcon={<AddBoxOutlinedIcon />}>
                                                     Add
                                                 </Button>
                                             </Grid>

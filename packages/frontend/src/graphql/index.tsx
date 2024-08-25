@@ -16,6 +16,8 @@ export const WordFragmentDoc = gql`
 export const ListFragmentDoc = gql`
     fragment List on List {
   name
+  closed
+  createdAt
   words {
     data {
       id
@@ -233,6 +235,31 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
       }
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export const UpdateListDocument = gql`
+    mutation updateList($id: ID!, $data: ListInput!) {
+  updateList(id: $id, data: $data) {
+    data {
+      id
+      attributes {
+        ...List
+      }
+    }
+  }
+}
+    ${ListFragmentDoc}`;
+export type UpdateListMutationFn = Apollo.MutationFunction<UpdateListMutation, UpdateListMutationVariables>;
+export type UpdateListComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateListMutation, UpdateListMutationVariables>, 'mutation'>;
+
+    export const UpdateListComponent = (props: UpdateListComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateListMutation, UpdateListMutationVariables> mutation={UpdateListDocument} {...props} />
+    );
+    
+export function useUpdateListMutation(baseOptions?: Apollo.MutationHookOptions<UpdateListMutation, UpdateListMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateListMutation, UpdateListMutationVariables>(UpdateListDocument, options);
+      }
+export type UpdateListMutationHookResult = ReturnType<typeof useUpdateListMutation>;
+export type UpdateListMutationResult = Apollo.MutationResult<UpdateListMutation>;
 export const UpdateWordDocument = gql`
     mutation updateWord($id: ID!, $data: WordInput!) {
   updateWord(id: $id, data: $data) {
