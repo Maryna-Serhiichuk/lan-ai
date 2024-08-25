@@ -13,6 +13,6 @@
   "scripts": {
     "start": "yarn workspaces run start",
     "start:frontend": "yarn workspace frontend run start",
-    "start:backend": "yarn workspace backend run develop"
+    "start:backend": "yarn workspace backend run prod"
   }
 }
