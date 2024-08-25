@@ -1,5 +1,5 @@
 import { createContext, FC, PropsWithChildren, useContext, type ReactElement } from 'react'
-import { IUseList } from './useList';
+import { IUseList, UseListArgs } from './useList';
 
 type ListValue = IUseList
 
@@ -17,6 +17,6 @@ export const ListProvider: FC<PropsWithChildren<IUseList>> = ({ children , ...co
     )
 }
 
-export const useListContext = () => {
+export const useListContext = (props?: UseListArgs) => {
     return useContext<ListValue>(ListContext);
 }

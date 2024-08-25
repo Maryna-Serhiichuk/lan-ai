@@ -7,14 +7,20 @@ import { Formik, Form, Field, FieldProps  } from 'formik';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import { Grid } from "@mui/material";
+import { IUseList } from './../context/useList'
 
 export const ListName: FC = () => {
-    const { data, updateData } = List.useContext()
     const [isUpdateState, setUpdateState] = useState(false)
+    const { data, updateData } = List.useContext()
+
+    const onSubmit: IUseList['updateData'] = async (input, handler) => {
+        await updateData(input, handler)
+        setUpdateState(false)
+    }
 
     return <Typography variant="h3" gutterBottom align="center">
         {isUpdateState
-            ? <Formik initialValues={{ name: data?.attributes?.name ?? '' }} onSubmit={updateData}>
+            ? <Formik initialValues={{ name: data?.attributes?.name ?? '' } as ListInput} onSubmit={onSubmit}>
                 {({ values, handleSubmit, handleChange }) => (
                     <Form onSubmit={handleSubmit}>
                         <Grid container direction={'row'} justifyContent={'center'} alignItems={'center'} columnSpacing={4} wrap={"nowrap"}>
