@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: backend
+    env: node
+    plan: free
+    buildCommand: cd packages/backend && yarn install && yarn build
+    startCommand: cd packages/backend && yarn prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      sizeGB: 1
+
+  - type: web
+    name: frontend
+    env: node
+    plan: free
+    buildCommand: cd packages/frontend && yarn install && yarn build
+    startCommand: cd packages/frontend && yarn start
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      sizeGB: 1
