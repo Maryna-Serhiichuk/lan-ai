@@ -99,7 +99,6 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
         t.field("text", { type: "String" })
       },
     }),
-
     nexus.extendType({
       type: "Mutation",
       definition: t => {
@@ -130,6 +129,23 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
       definition: t => {
         t.id("id")
         t.string("explain")
+      },
+    }),
+    nexus.extendType({
+      type: "Mutation",
+      definition: t => {
+        t.field("getStory", {
+          type: "StoryResponse",
+          args: {
+            id: nexus.nonNull("ID")
+          },
+        })
+      },
+    }),
+    nexus.extendType<"StoryResponse">({
+      type: "StoryResponse",
+      definition: t => {
+        t.field("story", { type: "String" })
       },
     }),
   ],

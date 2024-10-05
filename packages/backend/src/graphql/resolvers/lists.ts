@@ -1,5 +1,6 @@
 import { GraphQLFieldResolver } from "graphql"
 import { me } from "./me"
+import { queryCollection } from "./../utils/queryCollection"
 
 const lists: GraphQLFieldResolver<null, Graphql.ResolverContext, null> = async (root, args, ctx, info) => {
   const user: any = await me(null, null, ctx, info)
@@ -7,16 +8,16 @@ const lists: GraphQLFieldResolver<null, Graphql.ResolverContext, null> = async (
 
   if(!user?.setting?.id) throw new TypeError("Settings identifier is missing")
 
-  const { toEntityResponseCollection } = strapi.service("plugin::graphql.format").returnTypes
-
-  const list = await strapi.entityService.findMany("api::list.list", {
+  const list = await queryCollection("api::list.list", {
+    ...(args ?? {}),
     filters: {
+      ...((args as any)?.filters ?? {}),
       setting: user?.setting?.id,
     },
-    sort: { createdAt: 'desc' },
-  })
+    sort: ['createdAt:desc', ...(args as any)?.sort],
+  }, ctx)
 
-  return toEntityResponseCollection(list ?? [])
+  return list
 }
 
 export { lists }

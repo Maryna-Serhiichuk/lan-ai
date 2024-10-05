@@ -1,4 +1,5 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
+import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import ListUI from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -16,22 +17,27 @@ import styled from "@emotion/styled";
 import { wordPointState } from "components/untils/wordPointState";
 import { ListName } from "./ListName";
 
-const ListItemStyled = styled(ListItem, {
+const PointMark = styled('div', {
     shouldForwardProp: (prop) => prop !== 'color',
 })<{ color?: string }>`
-    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &::before {
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        width: 10px;
+        height: 10px;
         background: ${({ color }) => color};
-        opacity: .1;
-        z-index: -1;
+        opacity: .3;
+        border-radius: 50%;
     }
 `
+const Container = styled('div', {
+    shouldForwardProp: (prop) => prop !== 'color',
+})<{ color?: string }>`
+    max-width: 450px;
+`
+
 
 export const ListElement: FC = () => {
     const { data, setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
@@ -44,47 +50,54 @@ export const ListElement: FC = () => {
         }
     }
 
-    return <ListUI sx={{ width: '100%', maxWidth: 450, bgcolor: 'transparent' }}>
+    return <Container>
         <ListName />
-        {data?.attributes?.words?.data?.map((value) => {
-            return (
-            <ListItemStyled
-                color={wordPointState(value?.attributes?.point ?? 0)?.color}
-                key={value?.id}
-                secondaryAction={
-                    <Grid>
-                        <IconButton onClick={() => {
-                            setChosenWord(value)
-                            setUpdateWord(true)
-                        }} edge="end" aria-label="comments">
-                            <BorderColorOutlinedIcon />
-                        </IconButton>
-                        <IconButton onClick={() => {
-                            setChosenWord(value)
-                            setDeleteWord(true)
-                        }} edge="end" aria-label="comments">
-                            <DeleteOutlinedIcon />
-                        </IconButton>
-                    </Grid>
-                }
-                disablePadding
-            >
-                {/* <ListItemButton role={undefined} onClick={handleToggle(value)} dense> */}
-                <ListItemButton role={undefined} dense>
-                    <ListItemIcon>
-                        <Checkbox
-                            edge="start"
-                            checked={!!value?.attributes?.active}
-                            tabIndex={-1}
-                            disableRipple
-                            onChange={() => changeWordActivity(value?.id, !value?.attributes?.active)}
-                        />
-                    </ListItemIcon>
-                    <ListItemText primary={value?.attributes?.word} style={{ width: 150 }} />
-                    <ListItemText primary={value?.attributes?.translation} style={{ width: 200 }} />
-                </ListItemButton>
-            </ListItemStyled>
-            );
-        })}
-    </ListUI>
+        <ListUI sx={{ width: '100%', maxWidth: '100%', bgcolor: 'transparent' }}>
+            {data?.attributes?.words?.data?.map((value) => {
+                return (
+                    <Fragment>
+                        <ListItem
+                            color={wordPointState(value?.attributes?.point ?? 0)?.color}
+                            key={value?.id}
+                            secondaryAction={
+                                <Grid>
+                                    <IconButton onClick={() => {
+                                        setChosenWord(value)
+                                        setUpdateWord(true)
+                                    }} edge="end" aria-label="comments">
+                                        <BorderColorOutlinedIcon />
+                                    </IconButton>
+                                    <IconButton onClick={() => {
+                                        setChosenWord(value)
+                                        setDeleteWord(true)
+                                    }} edge="end" aria-label="comments">
+                                        <DeleteOutlinedIcon />
+                                    </IconButton>
+                                </Grid>
+                            }
+                            disablePadding
+                        >
+                            {/* <ListItemButton role={undefined} onClick={handleToggle(value)} dense> */}
+                            <ListItemButton role={undefined} dense>
+                                <ListItemIcon>
+                                    <Checkbox
+                                        edge="start"
+                                        checked={!!value?.attributes?.active}
+                                        tabIndex={-1}
+                                        disableRipple
+                                        onChange={() => changeWordActivity(value?.id, !value?.attributes?.active)}
+                                    />
+                                    <PointMark color={wordPointState(value?.attributes?.point ?? 0)?.color}/>
+                                
+                                </ListItemIcon>
+                                <ListItemText primary={value?.attributes?.word} style={{ width: 150 }} />
+                                <ListItemText primary={value?.attributes?.translation} style={{ width: 200 }} />
+                            </ListItemButton>
+                        </ListItem>
+                    <Divider/>
+                </Fragment>
+                );
+            })}
+        </ListUI>
+    </Container>
 }

@@ -844,6 +844,7 @@ export interface ApiPromptPrompt extends Schema.CollectionType {
     ask: Attribute.Text;
     check: Attribute.Text;
     variable: Attribute.Component<'context.dynamic'>;
+    story: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

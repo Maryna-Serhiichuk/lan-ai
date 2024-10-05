@@ -1,0 +1,10 @@
+query Setting($id: ID!) {
+    setting(id: $id) {
+        data {
+            id
+            attributes {
+                ...Setting
+            }
+        }
+    }
+}

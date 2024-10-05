@@ -10,6 +10,7 @@ import { UpdateWord } from "./UpdateWord.form";
 import { useParams } from "react-router-dom"
 import FormatLineSpacingIcon from '@mui/icons-material/FormatLineSpacing';
 import { LockButton } from "./Lock.button";
+import NotesIcon from '@mui/icons-material/Notes';
 
 export const ListActions: FC = () => {
     const { id } = useParams()
@@ -33,6 +34,11 @@ export const ListActions: FC = () => {
         <Link to={`/sentences/${id}`}>
             <Button fullWidth variant="contained" startIcon={<SubtitlesOutlinedIcon />}>
                 Sentences
+            </Button>
+        </Link>
+        <Link to={`/story/${id}`}>
+            <Button fullWidth variant="contained" startIcon={<NotesIcon />}>
+                Story
             </Button>
         </Link>
         <AddWord/>

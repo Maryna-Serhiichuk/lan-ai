@@ -17,6 +17,6 @@ export const ListProvider: FC<PropsWithChildren<IUseList>> = ({ children , ...co
     )
 }
 
-export const useListContext = (props?: UseListArgs) => {
+export const useListContext = () => {
     return useContext<ListValue>(ListContext);
 }

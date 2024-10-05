@@ -412,6 +412,7 @@ type Mutation {
   """Request a reset password token"""
   forgotPassword(email: String!): UsersPermissionsPasswordPayload
   getSentences(id: ID!): SentencesResponse
+  getStory(id: ID!): StoryResponse
   login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
   multipleUpload(field: String, files: [Upload]!, ref: String, refId: ID): [UploadFileEntityResponse]!
 
@@ -462,6 +463,7 @@ type Prompt {
   description: String
   name: String
   publishedAt: DateTime
+  story: String
   updatedAt: DateTime
   variable: ComponentContextDynamic
 }
@@ -491,6 +493,7 @@ input PromptFiltersInput {
   not: PromptFiltersInput
   or: [PromptFiltersInput]
   publishedAt: DateTimeFilterInput
+  story: StringFilterInput
   updatedAt: DateTimeFilterInput
   variable: ComponentContextDynamicFiltersInput
 }
@@ -501,6 +504,7 @@ input PromptInput {
   description: String
   name: String
   publishedAt: DateTime
+  story: String
   variable: ComponentContextDynamicInput
 }
 
@@ -620,6 +624,10 @@ input SettingInput {
 
 type SettingRelationResponseCollection {
   data: [SettingEntity!]!
+}
+
+type StoryResponse {
+  story: String
 }
 
 input StringFilterInput {

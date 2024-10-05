@@ -1,5 +1,5 @@
-query lists {
-    lists {
+query lists($filters: ListFiltersInput) {
+    lists(filters: $filters) {
         data {
         id
             attributes {

@@ -90,6 +90,31 @@ export function useCheckSentencesMutation(baseOptions?: Apollo.MutationHookOptio
       }
 export type CheckSentencesMutationHookResult = ReturnType<typeof useCheckSentencesMutation>;
 export type CheckSentencesMutationResult = Apollo.MutationResult<CheckSentencesMutation>;
+export const CreateSettingDocument = gql`
+    mutation createSetting($data: SettingInput!) {
+  createSetting(data: $data) {
+    data {
+      id
+      attributes {
+        ...Setting
+      }
+    }
+  }
+}
+    ${SettingFragmentDoc}`;
+export type CreateSettingMutationFn = Apollo.MutationFunction<CreateSettingMutation, CreateSettingMutationVariables>;
+export type CreateSettingComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateSettingMutation, CreateSettingMutationVariables>, 'mutation'>;
+
+    export const CreateSettingComponent = (props: CreateSettingComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateSettingMutation, CreateSettingMutationVariables> mutation={CreateSettingDocument} {...props} />
+    );
+    
+export function useCreateSettingMutation(baseOptions?: Apollo.MutationHookOptions<CreateSettingMutation, CreateSettingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateSettingMutation, CreateSettingMutationVariables>(CreateSettingDocument, options);
+      }
+export type CreateSettingMutationHookResult = ReturnType<typeof useCreateSettingMutation>;
+export type CreateSettingMutationResult = Apollo.MutationResult<CreateSettingMutation>;
 export const CreateWordDocument = gql`
     mutation createWord($data: WordInput!) {
   createWord(data: $data) {
@@ -187,6 +212,26 @@ export function useGetSentencesMutation(baseOptions?: Apollo.MutationHookOptions
       }
 export type GetSentencesMutationHookResult = ReturnType<typeof useGetSentencesMutation>;
 export type GetSentencesMutationResult = Apollo.MutationResult<GetSentencesMutation>;
+export const GetStoryDocument = gql`
+    mutation getStory($id: ID!) {
+  getStory(id: $id) {
+    story
+  }
+}
+    `;
+export type GetStoryMutationFn = Apollo.MutationFunction<GetStoryMutation, GetStoryMutationVariables>;
+export type GetStoryComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<GetStoryMutation, GetStoryMutationVariables>, 'mutation'>;
+
+    export const GetStoryComponent = (props: GetStoryComponentProps) => (
+      <ApolloReactComponents.Mutation<GetStoryMutation, GetStoryMutationVariables> mutation={GetStoryDocument} {...props} />
+    );
+    
+export function useGetStoryMutation(baseOptions?: Apollo.MutationHookOptions<GetStoryMutation, GetStoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<GetStoryMutation, GetStoryMutationVariables>(GetStoryDocument, options);
+      }
+export type GetStoryMutationHookResult = ReturnType<typeof useGetStoryMutation>;
+export type GetStoryMutationResult = Apollo.MutationResult<GetStoryMutation>;
 export const LoginDocument = gql`
     mutation login($input: UsersPermissionsLoginInput!) {
   login(input: $input) {
@@ -260,6 +305,31 @@ export function useUpdateListMutation(baseOptions?: Apollo.MutationHookOptions<U
       }
 export type UpdateListMutationHookResult = ReturnType<typeof useUpdateListMutation>;
 export type UpdateListMutationResult = Apollo.MutationResult<UpdateListMutation>;
+export const UpdateSettingDocument = gql`
+    mutation updateSetting($id: ID!, $data: SettingInput!) {
+  updateSetting(id: $id, data: $data) {
+    data {
+      id
+      attributes {
+        ...Setting
+      }
+    }
+  }
+}
+    ${SettingFragmentDoc}`;
+export type UpdateSettingMutationFn = Apollo.MutationFunction<UpdateSettingMutation, UpdateSettingMutationVariables>;
+export type UpdateSettingComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateSettingMutation, UpdateSettingMutationVariables>, 'mutation'>;
+
+    export const UpdateSettingComponent = (props: UpdateSettingComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateSettingMutation, UpdateSettingMutationVariables> mutation={UpdateSettingDocument} {...props} />
+    );
+    
+export function useUpdateSettingMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSettingMutation, UpdateSettingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateSettingMutation, UpdateSettingMutationVariables>(UpdateSettingDocument, options);
+      }
+export type UpdateSettingMutationHookResult = ReturnType<typeof useUpdateSettingMutation>;
+export type UpdateSettingMutationResult = Apollo.MutationResult<UpdateSettingMutation>;
 export const UpdateWordDocument = gql`
     mutation updateWord($id: ID!, $data: WordInput!) {
   updateWord(id: $id, data: $data) {
@@ -345,8 +415,8 @@ export type ListLazyQueryHookResult = ReturnType<typeof useListLazyQuery>;
 export type ListSuspenseQueryHookResult = ReturnType<typeof useListSuspenseQuery>;
 export type ListQueryResult = Apollo.QueryResult<ListQuery, ListQueryVariables>;
 export const ListsDocument = gql`
-    query lists {
-  lists {
+    query lists($filters: ListFiltersInput) {
+  lists(filters: $filters) {
     data {
       id
       attributes {
@@ -382,6 +452,14 @@ export const MeDocument = gql`
     query me {
   me {
     email
+    setting {
+      data {
+        id
+        attributes {
+          name
+        }
+      }
+    }
   }
 }
     `;
@@ -407,6 +485,40 @@ export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const SettingDocument = gql`
+    query Setting($id: ID!) {
+  setting(id: $id) {
+    data {
+      id
+      attributes {
+        ...Setting
+      }
+    }
+  }
+}
+    ${SettingFragmentDoc}`;
+export type SettingComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SettingQuery, SettingQueryVariables>, 'query'> & ({ variables: SettingQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SettingComponent = (props: SettingComponentProps) => (
+      <ApolloReactComponents.Query<SettingQuery, SettingQueryVariables> query={SettingDocument} {...props} />
+    );
+    
+export function useSettingQuery(baseOptions: Apollo.QueryHookOptions<SettingQuery, SettingQueryVariables> & ({ variables: SettingQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
+      }
+export function useSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SettingQuery, SettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
+        }
+export function useSettingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingQuery, SettingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
+        }
+export type SettingQueryHookResult = ReturnType<typeof useSettingQuery>;
+export type SettingLazyQueryHookResult = ReturnType<typeof useSettingLazyQuery>;
+export type SettingSuspenseQueryHookResult = ReturnType<typeof useSettingSuspenseQuery>;
+export type SettingQueryResult = Apollo.QueryResult<SettingQuery, SettingQueryVariables>;
 export const SettingsDocument = gql`
     query settings {
   settings {

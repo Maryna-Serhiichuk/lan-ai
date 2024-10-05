@@ -63,6 +63,7 @@ const promptsContext: GraphQLFieldResolver<null, Graphql.ResolverContext, null> 
         return {
             ask: replacePlaceholders(prompts?.ask),
             check: replacePlaceholders(prompts?.check),
+            story: replacePlaceholders(prompts?.story),
         }
 
     }

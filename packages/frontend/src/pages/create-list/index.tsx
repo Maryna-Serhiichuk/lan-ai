@@ -42,7 +42,7 @@ const CreateList: FC = () => {
                                     {({ insert, remove, push }) => (
                                         <Grid container direction={'column'} rowSpacing={2}>
                                             {values?.words?.length && values?.words?.length > 0 && values?.words?.map((word, index) => (
-                                                <Grid key={index} item container direction={'row'} columnSpacing={4}>
+                                                <Grid key={index} item container direction={'row'} columnSpacing={3}>
                                                     <Grid item>
                                                         <Field
                                                             name={`words.${index}.word`}

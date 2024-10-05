@@ -1,0 +1,10 @@
+mutation createSetting($data: SettingInput!) {
+    createSetting(data: $data) {
+        data {
+            id
+            attributes {
+                ...Setting
+            }
+        }
+    }
+}

@@ -1,17 +1,20 @@
 import { createContext, FC, PropsWithChildren, useContext } from 'react'
-import { useLocalStorage } from 'react-use'
 
 import { MeComponent } from './graphql'
 
-type ContextProps = Maybe<Partial<UsersPermissionsMe>>
+type ContextProps = Maybe<Partial<UsersPermissionsUser>>
 
 const defaultValue: ContextProps = null
 
 const AuthContext = createContext<ContextProps>(defaultValue)
 
 const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [token] = useLocalStorage('jwt')
-  return !token ? <>{children}</> : <MeComponent>{({ data }) => <AuthContext.Provider value={data?.me}>{children}</AuthContext.Provider>}</MeComponent>
+  const token = localStorage.getItem("jwt")
+  return !token 
+  ? <>{children}</> 
+  : <MeComponent>{({ data }) => 
+    <AuthContext.Provider value={data?.me}>{children}</AuthContext.Provider>
+  }</MeComponent>
 }
 
 function withAuth(Wrapped: FC): FC {

@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"
 import Grid from '@mui/material/Grid';
 import { useListsQuery } from "./../../graphql";
@@ -6,10 +6,19 @@ import { ListButton } from "./components/ListButton";
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import { useWordsPoint } from "pages/list/hooks/useWordsPoint";
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const Lists: FC = () => {
+    const [showClosed, setShowClosed] = useState(false)
     const navigation = useNavigate()
-    const { data, error } = useListsQuery()
+    const { data, error } = useListsQuery({ variables: { filters: { 
+        or: showClosed ? [] : [
+            { closed: { in: [false] } },
+            { closed: { null: true } }
+        ]
+    } } })
+
     const { saveWordsPoint } = useWordsPoint()
 
     useEffect(() => {
@@ -27,6 +36,10 @@ const Lists: FC = () => {
         justifyContent="center"
         style={{ minWidth: '100%', paddingTop: 100 }}
     >
+        <FormControlLabel 
+            control={<Switch checked={showClosed} onChange={e => setShowClosed(e?.target?.checked)}/>} 
+            label="Show Closed"
+         />
         <Grid
             container 
             spacing={0}

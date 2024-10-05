@@ -6,9 +6,9 @@ export type WordPointStateType = {
 type StudyLevelName = 'bad' | 'middle' | 'good'
 
 const studyLevel: { [key in StudyLevelName]: WordPointStateType } = {
-    bad: { label: '', color: 'red' },
-    middle: { label: '', color: 'yellow' },
-    good: { label: '', color: 'green' },
+    bad: { label: '', color: '#FF4466' },
+    middle: { label: '', color: '#EBC658' },
+    good: { label: '', color: '#71BD8D' },
 }
 
 

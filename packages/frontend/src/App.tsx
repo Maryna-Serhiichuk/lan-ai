@@ -2,6 +2,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Router from './pages';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './components/theme'
+import { AuthProvider } from 'Auth';
 
 const client = new ApolloClient({
   uri: 'http://localhost:1337/graphql',
@@ -12,9 +13,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Router />
-      </ThemeProvider>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <Router />
+        </ThemeProvider>
+      </AuthProvider>
     </ApolloProvider>
   );
 }

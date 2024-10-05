@@ -282,6 +282,7 @@ export interface NexusGenInputs {
     not?: NexusGenInputs['PromptFiltersInput'] | null; // PromptFiltersInput
     or?: Array<NexusGenInputs['PromptFiltersInput'] | null> | null; // [PromptFiltersInput]
     publishedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    story?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
     updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
     variable?: NexusGenInputs['ComponentContextDynamicFiltersInput'] | null; // ComponentContextDynamicFiltersInput
   }
@@ -291,6 +292,7 @@ export interface NexusGenInputs {
     description?: string | null; // String
     name?: string | null; // String
     publishedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    story?: string | null; // String
     variable?: NexusGenInputs['ComponentContextDynamicInput'] | null; // ComponentContextDynamicInput
   }
   SentenceInput: { // input type
@@ -626,6 +628,7 @@ export interface NexusGenObjects {
     description?: string | null; // String
     name?: string | null; // String
     publishedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    story?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   PromptEntity: {};
@@ -660,6 +663,9 @@ export interface NexusGenObjects {
   SettingEntityResponse: {};
   SettingEntityResponseCollection: {};
   SettingRelationResponseCollection: {};
+  StoryResponse: { // root type
+    story?: string | null; // String
+  }
   UploadFile: { // root type
     alternativeText?: string | null; // String
     caption?: string | null; // String
@@ -873,6 +879,7 @@ export interface NexusGenFieldTypes {
     emailConfirmation: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     forgotPassword: NexusGenRootTypes['UsersPermissionsPasswordPayload'] | null; // UsersPermissionsPasswordPayload
     getSentences: NexusGenRootTypes['SentencesResponse'] | null; // SentencesResponse
+    getStory: NexusGenRootTypes['StoryResponse'] | null; // StoryResponse
     login: NexusGenRootTypes['UsersPermissionsLoginPayload']; // UsersPermissionsLoginPayload!
     multipleUpload: Array<NexusGenRootTypes['UploadFileEntityResponse'] | null>; // [UploadFileEntityResponse]!
     register: NexusGenRootTypes['UsersPermissionsLoginPayload']; // UsersPermissionsLoginPayload!
@@ -904,6 +911,7 @@ export interface NexusGenFieldTypes {
     description: string | null; // String
     name: string | null; // String
     publishedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    story: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     variable: NexusGenRootTypes['ComponentContextDynamic'] | null; // ComponentContextDynamic
   }
@@ -984,6 +992,9 @@ export interface NexusGenFieldTypes {
   }
   SettingRelationResponseCollection: { // field return type
     data: NexusGenRootTypes['SettingEntity'][]; // [SettingEntity!]!
+  }
+  StoryResponse: { // field return type
+    story: string | null; // String
   }
   UploadFile: { // field return type
     alternativeText: string | null; // String
@@ -1269,6 +1280,7 @@ export interface NexusGenFieldTypeNames {
     emailConfirmation: 'UsersPermissionsLoginPayload'
     forgotPassword: 'UsersPermissionsPasswordPayload'
     getSentences: 'SentencesResponse'
+    getStory: 'StoryResponse'
     login: 'UsersPermissionsLoginPayload'
     multipleUpload: 'UploadFileEntityResponse'
     register: 'UsersPermissionsLoginPayload'
@@ -1300,6 +1312,7 @@ export interface NexusGenFieldTypeNames {
     description: 'String'
     name: 'String'
     publishedAt: 'DateTime'
+    story: 'String'
     updatedAt: 'DateTime'
     variable: 'ComponentContextDynamic'
   }
@@ -1380,6 +1393,9 @@ export interface NexusGenFieldTypeNames {
   }
   SettingRelationResponseCollection: { // field return type name
     data: 'SettingEntity'
+  }
+  StoryResponse: { // field return type name
+    story: 'String'
   }
   UploadFile: { // field return type name
     alternativeText: 'String'
@@ -1661,6 +1677,9 @@ export interface NexusGenArgTypes {
       email: string; // String!
     }
     getSentences: { // args
+      id: string; // ID!
+    }
+    getStory: { // args
       id: string; // ID!
     }
     login: { // args

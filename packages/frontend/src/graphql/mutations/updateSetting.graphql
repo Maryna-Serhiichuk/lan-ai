@@ -1,0 +1,10 @@
+mutation updateSetting($id: ID!, $data: SettingInput! ) {
+    updateSetting(id: $id, data: $data) {
+        data {
+            id
+            attributes {
+                ...Setting
+            }
+        }
+    }
+}

@@ -6,11 +6,13 @@ import { useMeQuery } from './../graphql'
 const Login = lazy<FC>(() => import('./login'))
 const SignUp = lazy<FC>(() => import('./sign-up'))
 const Settings = lazy<FC>(() => import('./settings'))
+const Setting = lazy<FC>(() => import('./setting'))
 const Lists = lazy<FC>(() => import('./lists'))
 const List = lazy<FC>(() => import('./list'))
 const Word = lazy<FC>(() => import('./word'))
 const CreateList = lazy<FC>(() => import('./create-list'))
 const Sentences = lazy<FC>(() => import('./sentences'))
+const Story = lazy<FC>(() => import('./story'))
 
 const guestRoutes: RouteObject[] = [
   {
@@ -46,6 +48,7 @@ const authRoutes: RouteObject[] = [
     element: <Common />,
     children: [
       {
+        // element: <Navigate to={'setting/1'} replace />,
         element: <Navigate to={'list'} replace />,
         children: [{path: ''},{path: '*'}]
       },
@@ -56,6 +59,10 @@ const authRoutes: RouteObject[] = [
           {
             path: 'settings',
             element: <Settings />,
+          },
+          {
+            path: 'setting/:id',
+            element: <Setting />,
           },
           {
             path: 'list',
@@ -76,6 +83,10 @@ const authRoutes: RouteObject[] = [
           {
             path: 'sentences/:id',
             element: <Sentences />,
+          },
+          {
+            path: 'story/:id',
+            element: <Story />,
           },
         ]
       },

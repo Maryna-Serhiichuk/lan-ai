@@ -414,6 +414,7 @@ type Mutation = {
   /** Request a reset password token */
   forgotPassword?: Maybe<UsersPermissionsPasswordPayload>;
   getSentences?: Maybe<SentencesResponse>;
+  getStory?: Maybe<StoryResponse>;
   login: UsersPermissionsLoginPayload;
   multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
   /** Register a user */
@@ -555,6 +556,11 @@ type MutationGetSentencesArgs = {
 };
 
 
+type MutationGetStoryArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
 type MutationLoginArgs = {
   input: UsersPermissionsLoginInput;
 };
@@ -673,6 +679,7 @@ type Prompt = {
   description?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  story?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   variable?: Maybe<ComponentContextDynamic>;
 };
@@ -702,6 +709,7 @@ type PromptFiltersInput = {
   not?: InputMaybe<PromptFiltersInput>;
   or?: InputMaybe<Array<InputMaybe<PromptFiltersInput>>>;
   publishedAt?: InputMaybe<DateTimeFilterInput>;
+  story?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   variable?: InputMaybe<ComponentContextDynamicFiltersInput>;
 };
@@ -712,6 +720,7 @@ type PromptInput = {
   description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  story?: InputMaybe<Scalars['String']['input']>;
   variable?: InputMaybe<ComponentContextDynamicInput>;
 };
 
@@ -946,6 +955,10 @@ type SettingInput = {
 
 type SettingRelationResponseCollection = {
   data: Array<SettingEntity>;
+};
+
+type StoryResponse = {
+  story?: Maybe<Scalars['String']['output']>;
 };
 
 type StringFilterInput = {
@@ -1510,6 +1523,13 @@ type CheckSentencesMutationVariables = Exact<{
 
 type CheckSentencesMutation = { checkSentences?: { data?: Array<{ id?: string | null | undefined, explain?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+type CreateSettingMutationVariables = Exact<{
+  data: SettingInput;
+}>;
+
+
+type CreateSettingMutation = { createSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type CreateWordMutationVariables = Exact<{
   data: WordInput;
 }>;
@@ -1538,6 +1558,13 @@ type GetSentencesMutationVariables = Exact<{
 
 type GetSentencesMutation = { getSentences?: { data?: Array<{ text?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+type GetStoryMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type GetStoryMutation = { getStory?: { story?: string | null | undefined } | null | undefined };
+
 type LoginMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
@@ -1560,6 +1587,14 @@ type UpdateListMutationVariables = Exact<{
 
 type UpdateListMutation = { updateList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type UpdateSettingMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  data: SettingInput;
+}>;
+
+
+type UpdateSettingMutation = { updateSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type UpdateWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   data: WordInput;
@@ -1580,7 +1615,9 @@ type ListQueryVariables = Exact<{
 
 type ListQuery = { list?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
-type ListsQueryVariables = Exact<{ [key: string]: never; }>;
+type ListsQueryVariables = Exact<{
+  filters?: InputMaybe<ListFiltersInput>;
+}>;
 
 
 type ListsQuery = { lists?: { data: Array<{ id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined }> } | null | undefined };
@@ -1588,7 +1625,14 @@ type ListsQuery = { lists?: { data: Array<{ id?: string | null | undefined, attr
 type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type MeQuery = { me?: { email: string } | null | undefined };
+type MeQuery = { me?: { email: string, setting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
+type SettingQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type SettingQuery = { setting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type SettingsQueryVariables = Exact<{ [key: string]: never; }>;
 

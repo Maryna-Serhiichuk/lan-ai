@@ -24,9 +24,20 @@ const updateWordsPoints: GraphQLFieldResolver<null, Graphql.ResolverContext, any
 
     const words = await strapi.entityService.findMany('api::word.word', {
         filters: {
-            list: {
-                setting: user?.setting?.id
-            }
+            $or: [
+                {
+                    list: {
+                        closed: false,
+                        setting: user?.setting?.id
+                    },
+                },
+                {
+                    list: {
+                        closed: null,
+                        setting: user?.setting?.id
+                    },
+                },
+              ],
         }
     });
 
