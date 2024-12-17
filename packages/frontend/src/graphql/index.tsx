@@ -32,6 +32,7 @@ export const ListFragmentDoc = gql`
 export const SentenceFragmentDoc = gql`
     fragment Sentence on Sentence {
   text
+  original
 }
     `;
 export const SettingFragmentDoc = gql`

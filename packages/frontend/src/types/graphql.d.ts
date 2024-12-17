@@ -869,6 +869,7 @@ type ResponseCollectionMeta = {
 };
 
 type Sentence = {
+  original?: Maybe<Scalars['String']['output']>;
   text?: Maybe<Scalars['String']['output']>;
 };
 
@@ -1494,7 +1495,7 @@ type ListFragment = { name?: string | null | undefined, closed?: boolean | null 
 
 type ListFragmentVariables = Exact<{ [key: string]: never; }>;
 
-type SentenceFragment = { text?: string | null | undefined };
+type SentenceFragment = { text?: string | null | undefined, original?: string | null | undefined };
 
 
 type SentenceFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -1556,7 +1557,7 @@ type GetSentencesMutationVariables = Exact<{
 }>;
 
 
-type GetSentencesMutation = { getSentences?: { data?: Array<{ text?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+type GetSentencesMutation = { getSentences?: { data?: Array<{ text?: string | null | undefined, original?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 type GetStoryMutationVariables = Exact<{
   id: Scalars['ID']['input'];

@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import Router from './pages';
-import ThemeConfigProvider from './components/theme'
+import ThemeConfigProvider from './components/theme/index'
 import { AuthProvider } from 'Auth';
 
 const client = new ApolloClient({

@@ -4,18 +4,34 @@ import { ThemeProvider } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface Theme {
+    mainColorTheme: ColorTypeOption,
     mainColor: string,
+    textColor: string,
     listShadow: {
       borderRadius?: number,
       boxShadow?: string
     };
+    input: {
+      background: string
+      borderColor: string
+      borderColorFocus: string
+      borderColorHover: string
+    }
   }
   interface ThemeOptions {
+    mainColorTheme: ColorTypeOption,
     mainColor: string,
+    textColor: string,
     listShadow: {
       borderRadius?: number,
       boxShadow?: string
     };
+    input: {
+      background: string
+      borderColor: string
+      borderColorFocus: string
+      borderColorHover: string
+    }
   }
 }
 
@@ -24,6 +40,7 @@ export type ConfigProviderProps = PropsWithChildren<Maybe<{}>>
 type ColorTypeOption = 'dark' | 'light'
 type ColorTypeThemeType = {
   color: string;
+  textColor: string,
   bodyColor: string;
   shadowListInsertOpacity: string;
   button: {
@@ -39,6 +56,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
   } = {
     dark: {
       color: '#403E3B',
+      textColor: '#000000', // #FFF9F1
       bodyColor: '#78746F',
       shadowListInsertOpacity: '.05',
       button: {
@@ -49,6 +67,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
     },
     light: {
       color: '#E9E2D9',
+      textColor: '#1F1E1C',
       bodyColor: 'rgba(255, 247, 237, .5)',
       shadowListInsertOpacity: '.3',
       button: {
@@ -71,6 +90,14 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
 
 
   const theme = useMemo(() => createTheme({
+    textColor: getColorTheme()?.textColor,
+    input: {
+      background: 'rgba(255,255,255,.1)',
+      borderColor: 'rgba(0, 0, 0, 0.23)',
+      borderColorHover: '#303740',
+      borderColorFocus: '#303740',
+    },
+    mainColorTheme: getAlgorihmTheme(),
     mainColor: getColorTheme()?.color,
     listShadow: {
       borderRadius: 20,
@@ -86,7 +113,11 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
         styleOverrides: {
           body: {
             backgroundColor: getColorTheme()?.bodyColor,
-            // color: '#333333',
+            color: getColorTheme()?.textColor,
+            '& ::selection': {
+              backgroundColor: '#4A443D', 
+              color: '#FFF9F1',
+            }
           },
         },
       },
@@ -125,7 +156,25 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
             },
           },
         },
-      }
+      },
+      MuiTextField: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            '& .MuiOutlinedInput-root': {
+              backgroundColor: theme?.input?.background,
+              '& fieldset': {
+                borderColor: theme?.input?.borderColor,
+              },
+              '&:hover fieldset': {
+                borderColor: theme?.input?.borderColorHover,
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: theme?.input?.borderColorFocus,
+              },
+            },
+          }),
+        },
+      },
     },
     palette: {
       background: {

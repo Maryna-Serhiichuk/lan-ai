@@ -46,11 +46,11 @@ const getSentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = a
             {role: "user", content: prompt?.ask},
         ]
     });
-console.log(englishSentence?.choices?.[0]?.message?.content)
+
     const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
-            {role: "user", content: `Переклади це речення на українську мову "${englishSentence?.choices?.[0]?.message?.content}"`},
+            {role: "user", content: `Translate this sentence into Ukrainian "${englishSentence?.choices?.[0]?.message?.content}"`},
         ]
     });
 
@@ -59,7 +59,8 @@ console.log(englishSentence?.choices?.[0]?.message?.content)
 
     return {
         data: ss?.map(item => ({
-            text: item
+            text: item,
+            original: englishSentence?.choices?.[0]?.message?.content
         }))
     }
 }

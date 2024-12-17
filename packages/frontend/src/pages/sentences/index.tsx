@@ -82,6 +82,11 @@ const Sentences = () => {
                                                             <TextareaField name={`data.${index}.sentences`} as="textarea"/>
                                                         </Grid>
                                                     </Grid>
+                                                    {result?.[0]?.explain &&
+                                                        <Grid item style={{ width: '100%', opacity: .6 }}>
+                                                            <Typography variant="h5">{sentences?.[index]?.original}</Typography>
+                                                        </Grid>
+                                                    }
                                                     <Grid item style={{ width: '100%', opacity: .6 }}>
                                                         <Markdown text={result?.find(it => it?.id === index.toString())?.explain ?? ""} />
                                                     </Grid>

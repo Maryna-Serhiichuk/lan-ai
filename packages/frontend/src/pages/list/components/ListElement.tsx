@@ -55,10 +55,9 @@ export const ListElement: FC = () => {
         <ListUI sx={{ width: '100%', maxWidth: '100%', bgcolor: 'transparent' }}>
             {data?.attributes?.words?.data?.map((value) => {
                 return (
-                    <Fragment>
+                    <Fragment key={value?.id}>
                         <ListItem
                             color={wordPointState(value?.attributes?.point ?? 0)?.color}
-                            key={value?.id}
                             secondaryAction={
                                 <Grid>
                                     <IconButton onClick={() => {

@@ -1,15 +1,6 @@
 import styled from "@emotion/styled";
-import { FC, TextareaHTMLAttributes } from "react";
-import { Formik, Form, Field, FormikConfig, FieldArray, FieldProps } from 'formik';
-
-const blue = {
-  100: '#DAECFF',
-  200: '#b6daff',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-  900: '#003A75',
-};
+import { FC } from "react";
+import { Field } from 'formik';
 
 const grey = {
   50: '#F3F6F9',
@@ -33,19 +24,17 @@ export const TextareaField = styled(Field)(({ theme }) => `
   line-height: 1.5;
   padding: 12px;
   border-radius: 12px 12px 0 12px;
-  color: ${grey[900]};
-  background: ${'#fff'};
-  border: 1px solid ${grey[200]};
-  box-shadow: 0px 2px 2px ${grey[50]};
+  color: ${theme?.textColor};
+  background: ${theme?.input?.background};
+  border: 1px solid ${theme?.input?.borderColor};
 
   &:hover {
-    border-color: ${blue[400]};
+    border-color: ${theme?.input?.borderColorHover};
   }
 
   &:focus {
     outline: 0;
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${blue[200]};
+    border-color: ${theme?.input?.borderColorFocus};
   }
 
   // firefox

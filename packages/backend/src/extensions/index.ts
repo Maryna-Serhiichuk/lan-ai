@@ -97,6 +97,7 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
       type: "Sentence",
       definition: t => {
         t.field("text", { type: "String" })
+        t.field("original", { type: "String" })
       },
     }),
     nexus.extendType({
