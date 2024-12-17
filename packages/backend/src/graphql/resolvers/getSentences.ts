@@ -31,10 +31,13 @@ const getSentences: GraphQLFieldResolver<null, Graphql.ResolverContext, any> = a
         },
     })
 
-    const wordsString = words?.map(item => item?.word)?.join(', ')
+    const wordsArray = words?.map(item => item?.word)
+    const wordsString = wordsArray?.join(', ')
+
+    const randomWord = wordsArray[Math.floor(Math.random() * wordsArray.length)];
 
     const prompt = await replaceFunc({
-        words: wordsString
+        words: randomWord
     })
 
     const englishSentence = await openai.chat.completions.create({
