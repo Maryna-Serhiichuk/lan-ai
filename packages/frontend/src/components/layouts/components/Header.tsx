@@ -4,15 +4,20 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { FC } from "react"
 import { styled } from '@mui/material/styles';
+import { ThemeOptions } from "@mui/material/styles/createTheme";
 
 const HeaderContainer = styled('header')`
     position: fixed;
+    z-index: 2;
     width: 100%;
 `
 
-const HeaderWrap = styled(Grid)`
+const HeaderWrap = styled(Grid, {
+    shouldForwardProp: (prop) => prop !== 'listShadow',
+})<{ theme?: ThemeOptions }>`
     padding: 10px 0;
-    box-shadow: 0 10px 20px rgba(0,0,0,.05);
+    background: ${({ theme }) => theme?.mainColor };
+    box-shadow: 0 10px 20px rgba(0,0,0,.2);
 `
 
 export const Header: FC = () => {

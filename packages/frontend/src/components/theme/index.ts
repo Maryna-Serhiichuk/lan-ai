@@ -78,7 +78,13 @@ const theme = createTheme({
       // light: '#D9CDC3',
       // dark: '#D9CDC3',
       // contrastText: '#D9CDC3'
-    }
+    },
+    error: {
+      main: '#FF4466',
+    },
+    success: {
+      main: '#71BD8D',
+    },
   },
 });
 

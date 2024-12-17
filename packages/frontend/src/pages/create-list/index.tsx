@@ -40,7 +40,7 @@ const CreateList: FC = () => {
                             <Grid item>
                                 <FieldArray name="words">
                                     {({ insert, remove, push }) => (
-                                        <Grid container direction={'column'} rowSpacing={2}>
+                                        <Grid container direction={'column'} rowSpacing={0}>
                                             {values?.words?.length && values?.words?.length > 0 && values?.words?.map((word, index) => (
                                                 <Grid key={index} item container direction={'row'} columnSpacing={3}>
                                                     <Grid item>

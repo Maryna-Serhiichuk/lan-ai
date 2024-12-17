@@ -11,6 +11,7 @@ export const WordFragmentDoc = gql`
   active
   studied
   point
+  updatedAt
 }
     `;
 export const ListFragmentDoc = gql`

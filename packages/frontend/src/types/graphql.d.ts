@@ -1489,7 +1489,7 @@ type WordsPointListInput = {
   point?: InputMaybe<Scalars['Int']['input']>;
 };
 
-type ListFragment = { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
+type ListFragment = { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined };
 
 
 type ListFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -1504,7 +1504,7 @@ type SettingFragment = { name?: string | null | undefined, theme?: string | null
 
 type SettingFragmentVariables = Exact<{ [key: string]: never; }>;
 
-type WordFragment = { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined };
+type WordFragment = { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined };
 
 
 type WordFragmentVariables = Exact<{ [key: string]: never; }>;
@@ -1514,7 +1514,7 @@ type ChangeWordsPointMutationVariables = Exact<{
 }>;
 
 
-type ChangeWordsPointMutation = { changeWordsPoint?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
+type ChangeWordsPointMutation = { changeWordsPoint?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined };
 
 type CheckSentencesMutationVariables = Exact<{
   data?: InputMaybe<Array<InputMaybe<SentenceInput>> | InputMaybe<SentenceInput>>;
@@ -1535,21 +1535,21 @@ type CreateWordMutationVariables = Exact<{
 }>;
 
 
-type CreateWordMutation = { createWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type CreateWordMutation = { createWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type CreateWordsListMutationVariables = Exact<{
   input: WordsListInput;
 }>;
 
 
-type CreateWordsListMutation = { createWordsList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type CreateWordsListMutation = { createWordsList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type DeleteWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-type DeleteWordMutation = { deleteWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type DeleteWordMutation = { deleteWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type GetSentencesMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1585,7 +1585,7 @@ type UpdateListMutationVariables = Exact<{
 }>;
 
 
-type UpdateListMutation = { updateList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type UpdateListMutation = { updateList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type UpdateSettingMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1601,26 +1601,26 @@ type UpdateWordMutationVariables = Exact<{
 }>;
 
 
-type UpdateWordMutation = { updateWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type UpdateWordMutation = { updateWord?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type UpdateWordsPointsMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-type UpdateWordsPointsMutation = { updateWordsPoints?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
+type UpdateWordsPointsMutation = { updateWordsPoints?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined };
 
 type ListQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-type ListQuery = { list?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+type ListQuery = { list?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type ListsQueryVariables = Exact<{
   filters?: InputMaybe<ListFiltersInput>;
 }>;
 
 
-type ListsQuery = { lists?: { data: Array<{ id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined }> } | null | undefined };
+type ListsQuery = { lists?: { data: Array<{ id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined }> } | null | undefined };
 
 type MeQueryVariables = Exact<{ [key: string]: never; }>;
 

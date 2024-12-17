@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import { styled } from "@mui/material";
 import dayjs from 'dayjs'
 import LockIcon from '@mui/icons-material/Lock';
+import DoneIcon from '@mui/icons-material/Done';
 
 const DateStyled = styled('div')`
     position: absolute;
@@ -36,7 +37,10 @@ export const ListButton: FC<ListEntity> = ({ id, attributes }) => {
     const roofPoints = 30
     const pointsSum = attributes?.words?.data?.map(it => it?.attributes?.point ?? 0)?.reduce((a,b) => a + b, 0)
     const avaragePoints = (pointsSum ?? 0) / (attributes?.words?.data?.length ?? 1)
-    
+
+    const dates = attributes?.words?.data?.map(a => a?.attributes?.updatedAt)?.filter(Boolean)
+    const isToday = dates?.some(date => dayjs(date).isSame(dayjs(), 'day'));
+
     return <Link to={id ?? ''} style={{ opacity: Math.abs(((1 / roofPoints) * avaragePoints) - 1) + opacityMin }}>
         <Button variant={attributes?.words?.data && attributes?.words?.data?.length > 0 ? "contained" : "outlined"} style={{ overflow: 'hidden', height: '100px', width: '200px', fontSize: 20 }}>
             {attributes?.name}
@@ -46,6 +50,11 @@ export const ListButton: FC<ListEntity> = ({ id, attributes }) => {
             <PointStyled>
                 {pointsSum}
             </PointStyled>
+            {isToday &&
+                <LockStyled>
+                    <DoneIcon fontSize={'small'}/>
+                </LockStyled>
+            }
             {attributes?.closed &&
                 <LockStyled>
                     <LockIcon fontSize={'small'}/>
