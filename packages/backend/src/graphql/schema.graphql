@@ -545,6 +545,7 @@ type ResponseCollectionMeta {
 }
 
 type Sentence {
+  original: String
   text: String
 }
 

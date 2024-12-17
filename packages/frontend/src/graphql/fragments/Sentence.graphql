@@ -1,3 +1,4 @@
 fragment Sentence on Sentence {
     text
+    original
 }

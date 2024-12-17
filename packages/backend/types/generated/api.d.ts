@@ -638,6 +638,7 @@ export interface NexusGenObjects {
   Query: {};
   ResponseCollectionMeta: {};
   Sentence: { // root type
+    original?: string | null; // String
     text?: string | null; // String
   }
   SentenceResponse: { // root type
@@ -955,6 +956,7 @@ export interface NexusGenFieldTypes {
     pagination: NexusGenRootTypes['Pagination']; // Pagination!
   }
   Sentence: { // field return type
+    original: string | null; // String
     text: string | null; // String
   }
   SentenceResponse: { // field return type
@@ -1356,6 +1358,7 @@ export interface NexusGenFieldTypeNames {
     pagination: 'Pagination'
   }
   Sentence: { // field return type name
+    original: 'String'
     text: 'String'
   }
   SentenceResponse: { // field return type name
