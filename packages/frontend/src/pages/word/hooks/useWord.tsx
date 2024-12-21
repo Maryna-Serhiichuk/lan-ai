@@ -186,7 +186,7 @@ export const useWord = (): IUseWord => {
     })) as IUseWord['wordPoints']
 
     const informText = () => {
-        const studyItem = wordsState?.find((_, i) => i === studyWordIndex ?? undefined)
+        const studyItem = wordsState?.find((_, i) => i === studyWordIndex)
         return studyItem?.attributes?.word + ' - ' + studyItem?.attributes?.translation
     }
 

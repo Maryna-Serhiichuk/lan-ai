@@ -895,6 +895,11 @@ export interface ApiSettingSetting extends Schema.CollectionType {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    verbs_lists: Attribute.Relation<
+      'api::setting.setting',
+      'oneToMany',
+      'api::verbs-list.verbs-list'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -939,6 +944,77 @@ export interface ApiVariableVariable extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::variable.variable',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVerbVerb extends Schema.CollectionType {
+  collectionName: 'verbs';
+  info: {
+    singularName: 'verb';
+    pluralName: 'verbs';
+    displayName: 'Verb';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    word: Attribute.String;
+    first: Attribute.String;
+    second: Attribute.String;
+    third: Attribute.String;
+    point: Attribute.BigInteger;
+    verbs_list: Attribute.Relation<
+      'api::verb.verb',
+      'manyToOne',
+      'api::verbs-list.verbs-list'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::verb.verb', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::verb.verb', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiVerbsListVerbsList extends Schema.CollectionType {
+  collectionName: 'verbs_lists';
+  info: {
+    singularName: 'verbs-list';
+    pluralName: 'verbs-lists';
+    displayName: 'VerbsList';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    setting: Attribute.Relation<
+      'api::verbs-list.verbs-list',
+      'manyToOne',
+      'api::setting.setting'
+    >;
+    verbs: Attribute.Relation<
+      'api::verbs-list.verbs-list',
+      'oneToMany',
+      'api::verb.verb'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::verbs-list.verbs-list',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::verbs-list.verbs-list',
       'oneToOne',
       'admin::user'
     > &
@@ -995,6 +1071,8 @@ declare module '@strapi/types' {
       'api::prompt.prompt': ApiPromptPrompt;
       'api::setting.setting': ApiSettingSetting;
       'api::variable.variable': ApiVariableVariable;
+      'api::verb.verb': ApiVerbVerb;
+      'api::verbs-list.verbs-list': ApiVerbsListVerbsList;
       'api::word.word': ApiWordWord;
     }
   }

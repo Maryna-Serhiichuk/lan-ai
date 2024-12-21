@@ -13,6 +13,8 @@ const Word = lazy<FC>(() => import('./word'))
 const CreateList = lazy<FC>(() => import('./create-list'))
 const Sentences = lazy<FC>(() => import('./sentences'))
 const Story = lazy<FC>(() => import('./story'))
+const Verbs = lazy<FC>(() => import('./verbs'))
+const Verb = lazy<FC>(() => import('./verb'))
 
 const guestRoutes: RouteObject[] = [
   {
@@ -87,6 +89,15 @@ const authRoutes: RouteObject[] = [
           {
             path: 'story/:id',
             element: <Story />,
+          },
+
+          {
+            path: 'verbs',
+            element: <Verbs />,
+          },
+          {
+            path: 'verb/:id',
+            element: <Verb />,
           },
         ]
       },

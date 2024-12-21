@@ -44,6 +44,29 @@ export const SettingFragmentDoc = gql`
   tenses
 }
     `;
+export const VerbFragmentDoc = gql`
+    fragment Verb on Verb {
+  word
+  first
+  second
+  third
+  point
+}
+    `;
+export const VerbsListFragmentDoc = gql`
+    fragment VerbsList on VerbsList {
+  name
+  createdAt
+  verbs {
+    data {
+      id
+      attributes {
+        ...Verb
+      }
+    }
+  }
+}
+    ${VerbFragmentDoc}`;
 export const ChangeWordsPointDocument = gql`
     mutation changeWordsPoint($input: [WordsPointListInput]) {
   changeWordsPoint(input: $input) {
@@ -408,8 +431,8 @@ export function useListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListQ
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ListQuery, ListQueryVariables>(ListDocument, options);
         }
-export function useListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ListQuery, ListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ListQuery, ListQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ListQuery, ListQueryVariables>(ListDocument, options);
         }
 export type ListQueryHookResult = ReturnType<typeof useListQuery>;
@@ -442,8 +465,8 @@ export function useListsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<List
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<ListsQuery, ListsQueryVariables>(ListsDocument, options);
         }
-export function useListsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ListsQuery, ListsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useListsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<ListsQuery, ListsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<ListsQuery, ListsQueryVariables>(ListsDocument, options);
         }
 export type ListsQueryHookResult = ReturnType<typeof useListsQuery>;
@@ -479,8 +502,8 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
         }
-export function useMeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useMeSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
         }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
@@ -513,8 +536,8 @@ export function useSettingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Se
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
         }
-export function useSettingSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingQuery, SettingQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useSettingSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SettingQuery, SettingQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SettingQuery, SettingQueryVariables>(SettingDocument, options);
         }
 export type SettingQueryHookResult = ReturnType<typeof useSettingQuery>;
@@ -547,11 +570,79 @@ export function useSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<S
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<SettingsQuery, SettingsQueryVariables>(SettingsDocument, options);
         }
-export function useSettingsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SettingsQuery, SettingsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useSettingsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<SettingsQuery, SettingsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<SettingsQuery, SettingsQueryVariables>(SettingsDocument, options);
         }
 export type SettingsQueryHookResult = ReturnType<typeof useSettingsQuery>;
 export type SettingsLazyQueryHookResult = ReturnType<typeof useSettingsLazyQuery>;
 export type SettingsSuspenseQueryHookResult = ReturnType<typeof useSettingsSuspenseQuery>;
 export type SettingsQueryResult = Apollo.QueryResult<SettingsQuery, SettingsQueryVariables>;
+export const VerbsListDocument = gql`
+    query verbsList($id: ID!) {
+  verbsList(id: $id) {
+    data {
+      id
+      attributes {
+        ...VerbsList
+      }
+    }
+  }
+}
+    ${VerbsListFragmentDoc}`;
+export type VerbsListComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<VerbsListQuery, VerbsListQueryVariables>, 'query'> & ({ variables: VerbsListQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const VerbsListComponent = (props: VerbsListComponentProps) => (
+      <ApolloReactComponents.Query<VerbsListQuery, VerbsListQueryVariables> query={VerbsListDocument} {...props} />
+    );
+    
+export function useVerbsListQuery(baseOptions: Apollo.QueryHookOptions<VerbsListQuery, VerbsListQueryVariables> & ({ variables: VerbsListQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VerbsListQuery, VerbsListQueryVariables>(VerbsListDocument, options);
+      }
+export function useVerbsListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VerbsListQuery, VerbsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VerbsListQuery, VerbsListQueryVariables>(VerbsListDocument, options);
+        }
+export function useVerbsListSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<VerbsListQuery, VerbsListQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VerbsListQuery, VerbsListQueryVariables>(VerbsListDocument, options);
+        }
+export type VerbsListQueryHookResult = ReturnType<typeof useVerbsListQuery>;
+export type VerbsListLazyQueryHookResult = ReturnType<typeof useVerbsListLazyQuery>;
+export type VerbsListSuspenseQueryHookResult = ReturnType<typeof useVerbsListSuspenseQuery>;
+export type VerbsListQueryResult = Apollo.QueryResult<VerbsListQuery, VerbsListQueryVariables>;
+export const VerbsListsDocument = gql`
+    query verbsLists($filters: VerbsListFiltersInput) {
+  verbsLists(filters: $filters) {
+    data {
+      id
+      attributes {
+        ...VerbsList
+      }
+    }
+  }
+}
+    ${VerbsListFragmentDoc}`;
+export type VerbsListsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<VerbsListsQuery, VerbsListsQueryVariables>, 'query'>;
+
+    export const VerbsListsComponent = (props: VerbsListsComponentProps) => (
+      <ApolloReactComponents.Query<VerbsListsQuery, VerbsListsQueryVariables> query={VerbsListsDocument} {...props} />
+    );
+    
+export function useVerbsListsQuery(baseOptions?: Apollo.QueryHookOptions<VerbsListsQuery, VerbsListsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<VerbsListsQuery, VerbsListsQueryVariables>(VerbsListsDocument, options);
+      }
+export function useVerbsListsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<VerbsListsQuery, VerbsListsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<VerbsListsQuery, VerbsListsQueryVariables>(VerbsListsDocument, options);
+        }
+export function useVerbsListsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<VerbsListsQuery, VerbsListsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<VerbsListsQuery, VerbsListsQueryVariables>(VerbsListsDocument, options);
+        }
+export type VerbsListsQueryHookResult = ReturnType<typeof useVerbsListsQuery>;
+export type VerbsListsLazyQueryHookResult = ReturnType<typeof useVerbsListsLazyQuery>;
+export type VerbsListsSuspenseQueryHookResult = ReturnType<typeof useVerbsListsSuspenseQuery>;
+export type VerbsListsQueryResult = Apollo.QueryResult<VerbsListsQuery, VerbsListsQueryVariables>;

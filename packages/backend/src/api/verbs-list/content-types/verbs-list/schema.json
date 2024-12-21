@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "verbs_lists",
+  "info": {
+    "singularName": "verbs-list",
+    "pluralName": "verbs-lists",
+    "displayName": "VerbsList",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "setting": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::setting.setting",
+      "inversedBy": "verbs_lists"
+    },
+    "verbs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::verb.verb",
+      "mappedBy": "verbs_list"
+    }
+  }
+}

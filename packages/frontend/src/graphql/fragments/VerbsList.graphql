@@ -1,0 +1,12 @@
+fragment VerbsList on VerbsList {
+    name
+    createdAt
+    verbs {
+        data {
+            id
+            attributes {
+                ...Verb
+            }
+        }
+    }
+}

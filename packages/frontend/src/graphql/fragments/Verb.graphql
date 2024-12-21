@@ -1,0 +1,7 @@
+fragment Verb on Verb {
+    word
+    first
+    second
+    third
+    point
+}
