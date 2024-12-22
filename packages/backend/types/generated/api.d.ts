@@ -175,6 +175,10 @@ export interface NexusGenInputs {
     or?: Array<string | null> | null; // [ID]
     startsWith?: string | null; // ID
   }
+  InfinitiveListInput: { // input type
+    name?: string | null; // String
+    verbs?: Array<NexusGenInputs['VerbInput'] | null> | null; // [VerbInput]
+  }
   IntFilterInput: { // input type
     and?: Array<number | null> | null; // [Int]
     between?: Array<number | null> | null; // [Int]
@@ -921,6 +925,7 @@ export interface NexusGenFieldTypes {
     changePassword: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     changeWordsPoint: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     checkSentences: NexusGenRootTypes['SentencesResultResponse'] | null; // SentencesResultResponse
+    createInfinitiveList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     createList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     createPrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     createSetting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
@@ -1379,6 +1384,7 @@ export interface NexusGenFieldTypeNames {
     changePassword: 'UsersPermissionsLoginPayload'
     changeWordsPoint: 'WordEntityResponseCollection'
     checkSentences: 'SentencesResultResponse'
+    createInfinitiveList: 'VerbsListEntityResponse'
     createList: 'ListEntityResponse'
     createPrompt: 'PromptEntityResponse'
     createSetting: 'SettingEntityResponse'
@@ -1795,6 +1801,9 @@ export interface NexusGenArgTypes {
     }
     checkSentences: { // args
       data?: Array<NexusGenInputs['SentenceInput'] | null> | null; // [SentenceInput]
+    }
+    createInfinitiveList: { // args
+      input: NexusGenInputs['InfinitiveListInput']; // InfinitiveListInput!
     }
     createList: { // args
       data: NexusGenInputs['ListInput']; // ListInput!

@@ -1,0 +1,10 @@
+mutation createInfinitiveList($input: InfinitiveListInput!) {
+    createInfinitiveList(input: $input){
+        data {
+            id
+            attributes {
+                ...VerbsList
+            }
+        }
+    }
+}

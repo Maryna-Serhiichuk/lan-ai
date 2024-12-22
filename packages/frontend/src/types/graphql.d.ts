@@ -253,6 +253,11 @@ type IdFilterInput = {
   startsWith?: InputMaybe<Scalars['ID']['input']>;
 };
 
+type InfinitiveListInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  verbs?: InputMaybe<Array<InputMaybe<VerbInput>>>;
+};
+
 type IntFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
@@ -387,6 +392,7 @@ type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
   checkSentences?: Maybe<SentencesResultResponse>;
+  createInfinitiveList?: Maybe<VerbsListEntityResponse>;
   createList?: Maybe<ListEntityResponse>;
   createPrompt?: Maybe<PromptEntityResponse>;
   createSetting?: Maybe<SettingEntityResponse>;
@@ -459,6 +465,11 @@ type MutationChangeWordsPointArgs = {
 
 type MutationCheckSentencesArgs = {
   data?: InputMaybe<Array<InputMaybe<SentenceInput>>>;
+};
+
+
+type MutationCreateInfinitiveListArgs = {
+  input: InfinitiveListInput;
 };
 
 
@@ -1713,6 +1724,13 @@ type CheckSentencesMutationVariables = Exact<{
 
 
 type CheckSentencesMutation = { checkSentences?: { data?: Array<{ id?: string | null | undefined, explain?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
+type CreateInfinitiveListMutationVariables = Exact<{
+  input: InfinitiveListInput;
+}>;
+
+
+type CreateInfinitiveListMutation = { createInfinitiveList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, createdAt?: Date | null | undefined, verbs?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type CreateSettingMutationVariables = Exact<{
   data: SettingInput;

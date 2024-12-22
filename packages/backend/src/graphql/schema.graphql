@@ -242,6 +242,11 @@ input IDFilterInput {
   startsWith: ID
 }
 
+input InfinitiveListInput {
+  name: String
+  verbs: [VerbInput]
+}
+
 input IntFilterInput {
   and: [Int]
   between: [Int]
@@ -379,6 +384,7 @@ type Mutation {
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
   changeWordsPoint(input: [WordsPointListInput]): WordEntityResponseCollection
   checkSentences(data: [SentenceInput]): SentencesResultResponse
+  createInfinitiveList(input: InfinitiveListInput!): VerbsListEntityResponse
   createList(data: ListInput!): ListEntityResponse
   createPrompt(data: PromptInput!): PromptEntityResponse
   createSetting(data: SettingInput!): SettingEntityResponse

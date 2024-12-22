@@ -149,6 +149,27 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
         t.field("story", { type: "String" })
       },
     }),
+
+    nexus.extendType({
+      type: "Mutation",
+      definition: t => {
+        t.field("createInfinitiveList", {
+          type: "VerbsListEntityResponse",
+          args: {
+            input: nexus.nonNull("InfinitiveListInput"),
+            // name: nexus.nonNull("String"),
+            // words: nexus.list("WordInput")
+          },
+        })
+      },
+    }),
+    nexus.extendInputType<"InfinitiveListInput">({
+      type: "InfinitiveListInput",
+      definition: t => {
+        t.string("name")
+        t.list.field("verbs", { type: "VerbInput" })
+      },
+    }),
   ],
   resolvers,
   resolversConfig,

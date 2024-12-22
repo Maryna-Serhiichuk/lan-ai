@@ -115,6 +115,31 @@ export function useCheckSentencesMutation(baseOptions?: Apollo.MutationHookOptio
       }
 export type CheckSentencesMutationHookResult = ReturnType<typeof useCheckSentencesMutation>;
 export type CheckSentencesMutationResult = Apollo.MutationResult<CheckSentencesMutation>;
+export const CreateInfinitiveListDocument = gql`
+    mutation createInfinitiveList($input: InfinitiveListInput!) {
+  createInfinitiveList(input: $input) {
+    data {
+      id
+      attributes {
+        ...VerbsList
+      }
+    }
+  }
+}
+    ${VerbsListFragmentDoc}`;
+export type CreateInfinitiveListMutationFn = Apollo.MutationFunction<CreateInfinitiveListMutation, CreateInfinitiveListMutationVariables>;
+export type CreateInfinitiveListComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateInfinitiveListMutation, CreateInfinitiveListMutationVariables>, 'mutation'>;
+
+    export const CreateInfinitiveListComponent = (props: CreateInfinitiveListComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateInfinitiveListMutation, CreateInfinitiveListMutationVariables> mutation={CreateInfinitiveListDocument} {...props} />
+    );
+    
+export function useCreateInfinitiveListMutation(baseOptions?: Apollo.MutationHookOptions<CreateInfinitiveListMutation, CreateInfinitiveListMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateInfinitiveListMutation, CreateInfinitiveListMutationVariables>(CreateInfinitiveListDocument, options);
+      }
+export type CreateInfinitiveListMutationHookResult = ReturnType<typeof useCreateInfinitiveListMutation>;
+export type CreateInfinitiveListMutationResult = Apollo.MutationResult<CreateInfinitiveListMutation>;
 export const CreateSettingDocument = gql`
     mutation createSetting($data: SettingInput!) {
   createSetting(data: $data) {
