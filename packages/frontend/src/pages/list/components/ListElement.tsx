@@ -16,6 +16,7 @@ import List from "..";
 import styled from "@emotion/styled";
 import { wordPointState } from "components/untils/wordPointState";
 import { ListName } from "./ListName";
+import { ListRow } from "./List.row";
 
 const PointMark = styled('div', {
     shouldForwardProp: (prop) => prop !== 'color',
@@ -38,9 +39,11 @@ const Container = styled('div', {
     max-width: 450px;
 `
 
+export type ChangeWordActivityType = (id: string|undefined|null, active: boolean) => void
+
 
 export const ListElement: FC = () => {
-    const { data, setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
+    const { data } = List.useContext()
 
     const [updateWord] = useUpdateWordMutation()
 
@@ -53,50 +56,10 @@ export const ListElement: FC = () => {
     return <Container>
         <ListName />
         <ListUI sx={{ width: '100%', maxWidth: '100%', bgcolor: 'transparent' }}>
-            {data?.attributes?.words?.data?.map((value) => {
-                return (
-                    <Fragment key={value?.id}>
-                        <ListItem
-                            color={wordPointState(value?.attributes?.point ?? 0)?.color}
-                            secondaryAction={
-                                <Grid>
-                                    <IconButton onClick={() => {
-                                        setChosenWord(value)
-                                        setUpdateWord(true)
-                                    }} edge="end" aria-label="comments">
-                                        <BorderColorOutlinedIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => {
-                                        setChosenWord(value)
-                                        setDeleteWord(true)
-                                    }} edge="end" aria-label="comments">
-                                        <DeleteOutlinedIcon />
-                                    </IconButton>
-                                </Grid>
-                            }
-                            disablePadding
-                        >
-                            {/* <ListItemButton role={undefined} onClick={handleToggle(value)} dense> */}
-                            <ListItemButton role={undefined} dense>
-                                <ListItemIcon>
-                                    <Checkbox
-                                        edge="start"
-                                        checked={!!value?.attributes?.active}
-                                        tabIndex={-1}
-                                        disableRipple
-                                        onChange={() => changeWordActivity(value?.id, !value?.attributes?.active)}
-                                    />
-                                    <PointMark color={wordPointState(value?.attributes?.point ?? 0)?.color}/>
-                                
-                                </ListItemIcon>
-                                <ListItemText primary={value?.attributes?.word} style={{ width: 150 }} />
-                                <ListItemText primary={value?.attributes?.translation} style={{ width: 200 }} />
-                            </ListItemButton>
-                        </ListItem>
-                    <Divider/>
-                </Fragment>
-                );
-            })}
+            {data?.attributes?.words?.data?.map((value) => <ListRow 
+                key={value?.id} data={value}
+                changeWordActivity={changeWordActivity}
+            />)}
         </ListUI>
     </Container>
 }

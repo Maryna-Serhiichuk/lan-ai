@@ -165,6 +165,31 @@ export function useCreateSettingMutation(baseOptions?: Apollo.MutationHookOption
       }
 export type CreateSettingMutationHookResult = ReturnType<typeof useCreateSettingMutation>;
 export type CreateSettingMutationResult = Apollo.MutationResult<CreateSettingMutation>;
+export const CreateVerbDocument = gql`
+    mutation createVerb($data: VerbInput!) {
+  createVerb(data: $data) {
+    data {
+      id
+      attributes {
+        ...Verb
+      }
+    }
+  }
+}
+    ${VerbFragmentDoc}`;
+export type CreateVerbMutationFn = Apollo.MutationFunction<CreateVerbMutation, CreateVerbMutationVariables>;
+export type CreateVerbComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateVerbMutation, CreateVerbMutationVariables>, 'mutation'>;
+
+    export const CreateVerbComponent = (props: CreateVerbComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateVerbMutation, CreateVerbMutationVariables> mutation={CreateVerbDocument} {...props} />
+    );
+    
+export function useCreateVerbMutation(baseOptions?: Apollo.MutationHookOptions<CreateVerbMutation, CreateVerbMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateVerbMutation, CreateVerbMutationVariables>(CreateVerbDocument, options);
+      }
+export type CreateVerbMutationHookResult = ReturnType<typeof useCreateVerbMutation>;
+export type CreateVerbMutationResult = Apollo.MutationResult<CreateVerbMutation>;
 export const CreateWordDocument = gql`
     mutation createWord($data: WordInput!) {
   createWord(data: $data) {

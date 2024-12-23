@@ -1739,6 +1739,13 @@ type CreateSettingMutationVariables = Exact<{
 
 type CreateSettingMutation = { createSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type CreateVerbMutationVariables = Exact<{
+  data: VerbInput;
+}>;
+
+
+type CreateVerbMutation = { createVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type CreateWordMutationVariables = Exact<{
   data: WordInput;
 }>;
