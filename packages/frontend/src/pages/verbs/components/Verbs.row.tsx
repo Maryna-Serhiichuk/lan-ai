@@ -47,9 +47,11 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
     const [isCreateState, setCreateState] = useState(false)
     const [createWord] = useCreateVerbMutation()
 
-    const addWord: FormikConfig<WordInput>['onSubmit'] = async (data, onSubmitProps) => {
+    const addWord: FormikConfig<VerbInput>['onSubmit'] = async (data, onSubmitProps) => {
+      console.log(111111)
+      console.log(data, { ...data, verbs_list: row?.id })
       try {
-          const result = await createWord({ variables: { data: { ...data, verbs_list: id } } })
+          const result = await createWord({ variables: { data: { ...data, verbs_list: row?.id } } })
           // refetch && await refetch()
           setCreateState(false)
       } catch (err: any) {
@@ -109,7 +111,7 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
                 {isCreateState &&
                   <TableRow>
                     <Grid>
-                      <Formik initialValues={{ word: '', translation: '' }} onSubmit={addWord}>
+                      <Formik initialValues={{ word: '', first: '', second: '' , third: ''}} onSubmit={addWord}>
                         {({ handleSubmit, handleChange }) => (
                             <Form onSubmit={handleSubmit}>
                                 <Grid container direction={'row'} spacing={2}>
