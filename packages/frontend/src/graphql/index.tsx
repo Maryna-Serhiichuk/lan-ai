@@ -405,6 +405,31 @@ export function useUpdateSettingMutation(baseOptions?: Apollo.MutationHookOption
       }
 export type UpdateSettingMutationHookResult = ReturnType<typeof useUpdateSettingMutation>;
 export type UpdateSettingMutationResult = Apollo.MutationResult<UpdateSettingMutation>;
+export const UpdateVerbDocument = gql`
+    mutation updateVerb($id: ID!, $data: VerbInput!) {
+  updateVerb(id: $id, data: $data) {
+    data {
+      id
+      attributes {
+        ...Verb
+      }
+    }
+  }
+}
+    ${VerbFragmentDoc}`;
+export type UpdateVerbMutationFn = Apollo.MutationFunction<UpdateVerbMutation, UpdateVerbMutationVariables>;
+export type UpdateVerbComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<UpdateVerbMutation, UpdateVerbMutationVariables>, 'mutation'>;
+
+    export const UpdateVerbComponent = (props: UpdateVerbComponentProps) => (
+      <ApolloReactComponents.Mutation<UpdateVerbMutation, UpdateVerbMutationVariables> mutation={UpdateVerbDocument} {...props} />
+    );
+    
+export function useUpdateVerbMutation(baseOptions?: Apollo.MutationHookOptions<UpdateVerbMutation, UpdateVerbMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateVerbMutation, UpdateVerbMutationVariables>(UpdateVerbDocument, options);
+      }
+export type UpdateVerbMutationHookResult = ReturnType<typeof useUpdateVerbMutation>;
+export type UpdateVerbMutationResult = Apollo.MutationResult<UpdateVerbMutation>;
 export const UpdateWordDocument = gql`
     mutation updateWord($id: ID!, $data: WordInput!) {
   updateWord(id: $id, data: $data) {

@@ -1,5 +1,5 @@
 import { FC, useState, Fragment } from "react";
-import { Link, useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,26 +14,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import { Formik, Form, ErrorMessage, FormikConfig  } from 'formik';
 import { styled } from '@mui/material/styles';
-import { useCreateVerbMutation } from "./../../../graphql";
-
-const TableCellButtonStyled = styled(TableCell)`
-  padding-left: 3px;
-  padding-right: 3px;
-  .MuiButton-root{
-    min-width: auto;
-    .MuiButton-icon {
-      margin: 0;
-    }
-    &: hover {
-      background: ${({ theme }) => theme?.mainColor };
-    }
-  }
-`
+import { useCreateVerbMutation, useVerbsListsLazyQuery } from "./../../../graphql";
+import { VerbRow } from "./Verb.row";
+import { VerbEditForm } from "./VerbEdit.form";
+import { VerbAddForm } from "./VerbAdd.form";
 
 const ButtonStyled = styled(Button)`
     .MuiButton-icon {
@@ -42,24 +29,30 @@ const ButtonStyled = styled(Button)`
 `
 
 export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
-    const { id } = useParams()
     const [open, setOpen] = useState(false);
     const [isCreateState, setCreateState] = useState(false)
+    const [isEditState, setEditState] = useState(false)
     const [createWord] = useCreateVerbMutation()
+    const [_, { refetch }] = useVerbsListsLazyQuery()
+    const [chosen, setChosen] = useState<VerbEntity>()
 
     const addWord: FormikConfig<VerbInput>['onSubmit'] = async (data, onSubmitProps) => {
-      console.log(111111)
-      console.log(data, { ...data, verbs_list: row?.id })
       try {
           const result = await createWord({ variables: { data: { ...data, verbs_list: row?.id } } })
-          // refetch && await refetch()
+          refetch && await refetch()
           setCreateState(false)
+          
       } catch (err: any) {
           const error = err as ResolverError
           onSubmitProps.setFieldError('word', error?.message ?? '')
       } 
     }
-  
+
+    const onEdit = (item: VerbEntity) => {
+      setChosen(item)
+      setEditState(true)
+    }
+
     return (
       <Fragment>
         <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -85,22 +78,10 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
               <Box sx={{ margin: 1, display: 'flex', justifyContent: 'space-between' }}>
                 <Table size="small" aria-label="purchases" style={{ width: 400 }}>
                   <TableBody>
-                    {row?.attributes?.verbs?.data?.map(word => (
-                      <TableRow key={word?.id}>
-                        <TableCell align="center">{word?.attributes?.first}</TableCell>
-                        <TableCell align="center">{word?.attributes?.second}</TableCell>
-                        <TableCell align="center">{word?.attributes?.third}</TableCell>
-                        <TableCell align="right">{word?.attributes?.word}</TableCell>
-                        <TableCellButtonStyled align="right" onClick={() => setCreateState(true)}>
-                          <Button startIcon={<EditIcon />} size="small"/>
-                        </TableCellButtonStyled>
-                        <TableCellButtonStyled align="right">
-                          <Button startIcon={<DeleteOutlineIcon />} size="small"/>
-                        </TableCellButtonStyled>
-                      </TableRow>
-                    ))}
+                    {row?.attributes?.verbs?.data?.map(word => <VerbRow key={word?.id} data={word} onEdit={onEdit} />)}
                   </TableBody>
                 </Table>
+                {isEditState && <VerbEditForm chosen={chosen} setEditState={setEditState}/>}
                 <TableRow>
                   <Button fullWidth onClick={() => setCreateState(true)} variant="contained" startIcon={<AddBoxOutlinedIcon />}>
                       Add
@@ -111,41 +92,7 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
                 {isCreateState &&
                   <TableRow>
                     <Grid>
-                      <Formik initialValues={{ word: '', first: '', second: '' , third: ''}} onSubmit={addWord}>
-                        {({ handleSubmit, handleChange }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <Grid container direction={'row'} spacing={2}>
-                                    <Grid item sm={2}>
-                                        <TextField autoComplete="off" fullWidth onChange={handleChange} name="first" label="Infinitive" size="small" variant="standard" />
-                                    </Grid>
-                                    <Grid item sm={2}>
-                                        <TextField autoComplete="off" fullWidth onChange={handleChange} name="second" label="Past" size="small" variant="standard" />
-                                    </Grid>
-                                    <Grid item sm={2}>
-                                        <TextField autoComplete="off" fullWidth onChange={handleChange} name="third" label="Past Participle" size="small" variant="standard" />
-                                    </Grid>
-                                    <Grid item sm={2}>
-                                        <TextField autoComplete="off" fullWidth onChange={handleChange} name="word" label="Translation" size="small" variant="standard" />
-                                    </Grid>
-                                    <Grid item sm={2} container direction="column" justifyContent="center">
-                                        <Button type="submit" variant="contained" startIcon={<AddBoxOutlinedIcon />}>
-                                            Done
-                                        </Button>
-                                    </Grid>
-                                    <Grid item sm={2} container direction="column" justifyContent="center">
-                                        <Button variant="outlined" onClick={() => setCreateState(false)}>
-                                            Cancel
-                                        </Button>
-                                    </Grid>
-                                    <ErrorMessage component="div" name="word">{msg => (
-                                        <Grid item xs={12}>
-                                            <Alert severity="error">{msg}</Alert>
-                                        </Grid>
-                                    )}</ErrorMessage>
-                                </Grid>
-                            </Form>
-                          )}
-                      </Formik>
+                      <VerbAddForm onAdd={addWord} setCreateState={setCreateState} />
                     </Grid>
                   </TableRow>
                 }

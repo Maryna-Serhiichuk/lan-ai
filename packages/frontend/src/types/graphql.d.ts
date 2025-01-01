@@ -1811,6 +1811,14 @@ type UpdateSettingMutationVariables = Exact<{
 
 type UpdateSettingMutation = { updateSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type UpdateVerbMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  data: VerbInput;
+}>;
+
+
+type UpdateVerbMutation = { updateVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type UpdateWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   data: WordInput;
