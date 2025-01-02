@@ -1,10 +1,8 @@
-import { FC, useState, Fragment } from "react";
+import { FC, useState, Fragment, useEffect } from "react";
 import { Link } from "react-router-dom"
-import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
-import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,12 +13,12 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { Formik, Form, ErrorMessage, FormikConfig  } from 'formik';
 import { styled } from '@mui/material/styles';
-import { useCreateVerbMutation, useVerbsListsLazyQuery } from "./../../../graphql";
 import { VerbRow } from "./Verb.row";
 import { VerbEditForm } from "./VerbEdit.form";
 import { VerbAddForm } from "./VerbAdd.form";
+import Verbs from "..";
+import { useHash } from "components/hooks/useHash";
 
 const ButtonStyled = styled(Button)`
     .MuiButton-icon {
@@ -29,24 +27,24 @@ const ButtonStyled = styled(Button)`
 `
 
 export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
+    const { setChosen, setEditState, isEditState, setCreateState, isCreateState } = Verbs.useContext()
     const [open, setOpen] = useState(false);
-    const [isCreateState, setCreateState] = useState(false)
-    const [isEditState, setEditState] = useState(false)
-    const [createWord] = useCreateVerbMutation()
-    const [_, { refetch }] = useVerbsListsLazyQuery()
-    const [chosen, setChosen] = useState<VerbEntity>()
+    const [hash, setHash] = useHash()
 
-    const addWord: FormikConfig<VerbInput>['onSubmit'] = async (data, onSubmitProps) => {
-      try {
-          const result = await createWord({ variables: { data: { ...data, verbs_list: row?.id } } })
-          refetch && await refetch()
-          setCreateState(false)
-          
-      } catch (err: any) {
-          const error = err as ResolverError
-          onSubmitProps.setFieldError('word', error?.message ?? '')
-      } 
+    const onCollaps = () => {
+      if(open) {
+        setHash('')
+      } else {
+        setHash(row?.id)
+      }
+      setOpen(!open)
     }
+
+    useEffect(() => {
+      if(hash && hash === `#${row?.id}` && open) {
+        setOpen(true)
+      }
+    }, [hash])
 
     const onEdit = (item: VerbEntity) => {
       setChosen(item)
@@ -60,7 +58,7 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
             <IconButton
               aria-label="expand row"
               size="small"
-              onClick={() => setOpen(!open)}
+              onClick={onCollaps}
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
@@ -81,7 +79,7 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
                     {row?.attributes?.verbs?.data?.map(word => <VerbRow key={word?.id} data={word} onEdit={onEdit} />)}
                   </TableBody>
                 </Table>
-                {isEditState && <VerbEditForm chosen={chosen} setEditState={setEditState}/>}
+                {isEditState && <VerbEditForm />}
                 <TableRow>
                   <Button fullWidth onClick={() => setCreateState(true)} variant="contained" startIcon={<AddBoxOutlinedIcon />}>
                       Add
@@ -92,7 +90,7 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
                 {isCreateState &&
                   <TableRow>
                     <Grid>
-                      <VerbAddForm onAdd={addWord} setCreateState={setCreateState} />
+                      <VerbAddForm />
                     </Grid>
                   </TableRow>
                 }

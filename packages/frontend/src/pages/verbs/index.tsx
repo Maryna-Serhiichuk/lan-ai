@@ -1,15 +1,21 @@
-import { FC } from "react";
-import Grid from '@mui/material/Grid';
-import { VerbsTable } from "./components/Verbs.table";
-import { VerbsButton } from "./components/Verbs.button";
+import { VerbsProvider, useVerbsContext, VerbsContext } from "./Verbs.context";
+import { useVerbs } from "./hooks/useVerbs";
+import VerbsContent from './Verbs.content'
 
-const Verbs: FC = () => {
-    return <Grid container direction="row" justifyContent="center" style={{ minWidth: '100%', paddingTop: 170 }}>
-        <Grid container direction={'column'} rowSpacing={5} style={{ maxWidth: 1000 }}>
-            <VerbsButton />
-            <VerbsTable />
-        </Grid>
-    </Grid>
+Verbs.useContext = useVerbsContext
+Verbs.Context = VerbsContext;
+Verbs.Provider = VerbsProvider;
+
+Verbs.useState = useVerbs
+
+Verbs.Content = VerbsContent;
+
+function Verbs () {
+    const context = Verbs.useState()
+
+    return <Verbs.Provider {...context}>
+        <Verbs.Content />
+    </Verbs.Provider>
 }
 
-export default Verbs
+export default Verbs;

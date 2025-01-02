@@ -7,7 +7,7 @@ import { VerbsRow } from "./Verbs.row";
 import { useVerbsListsQuery } from "./../../../graphql";
 
 export const VerbsTable: FC = () => {
-    const { data } = useVerbsListsQuery()   
+    const { data } = useVerbsListsQuery()
 
     return <TableContainer component={Paper}>
         <Table aria-label="collapsible table">

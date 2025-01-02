@@ -1,34 +1,21 @@
-import { FC, Dispatch, SetStateAction } from "react";
+import { FC } from "react";
 import Alert from '@mui/material/Alert';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
-import { Formik, Form, ErrorMessage, FormikConfig  } from 'formik';
-import { useUpdateVerbMutation } from "./../../../graphql";
+import { Formik, Form, ErrorMessage } from 'formik';
+import Verbs from "..";
 
-export const VerbEditForm: FC<{ 
-    chosen: VerbEntity, 
-    setEditState: Dispatch<SetStateAction<boolean>>,
-}> = ({ chosen, setEditState }) => {
-    const [updateVerb] = useUpdateVerbMutation()
-
-    const onSubmit: FormikConfig<VerbInput>['onSubmit'] = async (data, onSubmitProps) => {
-        try {
-            const result = await updateVerb({ variables: { data, id: chosen?.id } })
-            setEditState(false)
-        } catch (err: any) {
-            const error = err as ResolverError
-            onSubmitProps.setFieldError('word', error?.message ?? '')
-        } 
-    }
+export const VerbEditForm: FC = () => {
+    const { onUpdateVerb, chosen, setEditState } = Verbs.useContext()
 
     return <Formik initialValues={{ 
         word: chosen?.attributes?.word ?? '', 
         first: chosen?.attributes?.first ?? '', 
         second: chosen?.attributes?.second ?? '', 
         third: chosen?.attributes?.third ?? ''
-      }} onSubmit={onSubmit}>
+      }} onSubmit={onUpdateVerb}>
         {({ values, handleSubmit, handleChange }) => (
             <Form onSubmit={handleSubmit}>
                 <Grid container direction={'column'} spacing={2}>
