@@ -1,0 +1,10 @@
+mutation deleteVerb($id: ID!) {
+    deleteVerb(id: $id) {
+        data {
+            id
+            attributes {
+                ...Verb
+            }
+        }
+    }
+}

@@ -1,0 +1,10 @@
+mutation createVerb($data: VerbInput!){
+    createVerb(data: $data){
+        data {
+            id
+            attributes {
+                ...Verb
+            }
+        }
+    }
+}

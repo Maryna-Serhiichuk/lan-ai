@@ -16,7 +16,7 @@ declare module '@mui/material/styles' {
       borderColor: string
       borderColorFocus: string
       borderColorHover: string
-    }
+    },
   }
   interface ThemeOptions {
     mainColorTheme: ColorTypeOption,
@@ -39,6 +39,8 @@ export type ConfigProviderProps = PropsWithChildren<Maybe<{}>>
 
 type ColorTypeOption = 'dark' | 'light'
 type ColorTypeThemeType = {
+  mode: ColorTypeOption
+  palette: string;
   color: string;
   textColor: string,
   bodyColor: string;
@@ -55,6 +57,8 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
     [key in ColorTypeOption]: ColorTypeThemeType;
   } = {
     dark: {
+      mode: 'dark',
+      palette: '#403E3B',
       color: '#403E3B',
       textColor: '#000000', // #FFF9F1
       bodyColor: '#78746F',
@@ -66,6 +70,8 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
       }
     },
     light: {
+      mode: 'light',
+      palette: '#D9CDC3',
       color: '#E9E2D9',
       textColor: '#1F1E1C',
       bodyColor: 'rgba(255, 247, 237, .5)',
@@ -80,31 +86,33 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
 
   const getAlgorihmTheme = useCallback((): ColorTypeOption => {
     const hour = new Date().getHours();
-    return hour >= 17 || hour < 6 ? 'dark' : 'light';
+    return hour >= 16 || hour < 6 ? 'dark' : 'light';
   }, [])
 
   const getColorTheme = useCallback((): ColorTypeThemeType => {
-    const name = getAlgorihmTheme();
-    return colorTheme?.[name]
+    const mode = getAlgorihmTheme();
+    return {...colorTheme?.[mode], mode}
   }, [getAlgorihmTheme])
+
+  const colorThemeResult: ColorTypeThemeType = getColorTheme();
 
 
   const theme = useMemo(() => createTheme({
-    textColor: getColorTheme()?.textColor,
+    textColor: colorThemeResult?.textColor,
     input: {
       background: 'rgba(255,255,255,.1)',
       borderColor: 'rgba(0, 0, 0, 0.23)',
       borderColorHover: '#303740',
       borderColorFocus: '#303740',
     },
-    mainColorTheme: getAlgorihmTheme(),
-    mainColor: getColorTheme()?.color,
+    mainColorTheme: colorThemeResult?.mode,
+    mainColor: colorThemeResult?.color,
     listShadow: {
       borderRadius: 20,
       boxShadow: `
         0 0 50px rgba(0, 0, 0, .1),
         -5px 5px 5px rgba(0, 0, 0, .3),
-        inset -2px 4px 5px rgba(255, 255, 255, ${getColorTheme()?.shadowListInsertOpacity}),
+        inset -2px 4px 5px rgba(255, 255, 255, ${colorThemeResult?.shadowListInsertOpacity}),
         inset -10px 10px 100px 0px rgba(255, 255, 255, .1)
       `
     },
@@ -112,8 +120,8 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
       MuiCssBaseline: {
         styleOverrides: {
           body: {
-            backgroundColor: getColorTheme()?.bodyColor,
-            color: getColorTheme()?.textColor,
+            backgroundColor: colorThemeResult?.bodyColor,
+            color: colorThemeResult?.textColor,
             '& ::selection': {
               backgroundColor: '#4A443D', 
               color: '#FFF9F1',
@@ -131,7 +139,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
             color: '#1F1E1C'
           },
           text: {
-            color: getColorTheme()?.button?.text?.color
+            color: colorThemeResult?.button?.text?.color
           }
         },
       },
@@ -177,15 +185,15 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
       },
     },
     palette: {
+      mode: colorThemeResult?.mode,
       background: {
-        default: '#D9CDC3',
-        paper: '#D9CDC3'
+        default: colorThemeResult?.palette,
+        paper: colorThemeResult?.palette
       },
       primary: {
-        main: getColorTheme()?.color,
-        // light: '#D9CDC3',
-        // dark: '#D9CDC3',
-        // contrastText: '#D9CDC3'
+        main: colorThemeResult?.palette,
+        light: '#E9E2D9',
+        dark: '#403E3B',
       },
       error: {
         main: '#FF4466',

@@ -20,40 +20,40 @@ export const UpdateWord: FC = () => {
     }
 
     return <Grid>
-    {isUpdateWord
-        ? <Formik initialValues={{ 
-                word: chosenWord?.attributes?.word, 
-                translation: chosenWord?.attributes?.translation 
-            }} onSubmit={update}>
-            {({ values, handleSubmit, handleChange }) => (
-                <Form onSubmit={handleSubmit}>
-                    <Grid container direction={'column'} rowSpacing={1}>
-                        <Grid item>
-                            <TextField autoComplete="off" value={values?.word} fullWidth onChange={handleChange} name="word" label="Word" size="small" variant="standard" />
-                        </Grid>
-                        <Grid item>
-                            <TextField autoComplete="off" value={values?.translation} fullWidth onChange={handleChange} name="translation" label="Translation" size="small" variant="standard" />
-                        </Grid>
-                        <Grid item container direction="column" justifyContent="center">
-                            <Button type="submit" variant="contained" startIcon={<AddBoxOutlinedIcon />}>
-                                Change
-                            </Button>
-                        </Grid>
-                        <Grid item container direction="column" justifyContent="center">
-                            <Button variant="outlined" onClick={() => setUpdateWord(false)}>
-                                Cancel
-                            </Button>
-                        </Grid>
-                        <ErrorMessage component="div" name="word">{msg => (
-                            <Grid item xs={12}>
-                                <Alert severity="error">{msg}</Alert>
+        {isUpdateWord
+            ? <Formik initialValues={{ 
+                    word: chosenWord?.attributes?.word, 
+                    translation: chosenWord?.attributes?.translation 
+                }} onSubmit={update}>
+                    {({ values, handleSubmit, handleChange }) => (
+                        <Form onSubmit={handleSubmit}>
+                            <Grid container direction={'column'} rowSpacing={1}>
+                                <Grid item>
+                                    <TextField autoComplete="off" value={values?.word} fullWidth onChange={handleChange} name="word" label="Word" size="small" variant="standard" />
+                                </Grid>
+                                <Grid item>
+                                    <TextField autoComplete="off" value={values?.translation} fullWidth onChange={handleChange} name="translation" label="Translation" size="small" variant="standard" />
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center">
+                                    <Button type="submit" variant="contained" startIcon={<AddBoxOutlinedIcon />}>
+                                        Change
+                                    </Button>
+                                </Grid>
+                                <Grid item container direction="column" justifyContent="center">
+                                    <Button variant="outlined" onClick={() => setUpdateWord(false)}>
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                                <ErrorMessage component="div" name="word">{msg => (
+                                    <Grid item xs={12}>
+                                        <Alert severity="error">{msg}</Alert>
+                                    </Grid>
+                                )}</ErrorMessage>
                             </Grid>
-                        )}</ErrorMessage>
-                    </Grid>
-                </Form>
-            )}
-        </Formik>
-        : null
-    }
-</Grid>
+                        </Form>
+                    )}
+                </Formik>
+            : null
+        }
+    </Grid>
 }

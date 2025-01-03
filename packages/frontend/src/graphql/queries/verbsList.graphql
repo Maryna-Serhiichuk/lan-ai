@@ -1,0 +1,10 @@
+query verbsList($id: ID!) {
+    verbsList(id: $id) {
+        data {
+            id
+            attributes {
+                ...VerbsList
+            }
+        }
+    }
+}

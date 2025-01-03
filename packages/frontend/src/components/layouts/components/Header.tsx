@@ -36,6 +36,11 @@ export const Header: FC = () => {
                     Lists
                 </Button>
             </Link>
+            <Link to={`verbs`}>
+                <Button variant="text">
+                    Verbs
+                </Button>
+            </Link>
             <Link to={`settings`}>
                 <Button variant="text">
                     Change

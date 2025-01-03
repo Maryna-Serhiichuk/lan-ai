@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "verbs",
+  "info": {
+    "singularName": "verb",
+    "pluralName": "verbs",
+    "displayName": "Verb",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "word": {
+      "type": "string"
+    },
+    "first": {
+      "type": "string"
+    },
+    "second": {
+      "type": "string"
+    },
+    "third": {
+      "type": "string"
+    },
+    "point": {
+      "type": "biginteger"
+    },
+    "verbs_list": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::verbs-list.verbs-list",
+      "inversedBy": "verbs"
+    }
+  }
+}

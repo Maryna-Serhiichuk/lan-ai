@@ -55,6 +55,12 @@
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user",
       "mappedBy": "setting"
+    },
+    "verbs_lists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::verbs-list.verbs-list",
+      "mappedBy": "setting"
     }
   }
 }

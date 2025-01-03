@@ -17,7 +17,6 @@ const CreateList: FC = () => {
     const [_, { refetch }] = useListsLazyQuery()
 
     const addList: FormikConfig<WordsListInput>['onSubmit'] = async (input, onSubmitProps) => {
-        console.log(1)
         try {
             const data = await createWordsList({ variables: { input } })
             await refetch()

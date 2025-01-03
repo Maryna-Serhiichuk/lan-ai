@@ -1,0 +1,10 @@
+mutation updateVerb($id: ID!, $data: VerbInput!) {
+    updateVerb(id: $id, data: $data) {
+        data {
+            id
+            attributes {
+                ...Verb
+            }
+        }
+    }
+}

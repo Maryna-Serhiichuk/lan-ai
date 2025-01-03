@@ -1,7 +1,7 @@
 query lists($filters: ListFiltersInput) {
     lists(filters: $filters) {
         data {
-        id
+            id
             attributes {
                 ...List
             }
