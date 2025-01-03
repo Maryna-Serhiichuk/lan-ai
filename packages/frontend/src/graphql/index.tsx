@@ -240,6 +240,31 @@ export function useCreateWordsListMutation(baseOptions?: Apollo.MutationHookOpti
       }
 export type CreateWordsListMutationHookResult = ReturnType<typeof useCreateWordsListMutation>;
 export type CreateWordsListMutationResult = Apollo.MutationResult<CreateWordsListMutation>;
+export const DeleteVerbDocument = gql`
+    mutation deleteVerb($id: ID!) {
+  deleteVerb(id: $id) {
+    data {
+      id
+      attributes {
+        ...Verb
+      }
+    }
+  }
+}
+    ${VerbFragmentDoc}`;
+export type DeleteVerbMutationFn = Apollo.MutationFunction<DeleteVerbMutation, DeleteVerbMutationVariables>;
+export type DeleteVerbComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteVerbMutation, DeleteVerbMutationVariables>, 'mutation'>;
+
+    export const DeleteVerbComponent = (props: DeleteVerbComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteVerbMutation, DeleteVerbMutationVariables> mutation={DeleteVerbDocument} {...props} />
+    );
+    
+export function useDeleteVerbMutation(baseOptions?: Apollo.MutationHookOptions<DeleteVerbMutation, DeleteVerbMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteVerbMutation, DeleteVerbMutationVariables>(DeleteVerbDocument, options);
+      }
+export type DeleteVerbMutationHookResult = ReturnType<typeof useDeleteVerbMutation>;
+export type DeleteVerbMutationResult = Apollo.MutationResult<DeleteVerbMutation>;
 export const DeleteWordDocument = gql`
     mutation deleteWord($id: ID!) {
   deleteWord(id: $id) {

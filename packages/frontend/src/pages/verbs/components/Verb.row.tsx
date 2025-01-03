@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { styled } from '@mui/material/styles';
+import Verbs from "..";
 
 const TableCellButtonStyled = styled(TableCell)`
   padding-left: 3px;
@@ -21,16 +22,21 @@ const TableCellButtonStyled = styled(TableCell)`
 `
 
 export const VerbRow: FC<{ data: VerbEntity, onEdit: (item: VerbEntity) => void }> = ({ data, onEdit }) => {
+    const { setDeleteState, setChosen } = Verbs.useContext()
+
     return <TableRow key={data?.id}>
         <TableCell align="center">{data?.attributes?.first}</TableCell>
         <TableCell align="center">{data?.attributes?.second}</TableCell>
         <TableCell align="center">{data?.attributes?.third}</TableCell>
         <TableCell align="right">{data?.attributes?.word}</TableCell>
         <TableCellButtonStyled align="right" onClick={() => onEdit(data)}>
-            <Button startIcon={<EditIcon />} size="small"/>
+          <Button startIcon={<EditIcon />} size="small"/>
         </TableCellButtonStyled>
-        <TableCellButtonStyled align="right">
-            <Button startIcon={<DeleteOutlineIcon />} size="small"/>
+        <TableCellButtonStyled align="right" onClick={() => {
+          setChosen(data)
+          setDeleteState(true)
+        }}>
+          <Button startIcon={<DeleteOutlineIcon />} size="small"/>
         </TableCellButtonStyled>
     </TableRow>
 }

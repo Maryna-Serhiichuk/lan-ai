@@ -1760,6 +1760,13 @@ type CreateWordsListMutationVariables = Exact<{
 
 type CreateWordsListMutation = { createWordsList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type DeleteVerbMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type DeleteVerbMutation = { deleteVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type DeleteWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;

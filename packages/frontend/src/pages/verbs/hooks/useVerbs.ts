@@ -1,4 +1,4 @@
-import { useUpdateVerbMutation, useCreateVerbMutation, useVerbsListsLazyQuery } from "./../../../graphql";
+import { useUpdateVerbMutation, useCreateVerbMutation, useVerbsListsLazyQuery, useDeleteVerbMutation } from "./../../../graphql";
 import { Dispatch, SetStateAction, useState } from "react";
 import { FormikConfig } from 'formik';
 import { useLocation } from "react-router-dom";
@@ -10,8 +10,8 @@ export type UseVerbsArgs = {
 export type IUseVerbs = {
     chosen?: Maybe<VerbEntity>
     setChosen: Dispatch<SetStateAction<Maybe<VerbEntity>>>
-    // isDeleteWord: boolean
-    // setDeleteWord: Dispatch<SetStateAction<boolean>>
+    isDeleteState: boolean
+    setDeleteState: Dispatch<SetStateAction<boolean>>
     isEditState: boolean
     setEditState: Dispatch<SetStateAction<boolean>>
     isCreateState: boolean
@@ -19,16 +19,28 @@ export type IUseVerbs = {
 
     onUpdateVerb: FormikConfig<VerbInput>['onSubmit']
     onCreateVerb: FormikConfig<VerbInput>['onSubmit']
+    onDeleteVerb: () => void
 }
 
 export const useVerbs = (): IUseVerbs => {
-    const { hash } = useLocation(); 
+    const { hash } = useLocation();
+    const [isDeleteState, setDeleteState] = useState(false)
     const [isCreateState, setCreateState] = useState(false)
     const [isEditState, setEditState] = useState(false)
     const [chosen, setChosen] = useState<VerbEntity>()
     const [updateVerb] = useUpdateVerbMutation()
-    const [createWord] = useCreateVerbMutation()
+    const [createVerb] = useCreateVerbMutation()
+    const [deleteVerb] = useDeleteVerbMutation()
     const [_, { refetch }] = useVerbsListsLazyQuery()
+
+    const onDeleteVerb: IUseVerbs['onDeleteVerb'] = async () => {
+        try {
+            const result = await deleteVerb({ variables: { id: chosen?.id } })
+            setEditState(false)
+        } catch (err: any) {
+            const error = err as ResolverError
+        } 
+    }
 
     const onUpdateVerb: IUseVerbs['onUpdateVerb'] = async (data, onSubmitProps) => {
         try {
@@ -42,7 +54,7 @@ export const useVerbs = (): IUseVerbs => {
 
     const onCreateVerb: IUseVerbs['onCreateVerb'] = async (data, onSubmitProps) => {
         try {
-            const result = await createWord({ variables: { data: { ...data, verbs_list: hash?.replace('#', '') } } })
+            const result = await createVerb({ variables: { data: { ...data, verbs_list: hash?.replace('#', '') } } })
             refetch && await refetch()
             setCreateState(false)
             
@@ -59,7 +71,10 @@ export const useVerbs = (): IUseVerbs => {
         setEditState,
         isCreateState,
         setCreateState,
+        isDeleteState,
+        setDeleteState,
         onUpdateVerb,
         onCreateVerb,
+        onDeleteVerb,
     }
 }
