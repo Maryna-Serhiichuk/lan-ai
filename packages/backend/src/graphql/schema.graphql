@@ -382,6 +382,7 @@ input LongFilterInput {
 type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
+  changeVerbsPoint(input: [VerbsPointListInput]): VerbEntityResponseCollection
   changeWordsPoint(input: [WordsPointListInput]): WordEntityResponseCollection
   checkSentences(data: [SentenceInput]): SentencesResultResponse
   createInfinitiveList(input: InfinitiveListInput!): VerbsListEntityResponse
@@ -1181,6 +1182,11 @@ input VerbsListInput {
 
 type VerbsListRelationResponseCollection {
   data: [VerbsListEntity!]!
+}
+
+input VerbsPointListInput {
+  id: ID
+  point: Int
 }
 
 type Word {

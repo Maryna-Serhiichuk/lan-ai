@@ -170,6 +170,24 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
         t.list.field("verbs", { type: "VerbInput" })
       },
     }),
+    nexus.extendType({
+      type: "Mutation",
+      definition: t => {
+        t.field("changeVerbsPoint", {
+          type: "VerbEntityResponseCollection",
+          args: {
+            input: nexus.list("VerbsPointListInput"),
+          },
+        })
+      },
+    }),
+    nexus.extendInputType<"VerbsPointListInput">({
+      type: "VerbsPointListInput",
+      definition: t => {
+        t.id("id")
+        t.field("point", { type: "Int" })
+      },
+    }),
   ],
   resolvers,
   resolversConfig,

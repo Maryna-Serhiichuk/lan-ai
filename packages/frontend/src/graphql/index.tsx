@@ -67,6 +67,31 @@ export const VerbsListFragmentDoc = gql`
   }
 }
     ${VerbFragmentDoc}`;
+export const ChangeVerbsPointDocument = gql`
+    mutation changeVerbsPoint($input: [VerbsPointListInput]) {
+  changeVerbsPoint(input: $input) {
+    data {
+      id
+      attributes {
+        ...Verb
+      }
+    }
+  }
+}
+    ${VerbFragmentDoc}`;
+export type ChangeVerbsPointMutationFn = Apollo.MutationFunction<ChangeVerbsPointMutation, ChangeVerbsPointMutationVariables>;
+export type ChangeVerbsPointComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<ChangeVerbsPointMutation, ChangeVerbsPointMutationVariables>, 'mutation'>;
+
+    export const ChangeVerbsPointComponent = (props: ChangeVerbsPointComponentProps) => (
+      <ApolloReactComponents.Mutation<ChangeVerbsPointMutation, ChangeVerbsPointMutationVariables> mutation={ChangeVerbsPointDocument} {...props} />
+    );
+    
+export function useChangeVerbsPointMutation(baseOptions?: Apollo.MutationHookOptions<ChangeVerbsPointMutation, ChangeVerbsPointMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeVerbsPointMutation, ChangeVerbsPointMutationVariables>(ChangeVerbsPointDocument, options);
+      }
+export type ChangeVerbsPointMutationHookResult = ReturnType<typeof useChangeVerbsPointMutation>;
+export type ChangeVerbsPointMutationResult = Apollo.MutationResult<ChangeVerbsPointMutation>;
 export const ChangeWordsPointDocument = gql`
     mutation changeWordsPoint($input: [WordsPointListInput]) {
   changeWordsPoint(input: $input) {

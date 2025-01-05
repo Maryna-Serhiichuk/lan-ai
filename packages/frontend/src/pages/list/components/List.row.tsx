@@ -1,7 +1,6 @@
-import { FC, Fragment, useMemo, useState } from "react";
+import { FC, Fragment } from "react";
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import ListUI from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -11,25 +10,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColor';
 import { ChangeWordActivityType } from "./ListElement";
-import styled from "@emotion/styled";
 import List from "..";
-import { wordPointState } from "components/untils/wordPointState";
-
-const PointMark = styled('div', {
-    shouldForwardProp: (prop) => prop !== 'color',
-})<{ color?: string }>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &::before {
-        content: "";
-        width: 10px;
-        height: 10px;
-        background: ${({ color }) => color};
-        opacity: .3;
-        border-radius: 50%;
-    }
-`
+import { wordPointState } from "components/point-mark/wordPointState";
+import { PointMark } from "components/point-mark";
 
 export const ListRow: FC<{ data: WordEntity, changeWordActivity: ChangeWordActivityType }> = ({ data: value, changeWordActivity }) => {
     const { setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
@@ -65,7 +48,7 @@ export const ListRow: FC<{ data: WordEntity, changeWordActivity: ChangeWordActiv
                         disableRipple
                         onChange={() => changeWordActivity(value?.id, !value?.attributes?.active)}
                     />
-                    <PointMark color={wordPointState(value?.attributes?.point ?? 0)?.color}/>
+                    <PointMark point={value?.attributes?.point} />
                 </ListItemIcon>
                 <ListItemText primary={value?.attributes?.word} style={{ width: 150 }} />
                 <ListItemText primary={value?.attributes?.translation} style={{ width: 200 }} />

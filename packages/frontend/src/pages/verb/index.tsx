@@ -1,12 +1,12 @@
 import { FC } from "react";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { useVerbs } from "./hooks/useVerbs";
+import { useVerb } from "./hooks/useVerb";
 import KeyboardBackspaceOutlinedIcon from '@mui/icons-material/KeyboardBackspaceOutlined';
 import { VerbForm } from "./components/Verb.form";
 
 const Verb: FC = () => {
-    const verbsManager = useVerbs();
+    const verbsManager = useVerb();
     const { onReturn } = verbsManager;
 
     return <Grid container direction="row" justifyContent="center" style={{ minWidth: '100%', paddingTop: 100 }}>

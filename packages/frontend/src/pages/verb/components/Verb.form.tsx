@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import TextField from '@mui/material/TextField';
 import styled from "@emotion/styled";
 import Typography from '@mui/material/Typography';
-import { type IUseVerbs } from "./../hooks/useVerbs";
+import { type IUseVerb } from "./../hooks/useVerb";
 
 const StyledTextField = styled(TextField)`
   input {
@@ -14,7 +14,7 @@ const StyledTextField = styled(TextField)`
   }
 `;
 
-export const VerbForm: FC<IUseVerbs> = ({ chosenWord, checkWord, result }) => {
+export const VerbForm: FC<IUseVerb> = ({ chosenWord, checkWord, result }) => {
     return <Fragment>
         <Grid container item direction="column" alignItems="center">
             <Typography variant="h3" gutterBottom align="center">

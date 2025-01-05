@@ -571,6 +571,10 @@ export interface NexusGenInputs {
     setting?: string | null; // ID
     verbs?: Array<string | null> | null; // [ID]
   }
+  VerbsPointListInput: { // input type
+    id?: string | null; // ID
+    point?: number | null; // Int
+  }
   WordFiltersInput: { // input type
     active?: NexusGenInputs['BooleanFilterInput'] | null; // BooleanFilterInput
     and?: Array<NexusGenInputs['WordFiltersInput'] | null> | null; // [WordFiltersInput]
@@ -923,6 +927,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     changePassword: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
+    changeVerbsPoint: NexusGenRootTypes['VerbEntityResponseCollection'] | null; // VerbEntityResponseCollection
     changeWordsPoint: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     checkSentences: NexusGenRootTypes['SentencesResultResponse'] | null; // SentencesResultResponse
     createInfinitiveList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
@@ -1382,6 +1387,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     changePassword: 'UsersPermissionsLoginPayload'
+    changeVerbsPoint: 'VerbEntityResponseCollection'
     changeWordsPoint: 'WordEntityResponseCollection'
     checkSentences: 'SentencesResultResponse'
     createInfinitiveList: 'VerbsListEntityResponse'
@@ -1795,6 +1801,9 @@ export interface NexusGenArgTypes {
       currentPassword: string; // String!
       password: string; // String!
       passwordConfirmation: string; // String!
+    }
+    changeVerbsPoint: { // args
+      input?: Array<NexusGenInputs['VerbsPointListInput'] | null> | null; // [VerbsPointListInput]
     }
     changeWordsPoint: { // args
       input?: Array<NexusGenInputs['WordsPointListInput'] | null> | null; // [WordsPointListInput]

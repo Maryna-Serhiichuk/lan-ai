@@ -1,0 +1,10 @@
+mutation changeVerbsPoint($input: [VerbsPointListInput]) {
+    changeVerbsPoint(input: $input) {
+        data {
+            id
+            attributes {
+                ...Verb
+            }
+        }
+    }
+}

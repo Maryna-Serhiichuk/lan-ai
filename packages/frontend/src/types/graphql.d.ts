@@ -390,6 +390,7 @@ type LongFilterInput = {
 type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
+  changeVerbsPoint?: Maybe<VerbEntityResponseCollection>;
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
   checkSentences?: Maybe<SentencesResultResponse>;
   createInfinitiveList?: Maybe<VerbsListEntityResponse>;
@@ -455,6 +456,11 @@ type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
+};
+
+
+type MutationChangeVerbsPointArgs = {
+  input?: InputMaybe<Array<InputMaybe<VerbsPointListInput>>>;
 };
 
 
@@ -1618,6 +1624,11 @@ type VerbsListRelationResponseCollection = {
   data: Array<VerbsListEntity>;
 };
 
+type VerbsPointListInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  point?: InputMaybe<Scalars['Int']['input']>;
+};
+
 type Word = {
   active?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1710,6 +1721,13 @@ type WordFragment = { word?: string | null | undefined, translation?: string | n
 
 
 type WordFragmentVariables = Exact<{ [key: string]: never; }>;
+
+type ChangeVerbsPointMutationVariables = Exact<{
+  input?: InputMaybe<Array<InputMaybe<VerbsPointListInput>> | InputMaybe<VerbsPointListInput>>;
+}>;
+
+
+type ChangeVerbsPointMutation = { changeVerbsPoint?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
 
 type ChangeWordsPointMutationVariables = Exact<{
   input?: InputMaybe<Array<InputMaybe<WordsPointListInput>> | InputMaybe<WordsPointListInput>>;
