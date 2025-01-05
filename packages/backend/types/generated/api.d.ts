@@ -175,6 +175,10 @@ export interface NexusGenInputs {
     or?: Array<string | null> | null; // [ID]
     startsWith?: string | null; // ID
   }
+  InfinitiveListInput: { // input type
+    name?: string | null; // String
+    verbs?: Array<NexusGenInputs['VerbInput'] | null> | null; // [VerbInput]
+  }
   IntFilterInput: { // input type
     and?: Array<number | null> | null; // [Int]
     between?: Array<number | null> | null; // [Int]
@@ -315,6 +319,7 @@ export interface NexusGenInputs {
     theme?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
     updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
     user?: NexusGenInputs['UsersPermissionsUserFiltersInput'] | null; // UsersPermissionsUserFiltersInput
+    verbs_lists?: NexusGenInputs['VerbsListFiltersInput'] | null; // VerbsListFiltersInput
   }
   SettingInput: { // input type
     account?: string | null; // ID
@@ -325,6 +330,7 @@ export interface NexusGenInputs {
     tenses?: string | null; // String
     theme?: string | null; // String
     user?: string | null; // ID
+    verbs_lists?: Array<string | null> | null; // [ID]
   }
   StringFilterInput: { // input type
     and?: Array<string | null> | null; // [String]
@@ -526,6 +532,48 @@ export interface NexusGenInputs {
   }
   VariableInput: { // input type
     prompt?: string | null; // ID
+  }
+  VerbFiltersInput: { // input type
+    and?: Array<NexusGenInputs['VerbFiltersInput'] | null> | null; // [VerbFiltersInput]
+    createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    first?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    id?: NexusGenInputs['IDFilterInput'] | null; // IDFilterInput
+    not?: NexusGenInputs['VerbFiltersInput'] | null; // VerbFiltersInput
+    or?: Array<NexusGenInputs['VerbFiltersInput'] | null> | null; // [VerbFiltersInput]
+    point?: NexusGenInputs['LongFilterInput'] | null; // LongFilterInput
+    second?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    third?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    verbs_list?: NexusGenInputs['VerbsListFiltersInput'] | null; // VerbsListFiltersInput
+    word?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+  }
+  VerbInput: { // input type
+    first?: string | null; // String
+    point?: NexusGenScalars['Long'] | null; // Long
+    second?: string | null; // String
+    third?: string | null; // String
+    verbs_list?: string | null; // ID
+    word?: string | null; // String
+  }
+  VerbsListFiltersInput: { // input type
+    and?: Array<NexusGenInputs['VerbsListFiltersInput'] | null> | null; // [VerbsListFiltersInput]
+    createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    id?: NexusGenInputs['IDFilterInput'] | null; // IDFilterInput
+    name?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    not?: NexusGenInputs['VerbsListFiltersInput'] | null; // VerbsListFiltersInput
+    or?: Array<NexusGenInputs['VerbsListFiltersInput'] | null> | null; // [VerbsListFiltersInput]
+    setting?: NexusGenInputs['SettingFiltersInput'] | null; // SettingFiltersInput
+    updatedAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
+    verbs?: NexusGenInputs['VerbFiltersInput'] | null; // VerbFiltersInput
+  }
+  VerbsListInput: { // input type
+    name?: string | null; // String
+    setting?: string | null; // ID
+    verbs?: Array<string | null> | null; // [ID]
+  }
+  VerbsPointListInput: { // input type
+    id?: string | null; // ID
+    point?: number | null; // Int
   }
   WordFiltersInput: { // input type
     active?: NexusGenInputs['BooleanFilterInput'] | null; // BooleanFilterInput
@@ -772,6 +820,28 @@ export interface NexusGenObjects {
   VariableEntityResponse: {};
   VariableEntityResponseCollection: {};
   VariableRelationResponseCollection: {};
+  Verb: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    first?: string | null; // String
+    point?: NexusGenScalars['Long'] | null; // Long
+    second?: string | null; // String
+    third?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    word?: string | null; // String
+  }
+  VerbEntity: {};
+  VerbEntityResponse: {};
+  VerbEntityResponseCollection: {};
+  VerbRelationResponseCollection: {};
+  VerbsList: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    name?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  VerbsListEntity: {};
+  VerbsListEntityResponse: {};
+  VerbsListEntityResponseCollection: {};
+  VerbsListRelationResponseCollection: {};
   Word: { // root type
     active?: boolean | null; // Boolean
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -791,7 +861,7 @@ export interface NexusGenInterfaces {
 }
 
 export interface NexusGenUnions {
-  GenericMorph: NexusGenRootTypes['ComponentContextDynamic'] | NexusGenRootTypes['I18NLocale'] | NexusGenRootTypes['List'] | NexusGenRootTypes['Prompt'] | NexusGenRootTypes['Setting'] | NexusGenRootTypes['UploadFile'] | NexusGenRootTypes['UploadFolder'] | NexusGenRootTypes['UsersPermissionsPermission'] | NexusGenRootTypes['UsersPermissionsRole'] | NexusGenRootTypes['UsersPermissionsUser'] | NexusGenRootTypes['Variable'] | NexusGenRootTypes['Word'];
+  GenericMorph: NexusGenRootTypes['ComponentContextDynamic'] | NexusGenRootTypes['I18NLocale'] | NexusGenRootTypes['List'] | NexusGenRootTypes['Prompt'] | NexusGenRootTypes['Setting'] | NexusGenRootTypes['UploadFile'] | NexusGenRootTypes['UploadFolder'] | NexusGenRootTypes['UsersPermissionsPermission'] | NexusGenRootTypes['UsersPermissionsRole'] | NexusGenRootTypes['UsersPermissionsUser'] | NexusGenRootTypes['Variable'] | NexusGenRootTypes['Verb'] | NexusGenRootTypes['VerbsList'] | NexusGenRootTypes['Word'];
 }
 
 export type NexusGenRootTypes = NexusGenObjects & NexusGenUnions
@@ -857,8 +927,10 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     changePassword: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
+    changeVerbsPoint: NexusGenRootTypes['VerbEntityResponseCollection'] | null; // VerbEntityResponseCollection
     changeWordsPoint: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     checkSentences: NexusGenRootTypes['SentencesResultResponse'] | null; // SentencesResultResponse
+    createInfinitiveList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     createList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     createPrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
     createSetting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
@@ -866,6 +938,8 @@ export interface NexusGenFieldTypes {
     createUploadFolder: NexusGenRootTypes['UploadFolderEntityResponse'] | null; // UploadFolderEntityResponse
     createUsersPermissionsRole: NexusGenRootTypes['UsersPermissionsCreateRolePayload'] | null; // UsersPermissionsCreateRolePayload
     createUsersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse']; // UsersPermissionsUserEntityResponse!
+    createVerb: NexusGenRootTypes['VerbEntityResponse'] | null; // VerbEntityResponse
+    createVerbsList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     createWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     createWordsList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     deleteList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
@@ -876,6 +950,8 @@ export interface NexusGenFieldTypes {
     deleteUsersPermissionsRole: NexusGenRootTypes['UsersPermissionsDeleteRolePayload'] | null; // UsersPermissionsDeleteRolePayload
     deleteUsersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse']; // UsersPermissionsUserEntityResponse!
     deleteVariable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
+    deleteVerb: NexusGenRootTypes['VerbEntityResponse'] | null; // VerbEntityResponse
+    deleteVerbsList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     deleteWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     emailConfirmation: NexusGenRootTypes['UsersPermissionsLoginPayload'] | null; // UsersPermissionsLoginPayload
     forgotPassword: NexusGenRootTypes['UsersPermissionsPasswordPayload'] | null; // UsersPermissionsPasswordPayload
@@ -895,6 +971,8 @@ export interface NexusGenFieldTypes {
     updateUsersPermissionsRole: NexusGenRootTypes['UsersPermissionsUpdateRolePayload'] | null; // UsersPermissionsUpdateRolePayload
     updateUsersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse']; // UsersPermissionsUserEntityResponse!
     updateVariable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
+    updateVerb: NexusGenRootTypes['VerbEntityResponse'] | null; // VerbEntityResponse
+    updateVerbsList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     updateWord: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     updateWordsPoints: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     upload: NexusGenRootTypes['UploadFileEntityResponse']; // UploadFileEntityResponse!
@@ -949,6 +1027,10 @@ export interface NexusGenFieldTypes {
     usersPermissionsUser: NexusGenRootTypes['UsersPermissionsUserEntityResponse'] | null; // UsersPermissionsUserEntityResponse
     usersPermissionsUsers: NexusGenRootTypes['UsersPermissionsUserEntityResponseCollection'] | null; // UsersPermissionsUserEntityResponseCollection
     variable: NexusGenRootTypes['VariableEntityResponse'] | null; // VariableEntityResponse
+    verb: NexusGenRootTypes['VerbEntityResponse'] | null; // VerbEntityResponse
+    verbs: NexusGenRootTypes['VerbEntityResponseCollection'] | null; // VerbEntityResponseCollection
+    verbsList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
+    verbsLists: NexusGenRootTypes['VerbsListEntityResponseCollection'] | null; // VerbsListEntityResponseCollection
     word: NexusGenRootTypes['WordEntityResponse'] | null; // WordEntityResponse
     words: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
   }
@@ -980,6 +1062,7 @@ export interface NexusGenFieldTypes {
     theme: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     user: NexusGenRootTypes['UsersPermissionsUserEntityResponse'] | null; // UsersPermissionsUserEntityResponse
+    verbs_lists: NexusGenRootTypes['VerbsListRelationResponseCollection'] | null; // VerbsListRelationResponseCollection
   }
   SettingEntity: { // field return type
     attributes: NexusGenRootTypes['Setting'] | null; // Setting
@@ -1174,6 +1257,51 @@ export interface NexusGenFieldTypes {
   VariableRelationResponseCollection: { // field return type
     data: NexusGenRootTypes['VariableEntity'][]; // [VariableEntity!]!
   }
+  Verb: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    first: string | null; // String
+    point: NexusGenScalars['Long'] | null; // Long
+    second: string | null; // String
+    third: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    verbs_list: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
+    word: string | null; // String
+  }
+  VerbEntity: { // field return type
+    attributes: NexusGenRootTypes['Verb'] | null; // Verb
+    id: string | null; // ID
+  }
+  VerbEntityResponse: { // field return type
+    data: NexusGenRootTypes['VerbEntity'] | null; // VerbEntity
+  }
+  VerbEntityResponseCollection: { // field return type
+    data: NexusGenRootTypes['VerbEntity'][]; // [VerbEntity!]!
+    meta: NexusGenRootTypes['ResponseCollectionMeta']; // ResponseCollectionMeta!
+  }
+  VerbRelationResponseCollection: { // field return type
+    data: NexusGenRootTypes['VerbEntity'][]; // [VerbEntity!]!
+  }
+  VerbsList: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    name: string | null; // String
+    setting: NexusGenRootTypes['SettingEntityResponse'] | null; // SettingEntityResponse
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    verbs: NexusGenRootTypes['VerbRelationResponseCollection'] | null; // VerbRelationResponseCollection
+  }
+  VerbsListEntity: { // field return type
+    attributes: NexusGenRootTypes['VerbsList'] | null; // VerbsList
+    id: string | null; // ID
+  }
+  VerbsListEntityResponse: { // field return type
+    data: NexusGenRootTypes['VerbsListEntity'] | null; // VerbsListEntity
+  }
+  VerbsListEntityResponseCollection: { // field return type
+    data: NexusGenRootTypes['VerbsListEntity'][]; // [VerbsListEntity!]!
+    meta: NexusGenRootTypes['ResponseCollectionMeta']; // ResponseCollectionMeta!
+  }
+  VerbsListRelationResponseCollection: { // field return type
+    data: NexusGenRootTypes['VerbsListEntity'][]; // [VerbsListEntity!]!
+  }
   Word: { // field return type
     active: boolean | null; // Boolean
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -1259,8 +1387,10 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     changePassword: 'UsersPermissionsLoginPayload'
+    changeVerbsPoint: 'VerbEntityResponseCollection'
     changeWordsPoint: 'WordEntityResponseCollection'
     checkSentences: 'SentencesResultResponse'
+    createInfinitiveList: 'VerbsListEntityResponse'
     createList: 'ListEntityResponse'
     createPrompt: 'PromptEntityResponse'
     createSetting: 'SettingEntityResponse'
@@ -1268,6 +1398,8 @@ export interface NexusGenFieldTypeNames {
     createUploadFolder: 'UploadFolderEntityResponse'
     createUsersPermissionsRole: 'UsersPermissionsCreateRolePayload'
     createUsersPermissionsUser: 'UsersPermissionsUserEntityResponse'
+    createVerb: 'VerbEntityResponse'
+    createVerbsList: 'VerbsListEntityResponse'
     createWord: 'WordEntityResponse'
     createWordsList: 'ListEntityResponse'
     deleteList: 'ListEntityResponse'
@@ -1278,6 +1410,8 @@ export interface NexusGenFieldTypeNames {
     deleteUsersPermissionsRole: 'UsersPermissionsDeleteRolePayload'
     deleteUsersPermissionsUser: 'UsersPermissionsUserEntityResponse'
     deleteVariable: 'VariableEntityResponse'
+    deleteVerb: 'VerbEntityResponse'
+    deleteVerbsList: 'VerbsListEntityResponse'
     deleteWord: 'WordEntityResponse'
     emailConfirmation: 'UsersPermissionsLoginPayload'
     forgotPassword: 'UsersPermissionsPasswordPayload'
@@ -1297,6 +1431,8 @@ export interface NexusGenFieldTypeNames {
     updateUsersPermissionsRole: 'UsersPermissionsUpdateRolePayload'
     updateUsersPermissionsUser: 'UsersPermissionsUserEntityResponse'
     updateVariable: 'VariableEntityResponse'
+    updateVerb: 'VerbEntityResponse'
+    updateVerbsList: 'VerbsListEntityResponse'
     updateWord: 'WordEntityResponse'
     updateWordsPoints: 'WordEntityResponseCollection'
     upload: 'UploadFileEntityResponse'
@@ -1351,6 +1487,10 @@ export interface NexusGenFieldTypeNames {
     usersPermissionsUser: 'UsersPermissionsUserEntityResponse'
     usersPermissionsUsers: 'UsersPermissionsUserEntityResponseCollection'
     variable: 'VariableEntityResponse'
+    verb: 'VerbEntityResponse'
+    verbs: 'VerbEntityResponseCollection'
+    verbsList: 'VerbsListEntityResponse'
+    verbsLists: 'VerbsListEntityResponseCollection'
     word: 'WordEntityResponse'
     words: 'WordEntityResponseCollection'
   }
@@ -1382,6 +1522,7 @@ export interface NexusGenFieldTypeNames {
     theme: 'String'
     updatedAt: 'DateTime'
     user: 'UsersPermissionsUserEntityResponse'
+    verbs_lists: 'VerbsListRelationResponseCollection'
   }
   SettingEntity: { // field return type name
     attributes: 'Setting'
@@ -1576,6 +1717,51 @@ export interface NexusGenFieldTypeNames {
   VariableRelationResponseCollection: { // field return type name
     data: 'VariableEntity'
   }
+  Verb: { // field return type name
+    createdAt: 'DateTime'
+    first: 'String'
+    point: 'Long'
+    second: 'String'
+    third: 'String'
+    updatedAt: 'DateTime'
+    verbs_list: 'VerbsListEntityResponse'
+    word: 'String'
+  }
+  VerbEntity: { // field return type name
+    attributes: 'Verb'
+    id: 'ID'
+  }
+  VerbEntityResponse: { // field return type name
+    data: 'VerbEntity'
+  }
+  VerbEntityResponseCollection: { // field return type name
+    data: 'VerbEntity'
+    meta: 'ResponseCollectionMeta'
+  }
+  VerbRelationResponseCollection: { // field return type name
+    data: 'VerbEntity'
+  }
+  VerbsList: { // field return type name
+    createdAt: 'DateTime'
+    name: 'String'
+    setting: 'SettingEntityResponse'
+    updatedAt: 'DateTime'
+    verbs: 'VerbRelationResponseCollection'
+  }
+  VerbsListEntity: { // field return type name
+    attributes: 'VerbsList'
+    id: 'ID'
+  }
+  VerbsListEntityResponse: { // field return type name
+    data: 'VerbsListEntity'
+  }
+  VerbsListEntityResponseCollection: { // field return type name
+    data: 'VerbsListEntity'
+    meta: 'ResponseCollectionMeta'
+  }
+  VerbsListRelationResponseCollection: { // field return type name
+    data: 'VerbsListEntity'
+  }
   Word: { // field return type name
     active: 'Boolean'
     createdAt: 'DateTime'
@@ -1616,11 +1802,17 @@ export interface NexusGenArgTypes {
       password: string; // String!
       passwordConfirmation: string; // String!
     }
+    changeVerbsPoint: { // args
+      input?: Array<NexusGenInputs['VerbsPointListInput'] | null> | null; // [VerbsPointListInput]
+    }
     changeWordsPoint: { // args
       input?: Array<NexusGenInputs['WordsPointListInput'] | null> | null; // [WordsPointListInput]
     }
     checkSentences: { // args
       data?: Array<NexusGenInputs['SentenceInput'] | null> | null; // [SentenceInput]
+    }
+    createInfinitiveList: { // args
+      input: NexusGenInputs['InfinitiveListInput']; // InfinitiveListInput!
     }
     createList: { // args
       data: NexusGenInputs['ListInput']; // ListInput!
@@ -1642,6 +1834,12 @@ export interface NexusGenArgTypes {
     }
     createUsersPermissionsUser: { // args
       data: NexusGenInputs['UsersPermissionsUserInput']; // UsersPermissionsUserInput!
+    }
+    createVerb: { // args
+      data: NexusGenInputs['VerbInput']; // VerbInput!
+    }
+    createVerbsList: { // args
+      data: NexusGenInputs['VerbsListInput']; // VerbsListInput!
     }
     createWord: { // args
       data: NexusGenInputs['WordInput']; // WordInput!
@@ -1668,6 +1866,12 @@ export interface NexusGenArgTypes {
       id: string; // ID!
     }
     deleteUsersPermissionsUser: { // args
+      id: string; // ID!
+    }
+    deleteVerb: { // args
+      id: string; // ID!
+    }
+    deleteVerbsList: { // args
       id: string; // ID!
     }
     deleteWord: { // args
@@ -1739,6 +1943,14 @@ export interface NexusGenArgTypes {
     }
     updateVariable: { // args
       data: NexusGenInputs['VariableInput']; // VariableInput!
+    }
+    updateVerb: { // args
+      data: NexusGenInputs['VerbInput']; // VerbInput!
+      id: string; // ID!
+    }
+    updateVerbsList: { // args
+      data: NexusGenInputs['VerbsListInput']; // VerbsListInput!
+      id: string; // ID!
     }
     updateWord: { // args
       data: NexusGenInputs['WordInput']; // WordInput!
@@ -1818,6 +2030,22 @@ export interface NexusGenArgTypes {
       pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
       sort: Array<string | null> | null; // [String]
     }
+    verb: { // args
+      id?: string | null; // ID
+    }
+    verbs: { // args
+      filters?: NexusGenInputs['VerbFiltersInput'] | null; // VerbFiltersInput
+      pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
+      sort: Array<string | null> | null; // [String]
+    }
+    verbsList: { // args
+      id?: string | null; // ID
+    }
+    verbsLists: { // args
+      filters?: NexusGenInputs['VerbsListFiltersInput'] | null; // VerbsListFiltersInput
+      pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
+      sort: Array<string | null> | null; // [String]
+    }
     word: { // args
       id?: string | null; // ID
     }
@@ -1830,6 +2058,11 @@ export interface NexusGenArgTypes {
   Setting: {
     lists: { // args
       filters?: NexusGenInputs['ListFiltersInput'] | null; // ListFiltersInput
+      pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
+      sort: Array<string | null> | null; // [String]
+    }
+    verbs_lists: { // args
+      filters?: NexusGenInputs['VerbsListFiltersInput'] | null; // VerbsListFiltersInput
       pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
       sort: Array<string | null> | null; // [String]
     }
@@ -1865,10 +2098,17 @@ export interface NexusGenArgTypes {
       sort: Array<string | null> | null; // [String]
     }
   }
+  VerbsList: {
+    verbs: { // args
+      filters?: NexusGenInputs['VerbFiltersInput'] | null; // VerbFiltersInput
+      pagination: NexusGenInputs['PaginationArg'] | null; // PaginationArg
+      sort: Array<string | null> | null; // [String]
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {
-  GenericMorph: "ComponentContextDynamic" | "I18NLocale" | "List" | "Prompt" | "Setting" | "UploadFile" | "UploadFolder" | "UsersPermissionsPermission" | "UsersPermissionsRole" | "UsersPermissionsUser" | "Variable" | "Word"
+  GenericMorph: "ComponentContextDynamic" | "I18NLocale" | "List" | "Prompt" | "Setting" | "UploadFile" | "UploadFolder" | "UsersPermissionsPermission" | "UsersPermissionsRole" | "UsersPermissionsUser" | "Variable" | "Verb" | "VerbsList" | "Word"
 }
 
 export interface NexusGenTypeInterfaces {

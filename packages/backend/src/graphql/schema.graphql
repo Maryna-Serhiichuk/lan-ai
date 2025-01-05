@@ -171,7 +171,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Word
+union GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Verb | VerbsList | Word
 
 type I18NLocale {
   code: String
@@ -240,6 +240,11 @@ input IDFilterInput {
   null: Boolean
   or: [ID]
   startsWith: ID
+}
+
+input InfinitiveListInput {
+  name: String
+  verbs: [VerbInput]
 }
 
 input IntFilterInput {
@@ -377,8 +382,10 @@ input LongFilterInput {
 type Mutation {
   """Change user password. Confirm with the current password."""
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
+  changeVerbsPoint(input: [VerbsPointListInput]): VerbEntityResponseCollection
   changeWordsPoint(input: [WordsPointListInput]): WordEntityResponseCollection
   checkSentences(data: [SentenceInput]): SentencesResultResponse
+  createInfinitiveList(input: InfinitiveListInput!): VerbsListEntityResponse
   createList(data: ListInput!): ListEntityResponse
   createPrompt(data: PromptInput!): PromptEntityResponse
   createSetting(data: SettingInput!): SettingEntityResponse
@@ -390,6 +397,8 @@ type Mutation {
 
   """Create a new user"""
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
+  createVerb(data: VerbInput!): VerbEntityResponse
+  createVerbsList(data: VerbsListInput!): VerbsListEntityResponse
   createWord(data: WordInput!): WordEntityResponse
   createWordsList(input: WordsListInput!): ListEntityResponse
   deleteList(id: ID!): ListEntityResponse
@@ -404,6 +413,8 @@ type Mutation {
   """Delete an existing user"""
   deleteUsersPermissionsUser(id: ID!): UsersPermissionsUserEntityResponse!
   deleteVariable: VariableEntityResponse
+  deleteVerb(id: ID!): VerbEntityResponse
+  deleteVerbsList(id: ID!): VerbsListEntityResponse
   deleteWord(id: ID!): WordEntityResponse
 
   """Confirm an email users email address"""
@@ -437,6 +448,8 @@ type Mutation {
   """Update an existing user"""
   updateUsersPermissionsUser(data: UsersPermissionsUserInput!, id: ID!): UsersPermissionsUserEntityResponse!
   updateVariable(data: VariableInput!): VariableEntityResponse
+  updateVerb(data: VerbInput!, id: ID!): VerbEntityResponse
+  updateVerbsList(data: VerbsListInput!, id: ID!): VerbsListEntityResponse
   updateWord(data: WordInput!, id: ID!): WordEntityResponse
   updateWordsPoints: WordEntityResponseCollection
   upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID): UploadFileEntityResponse!
@@ -536,6 +549,10 @@ type Query {
   usersPermissionsUser(id: ID): UsersPermissionsUserEntityResponse
   usersPermissionsUsers(filters: UsersPermissionsUserFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UsersPermissionsUserEntityResponseCollection
   variable: VariableEntityResponse
+  verb(id: ID): VerbEntityResponse
+  verbs(filters: VerbFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): VerbEntityResponseCollection
+  verbsList(id: ID): VerbsListEntityResponse
+  verbsLists(filters: VerbsListFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): VerbsListEntityResponseCollection
   word(id: ID): WordEntityResponse
   words(filters: WordFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): WordEntityResponseCollection
 }
@@ -579,6 +596,7 @@ type Setting {
   theme: String
   updatedAt: DateTime
   user: UsersPermissionsUserEntityResponse
+  verbs_lists(filters: VerbsListFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): VerbsListRelationResponseCollection
 }
 
 type SettingEntity {
@@ -610,6 +628,7 @@ input SettingFiltersInput {
   theme: StringFilterInput
   updatedAt: DateTimeFilterInput
   user: UsersPermissionsUserFiltersInput
+  verbs_lists: VerbsListFiltersInput
 }
 
 input SettingInput {
@@ -621,6 +640,7 @@ input SettingInput {
   tenses: String
   theme: String
   user: ID
+  verbs_lists: [ID]
 }
 
 type SettingRelationResponseCollection {
@@ -1065,6 +1085,108 @@ input VariableInput {
 
 type VariableRelationResponseCollection {
   data: [VariableEntity!]!
+}
+
+type Verb {
+  createdAt: DateTime
+  first: String
+  point: Long
+  second: String
+  third: String
+  updatedAt: DateTime
+  verbs_list: VerbsListEntityResponse
+  word: String
+}
+
+type VerbEntity {
+  attributes: Verb
+  id: ID
+}
+
+type VerbEntityResponse {
+  data: VerbEntity
+}
+
+type VerbEntityResponseCollection {
+  data: [VerbEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input VerbFiltersInput {
+  and: [VerbFiltersInput]
+  createdAt: DateTimeFilterInput
+  first: StringFilterInput
+  id: IDFilterInput
+  not: VerbFiltersInput
+  or: [VerbFiltersInput]
+  point: LongFilterInput
+  second: StringFilterInput
+  third: StringFilterInput
+  updatedAt: DateTimeFilterInput
+  verbs_list: VerbsListFiltersInput
+  word: StringFilterInput
+}
+
+input VerbInput {
+  first: String
+  point: Long
+  second: String
+  third: String
+  verbs_list: ID
+  word: String
+}
+
+type VerbRelationResponseCollection {
+  data: [VerbEntity!]!
+}
+
+type VerbsList {
+  createdAt: DateTime
+  name: String
+  setting: SettingEntityResponse
+  updatedAt: DateTime
+  verbs(filters: VerbFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): VerbRelationResponseCollection
+}
+
+type VerbsListEntity {
+  attributes: VerbsList
+  id: ID
+}
+
+type VerbsListEntityResponse {
+  data: VerbsListEntity
+}
+
+type VerbsListEntityResponseCollection {
+  data: [VerbsListEntity!]!
+  meta: ResponseCollectionMeta!
+}
+
+input VerbsListFiltersInput {
+  and: [VerbsListFiltersInput]
+  createdAt: DateTimeFilterInput
+  id: IDFilterInput
+  name: StringFilterInput
+  not: VerbsListFiltersInput
+  or: [VerbsListFiltersInput]
+  setting: SettingFiltersInput
+  updatedAt: DateTimeFilterInput
+  verbs: VerbFiltersInput
+}
+
+input VerbsListInput {
+  name: String
+  setting: ID
+  verbs: [ID]
+}
+
+type VerbsListRelationResponseCollection {
+  data: [VerbsListEntity!]!
+}
+
+input VerbsPointListInput {
+  id: ID
+  point: Int
 }
 
 type Word {

@@ -7,6 +7,8 @@ import { updateWordsPoints } from './updateWordsPoints'
 import { getSentences } from './getSentences'
 import { checkSentences } from './checkSentences'
 import { getStory } from './getStory'
+import { createInfinitiveList } from './createInfinitiveList'
+import { changeVerbsPoint } from './changeVerbsPoint'
 
 const Query = {
   me,
@@ -20,7 +22,9 @@ const Mutation = {
   updateWordsPoints,
   getSentences,
   checkSentences,
-  getStory
+  getStory,
+  createInfinitiveList,
+  changeVerbsPoint,
 }
 
 export const resolversConfig: Strapi.Graphql.ResolverConfig = {

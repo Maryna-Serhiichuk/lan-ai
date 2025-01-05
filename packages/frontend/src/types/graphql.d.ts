@@ -185,7 +185,7 @@ type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-type GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Word;
+type GenericMorph = ComponentContextDynamic | I18NLocale | List | Prompt | Setting | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Variable | Verb | VerbsList | Word;
 
 type I18NLocale = {
   code?: Maybe<Scalars['String']['output']>;
@@ -251,6 +251,11 @@ type IdFilterInput = {
   null?: InputMaybe<Scalars['Boolean']['input']>;
   or?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   startsWith?: InputMaybe<Scalars['ID']['input']>;
+};
+
+type InfinitiveListInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  verbs?: InputMaybe<Array<InputMaybe<VerbInput>>>;
 };
 
 type IntFilterInput = {
@@ -385,8 +390,10 @@ type LongFilterInput = {
 type Mutation = {
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
+  changeVerbsPoint?: Maybe<VerbEntityResponseCollection>;
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
   checkSentences?: Maybe<SentencesResultResponse>;
+  createInfinitiveList?: Maybe<VerbsListEntityResponse>;
   createList?: Maybe<ListEntityResponse>;
   createPrompt?: Maybe<PromptEntityResponse>;
   createSetting?: Maybe<SettingEntityResponse>;
@@ -396,6 +403,8 @@ type Mutation = {
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  createVerb?: Maybe<VerbEntityResponse>;
+  createVerbsList?: Maybe<VerbsListEntityResponse>;
   createWord?: Maybe<WordEntityResponse>;
   createWordsList?: Maybe<ListEntityResponse>;
   deleteList?: Maybe<ListEntityResponse>;
@@ -408,6 +417,8 @@ type Mutation = {
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteVariable?: Maybe<VariableEntityResponse>;
+  deleteVerb?: Maybe<VerbEntityResponse>;
+  deleteVerbsList?: Maybe<VerbsListEntityResponse>;
   deleteWord?: Maybe<WordEntityResponse>;
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>;
@@ -433,6 +444,8 @@ type Mutation = {
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   updateVariable?: Maybe<VariableEntityResponse>;
+  updateVerb?: Maybe<VerbEntityResponse>;
+  updateVerbsList?: Maybe<VerbsListEntityResponse>;
   updateWord?: Maybe<WordEntityResponse>;
   updateWordsPoints?: Maybe<WordEntityResponseCollection>;
   upload: UploadFileEntityResponse;
@@ -446,6 +459,11 @@ type MutationChangePasswordArgs = {
 };
 
 
+type MutationChangeVerbsPointArgs = {
+  input?: InputMaybe<Array<InputMaybe<VerbsPointListInput>>>;
+};
+
+
 type MutationChangeWordsPointArgs = {
   input?: InputMaybe<Array<InputMaybe<WordsPointListInput>>>;
 };
@@ -453,6 +471,11 @@ type MutationChangeWordsPointArgs = {
 
 type MutationCheckSentencesArgs = {
   data?: InputMaybe<Array<InputMaybe<SentenceInput>>>;
+};
+
+
+type MutationCreateInfinitiveListArgs = {
+  input: InfinitiveListInput;
 };
 
 
@@ -488,6 +511,16 @@ type MutationCreateUsersPermissionsRoleArgs = {
 
 type MutationCreateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
+};
+
+
+type MutationCreateVerbArgs = {
+  data: VerbInput;
+};
+
+
+type MutationCreateVerbsListArgs = {
+  data: VerbsListInput;
 };
 
 
@@ -532,6 +565,16 @@ type MutationDeleteUsersPermissionsRoleArgs = {
 
 
 type MutationDeleteUsersPermissionsUserArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+type MutationDeleteVerbArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+type MutationDeleteVerbsListArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -644,6 +687,18 @@ type MutationUpdateVariableArgs = {
 };
 
 
+type MutationUpdateVerbArgs = {
+  data: VerbInput;
+  id: Scalars['ID']['input'];
+};
+
+
+type MutationUpdateVerbsListArgs = {
+  data: VerbsListInput;
+  id: Scalars['ID']['input'];
+};
+
+
 type MutationUpdateWordArgs = {
   data: WordInput;
   id: Scalars['ID']['input'];
@@ -751,6 +806,10 @@ type Query = {
   usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>;
   usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>;
   variable?: Maybe<VariableEntityResponse>;
+  verb?: Maybe<VerbEntityResponse>;
+  verbs?: Maybe<VerbEntityResponseCollection>;
+  verbsList?: Maybe<VerbsListEntityResponse>;
+  verbsLists?: Maybe<VerbsListEntityResponseCollection>;
   word?: Maybe<WordEntityResponse>;
   words?: Maybe<WordEntityResponseCollection>;
 };
@@ -853,6 +912,30 @@ type QueryUsersPermissionsUsersArgs = {
 };
 
 
+type QueryVerbArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+type QueryVerbsArgs = {
+  filters?: InputMaybe<VerbFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+type QueryVerbsListArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+type QueryVerbsListsArgs = {
+  filters?: InputMaybe<VerbsListFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
 type QueryWordArgs = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
@@ -903,11 +986,19 @@ type Setting = {
   theme?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
   user?: Maybe<UsersPermissionsUserEntityResponse>;
+  verbs_lists?: Maybe<VerbsListRelationResponseCollection>;
 };
 
 
 type SettingListsArgs = {
   filters?: InputMaybe<ListFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+type SettingVerbsListsArgs = {
+  filters?: InputMaybe<VerbsListFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -941,6 +1032,7 @@ type SettingFiltersInput = {
   theme?: InputMaybe<StringFilterInput>;
   updatedAt?: InputMaybe<DateTimeFilterInput>;
   user?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  verbs_lists?: InputMaybe<VerbsListFiltersInput>;
 };
 
 type SettingInput = {
@@ -952,6 +1044,7 @@ type SettingInput = {
   tenses?: InputMaybe<Scalars['String']['input']>;
   theme?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<Scalars['ID']['input']>;
+  verbs_lists?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 type SettingRelationResponseCollection = {
@@ -1427,6 +1520,115 @@ type VariableRelationResponseCollection = {
   data: Array<VariableEntity>;
 };
 
+type Verb = {
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  first?: Maybe<Scalars['String']['output']>;
+  point?: Maybe<Scalars['Long']['output']>;
+  second?: Maybe<Scalars['String']['output']>;
+  third?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  verbs_list?: Maybe<VerbsListEntityResponse>;
+  word?: Maybe<Scalars['String']['output']>;
+};
+
+type VerbEntity = {
+  attributes?: Maybe<Verb>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+type VerbEntityResponse = {
+  data?: Maybe<VerbEntity>;
+};
+
+type VerbEntityResponseCollection = {
+  data: Array<VerbEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type VerbFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<VerbFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  first?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<VerbFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<VerbFiltersInput>>>;
+  point?: InputMaybe<LongFilterInput>;
+  second?: InputMaybe<StringFilterInput>;
+  third?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  verbs_list?: InputMaybe<VerbsListFiltersInput>;
+  word?: InputMaybe<StringFilterInput>;
+};
+
+type VerbInput = {
+  first?: InputMaybe<Scalars['String']['input']>;
+  point?: InputMaybe<Scalars['Long']['input']>;
+  second?: InputMaybe<Scalars['String']['input']>;
+  third?: InputMaybe<Scalars['String']['input']>;
+  verbs_list?: InputMaybe<Scalars['ID']['input']>;
+  word?: InputMaybe<Scalars['String']['input']>;
+};
+
+type VerbRelationResponseCollection = {
+  data: Array<VerbEntity>;
+};
+
+type VerbsList = {
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  setting?: Maybe<SettingEntityResponse>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  verbs?: Maybe<VerbRelationResponseCollection>;
+};
+
+
+type VerbsListVerbsArgs = {
+  filters?: InputMaybe<VerbFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+type VerbsListEntity = {
+  attributes?: Maybe<VerbsList>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+type VerbsListEntityResponse = {
+  data?: Maybe<VerbsListEntity>;
+};
+
+type VerbsListEntityResponseCollection = {
+  data: Array<VerbsListEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+type VerbsListFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<VerbsListFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<VerbsListFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<VerbsListFiltersInput>>>;
+  setting?: InputMaybe<SettingFiltersInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+  verbs?: InputMaybe<VerbFiltersInput>;
+};
+
+type VerbsListInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
+  setting?: InputMaybe<Scalars['ID']['input']>;
+  verbs?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+};
+
+type VerbsListRelationResponseCollection = {
+  data: Array<VerbsListEntity>;
+};
+
+type VerbsPointListInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+  point?: InputMaybe<Scalars['Int']['input']>;
+};
+
 type Word = {
   active?: Maybe<Scalars['Boolean']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
@@ -1505,10 +1707,27 @@ type SettingFragment = { name?: string | null | undefined, theme?: string | null
 
 type SettingFragmentVariables = Exact<{ [key: string]: never; }>;
 
+type VerbFragment = { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined };
+
+
+type VerbFragmentVariables = Exact<{ [key: string]: never; }>;
+
+type VerbsListFragment = { name?: string | null | undefined, createdAt?: Date | null | undefined, verbs?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
+
+
+type VerbsListFragmentVariables = Exact<{ [key: string]: never; }>;
+
 type WordFragment = { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined };
 
 
 type WordFragmentVariables = Exact<{ [key: string]: never; }>;
+
+type ChangeVerbsPointMutationVariables = Exact<{
+  input?: InputMaybe<Array<InputMaybe<VerbsPointListInput>> | InputMaybe<VerbsPointListInput>>;
+}>;
+
+
+type ChangeVerbsPointMutation = { changeVerbsPoint?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined };
 
 type ChangeWordsPointMutationVariables = Exact<{
   input?: InputMaybe<Array<InputMaybe<WordsPointListInput>> | InputMaybe<WordsPointListInput>>;
@@ -1524,12 +1743,26 @@ type CheckSentencesMutationVariables = Exact<{
 
 type CheckSentencesMutation = { checkSentences?: { data?: Array<{ id?: string | null | undefined, explain?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
+type CreateInfinitiveListMutationVariables = Exact<{
+  input: InfinitiveListInput;
+}>;
+
+
+type CreateInfinitiveListMutation = { createInfinitiveList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, createdAt?: Date | null | undefined, verbs?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type CreateSettingMutationVariables = Exact<{
   data: SettingInput;
 }>;
 
 
 type CreateSettingMutation = { createSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
+type CreateVerbMutationVariables = Exact<{
+  data: VerbInput;
+}>;
+
+
+type CreateVerbMutation = { createVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type CreateWordMutationVariables = Exact<{
   data: WordInput;
@@ -1544,6 +1777,13 @@ type CreateWordsListMutationVariables = Exact<{
 
 
 type CreateWordsListMutation = { createWordsList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, closed?: boolean | null | undefined, createdAt?: Date | null | undefined, words?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, translation?: string | null | undefined, active?: boolean | null | undefined, studied?: boolean | null | undefined, point?: number | null | undefined, updatedAt?: Date | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
+type DeleteVerbMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type DeleteVerbMutation = { deleteVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
 type DeleteWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -1596,6 +1836,14 @@ type UpdateSettingMutationVariables = Exact<{
 
 type UpdateSettingMutation = { updateSetting?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined } | null | undefined } | null | undefined };
 
+type UpdateVerbMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  data: VerbInput;
+}>;
+
+
+type UpdateVerbMutation = { updateVerb?: { data?: { id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
 type UpdateWordMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   data: WordInput;
@@ -1639,3 +1887,17 @@ type SettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 type SettingsQuery = { settings?: { data: Array<{ id?: string | null | undefined, attributes?: { name?: string | null | undefined, theme?: string | null | undefined, level?: EnumSettingLevel | null | undefined, language?: EnumSettingLanguage | null | undefined, tenses?: string | null | undefined } | null | undefined }> } | null | undefined };
+
+type VerbsListQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+type VerbsListQuery = { verbsList?: { data?: { id?: string | null | undefined, attributes?: { name?: string | null | undefined, createdAt?: Date | null | undefined, verbs?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined } | null | undefined } | null | undefined };
+
+type VerbsListsQueryVariables = Exact<{
+  filters?: InputMaybe<VerbsListFiltersInput>;
+}>;
+
+
+type VerbsListsQuery = { verbsLists?: { data: Array<{ id?: string | null | undefined, attributes?: { name?: string | null | undefined, createdAt?: Date | null | undefined, verbs?: { data: Array<{ id?: string | null | undefined, attributes?: { word?: string | null | undefined, first?: string | null | undefined, second?: string | null | undefined, third?: string | null | undefined, point?: number | null | undefined } | null | undefined }> } | null | undefined } | null | undefined }> } | null | undefined };

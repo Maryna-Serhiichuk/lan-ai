@@ -1,0 +1,10 @@
+query verbsLists($filters: VerbsListFiltersInput) {
+    verbsLists(filters: $filters) {
+        data {
+            id
+            attributes {
+                ...VerbsList
+            }
+        }
+    }
+}
