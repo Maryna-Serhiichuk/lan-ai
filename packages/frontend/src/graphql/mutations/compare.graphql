@@ -1,0 +1,5 @@
+mutation compare($input: CompareInput!){
+    compare(input: $input) {
+        text
+    }
+}

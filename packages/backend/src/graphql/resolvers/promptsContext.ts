@@ -6,6 +6,8 @@ import { me } from "./me"
 type PromptsModel = {
     ask: string | undefined | null;
     check: string | undefined | null;
+    story: string | undefined | null;
+    compare: string | undefined | null;
 }
 
 export type PromptsContextFunction = (
@@ -64,6 +66,7 @@ const promptsContext: GraphQLFieldResolver<null, Graphql.ResolverContext, null> 
             ask: replacePlaceholders(prompts?.ask),
             check: replacePlaceholders(prompts?.check),
             story: replacePlaceholders(prompts?.story),
+            compare: replacePlaceholders(prompts?.compare),
         }
 
     }
