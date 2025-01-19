@@ -76,7 +76,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
       palette: '#D9CDC3',
       color: '#E9E2D9',
       textColor: '#1F1E1C',
-      bodyColor: 'rgba(255, 247, 237, .5)',
+      bodyColor: '#FFF8F1',
       shadowListInsertOpacity: '.3',
       button: {
         text: {
