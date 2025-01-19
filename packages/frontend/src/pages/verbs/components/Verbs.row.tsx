@@ -1,4 +1,4 @@
-import { FC, useState, Fragment, useEffect } from "react";
+import { FC, useState, Fragment, useEffect, useCallback, memo } from "react";
 import { Link } from "react-router-dom"
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -26,19 +26,19 @@ const ButtonStyled = styled(Button)`
     }
 `
 
-export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
+export const VerbsRow: FC<{ row: VerbsListEntity }> = memo(({ row }) => {
     const { setChosen, setEditState, isEditState, setCreateState, isCreateState } = Verbs.useContext()
     const [open, setOpen] = useState(false);
-    const [hash, setHash] = useHash()
+    const [hash, setHash] = useHash() // anyway calls rerender page
 
-    const onCollaps = () => {
-      if(open) {
-        setHash('')
+    const onCollaps = useCallback(() => {
+      if (open) {
+        setHash('');
       } else {
-        setHash(row?.id)
+        setHash(row?.id);
       }
-      setOpen(!open)
-    }
+      setOpen(!open);
+    }, [open, row?.id]);
 
     useEffect(() => {
       if(hash && hash === `#${row?.id}` && open) {
@@ -46,10 +46,10 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
       }
     }, [hash])
 
-    const onEdit = (item: VerbEntity) => {
+    const onEdit = useCallback((item: VerbEntity) => {
       setChosen(item)
       setEditState(true)
-    }
+    }, [setChosen, setEditState])
 
     return (
       <Fragment>
@@ -100,4 +100,4 @@ export const VerbsRow: FC<{ row: VerbsListEntity }> = ({ row }) => {
         </TableRow>
       </Fragment>
     );
-  }
+  })

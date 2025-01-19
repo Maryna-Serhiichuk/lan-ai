@@ -77,8 +77,8 @@ export const Comparison: FC = () => {
     const onCompare: FormikConfig<CompareInput>['onSubmit'] = async (input, onSubmitProps) => {
         try {
             const data = await compare({ variables: { input } })
-            console.log(data)
             setExplanation(data?.data?.compare?.text)
+            onSubmitProps.resetForm()
             // await refetch()
             // navigate('/lists')
         } catch (err: any) {
