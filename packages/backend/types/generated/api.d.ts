@@ -38,6 +38,9 @@ export interface NexusGenInputs {
     or?: Array<boolean | null> | null; // [Boolean]
     startsWith?: boolean | null; // Boolean
   }
+  CompareInput: { // input type
+    words?: string | null; // String
+  }
   ComponentContextDynamicFiltersInput: { // input type
     and?: Array<NexusGenInputs['ComponentContextDynamicFiltersInput'] | null> | null; // [ComponentContextDynamicFiltersInput]
     language?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
@@ -279,6 +282,7 @@ export interface NexusGenInputs {
     and?: Array<NexusGenInputs['PromptFiltersInput'] | null> | null; // [PromptFiltersInput]
     ask?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
     check?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
+    compare?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
     createdAt?: NexusGenInputs['DateTimeFilterInput'] | null; // DateTimeFilterInput
     description?: NexusGenInputs['StringFilterInput'] | null; // StringFilterInput
     id?: NexusGenInputs['IDFilterInput'] | null; // IDFilterInput
@@ -293,6 +297,7 @@ export interface NexusGenInputs {
   PromptInput: { // input type
     ask?: string | null; // String
     check?: string | null; // String
+    compare?: string | null; // String
     description?: string | null; // String
     name?: string | null; // String
     publishedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -629,6 +634,9 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  CompareResponse: { // root type
+    text?: string | null; // String
+  }
   ComponentContextDynamic: { // root type
     id: string; // ID!
     language?: string | null; // String
@@ -672,6 +680,7 @@ export interface NexusGenObjects {
   Prompt: { // root type
     ask?: string | null; // String
     check?: string | null; // String
+    compare?: string | null; // String
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     description?: string | null; // String
     name?: string | null; // String
@@ -869,6 +878,9 @@ export type NexusGenRootTypes = NexusGenObjects & NexusGenUnions
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  CompareResponse: { // field return type
+    text: string | null; // String
+  }
   ComponentContextDynamic: { // field return type
     id: string; // ID!
     language: string | null; // String
@@ -930,6 +942,7 @@ export interface NexusGenFieldTypes {
     changeVerbsPoint: NexusGenRootTypes['VerbEntityResponseCollection'] | null; // VerbEntityResponseCollection
     changeWordsPoint: NexusGenRootTypes['WordEntityResponseCollection'] | null; // WordEntityResponseCollection
     checkSentences: NexusGenRootTypes['SentencesResultResponse'] | null; // SentencesResultResponse
+    compare: NexusGenRootTypes['CompareResponse'] | null; // CompareResponse
     createInfinitiveList: NexusGenRootTypes['VerbsListEntityResponse'] | null; // VerbsListEntityResponse
     createList: NexusGenRootTypes['ListEntityResponse'] | null; // ListEntityResponse
     createPrompt: NexusGenRootTypes['PromptEntityResponse'] | null; // PromptEntityResponse
@@ -986,6 +999,7 @@ export interface NexusGenFieldTypes {
   Prompt: { // field return type
     ask: string | null; // String
     check: string | null; // String
+    compare: string | null; // String
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     description: string | null; // String
     name: string | null; // String
@@ -1329,6 +1343,9 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  CompareResponse: { // field return type name
+    text: 'String'
+  }
   ComponentContextDynamic: { // field return type name
     id: 'ID'
     language: 'String'
@@ -1390,6 +1407,7 @@ export interface NexusGenFieldTypeNames {
     changeVerbsPoint: 'VerbEntityResponseCollection'
     changeWordsPoint: 'WordEntityResponseCollection'
     checkSentences: 'SentencesResultResponse'
+    compare: 'CompareResponse'
     createInfinitiveList: 'VerbsListEntityResponse'
     createList: 'ListEntityResponse'
     createPrompt: 'PromptEntityResponse'
@@ -1446,6 +1464,7 @@ export interface NexusGenFieldTypeNames {
   Prompt: { // field return type name
     ask: 'String'
     check: 'String'
+    compare: 'String'
     createdAt: 'DateTime'
     description: 'String'
     name: 'String'
@@ -1810,6 +1829,9 @@ export interface NexusGenArgTypes {
     }
     checkSentences: { // args
       data?: Array<NexusGenInputs['SentenceInput'] | null> | null; // [SentenceInput]
+    }
+    compare: { // args
+      input: NexusGenInputs['CompareInput']; // CompareInput!
     }
     createInfinitiveList: { // args
       input: NexusGenInputs['InfinitiveListInput']; // InfinitiveListInput!

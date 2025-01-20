@@ -27,6 +27,14 @@ input BooleanFilterInput {
   startsWith: Boolean
 }
 
+input CompareInput {
+  words: String
+}
+
+type CompareResponse {
+  text: String
+}
+
 type ComponentContextDynamic {
   id: ID!
   language: String
@@ -385,6 +393,7 @@ type Mutation {
   changeVerbsPoint(input: [VerbsPointListInput]): VerbEntityResponseCollection
   changeWordsPoint(input: [WordsPointListInput]): WordEntityResponseCollection
   checkSentences(data: [SentenceInput]): SentencesResultResponse
+  compare(input: CompareInput!): CompareResponse
   createInfinitiveList(input: InfinitiveListInput!): VerbsListEntityResponse
   createList(data: ListInput!): ListEntityResponse
   createPrompt(data: PromptInput!): PromptEntityResponse
@@ -472,6 +481,7 @@ input PaginationArg {
 type Prompt {
   ask: String
   check: String
+  compare: String
   createdAt: DateTime
   description: String
   name: String
@@ -499,6 +509,7 @@ input PromptFiltersInput {
   and: [PromptFiltersInput]
   ask: StringFilterInput
   check: StringFilterInput
+  compare: StringFilterInput
   createdAt: DateTimeFilterInput
   description: StringFilterInput
   id: IDFilterInput
@@ -514,6 +525,7 @@ input PromptFiltersInput {
 input PromptInput {
   ask: String
   check: String
+  compare: String
   description: String
   name: String
   publishedAt: DateTime

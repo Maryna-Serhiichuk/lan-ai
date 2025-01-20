@@ -188,6 +188,30 @@ const schemaExtension: Strapi.Graphql.ExtensionCallback = ({ nexus }) => ({
         t.field("point", { type: "Int" })
       },
     }),
+
+    nexus.extendType({
+      type: "Mutation",
+      definition: t => {
+        t.field("compare", {
+          type: "CompareResponse",
+          args: {
+            input: nexus.nonNull("CompareInput"),
+          },
+        })
+      },
+    }),
+    nexus.extendInputType<"CompareInput">({
+      type: "CompareInput",
+      definition: t => {
+        t.string("words")
+      },
+    }),
+    nexus.extendType<"CompareResponse">({
+      type: "CompareResponse",
+      definition: t => {
+        t.field("text", { type: "String" })
+      },
+    }),
   ],
   resolvers,
   resolversConfig,

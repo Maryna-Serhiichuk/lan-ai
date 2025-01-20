@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import Button from '@mui/material/Button';
@@ -22,9 +22,9 @@ const TableCellButtonStyled = styled(TableCell)`
   }
 `
 
-export const VerbRow: FC<{ data: VerbEntity, onEdit: (item: VerbEntity) => void }> = ({ data, onEdit }) => {
+export const VerbRow: FC<{ data: VerbEntity, onEdit: (item: VerbEntity) => void }> = memo(({ data, onEdit }) => {
     const { setDeleteState, setChosen } = Verbs.useContext()
-
+    
     return <TableRow key={data?.id}>
       <TableCell align="center" style={{ paddingLeft: 0, paddingRight: 0 }}>
         <PointMark point={data?.attributes?.point} />
@@ -43,4 +43,4 @@ export const VerbRow: FC<{ data: VerbEntity, onEdit: (item: VerbEntity) => void 
         <Button startIcon={<DeleteOutlineIcon />} size="small"/>
       </TableCellButtonStyled>
     </TableRow>
-}
+})

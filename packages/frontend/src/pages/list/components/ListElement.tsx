@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import ListUI from '@mui/material/List';
 
 import { useUpdateWordMutation } from "./../../../graphql";
@@ -21,11 +21,14 @@ export const ListElement: FC = () => {
 
     const [updateWord] = useUpdateWordMutation()
 
-    const changeWordActivity = async (id: string|undefined|null, active: boolean) => {
-        if(id){
-            await updateWord({ variables: { id, data: { active } } })
-        }
-    }
+    const changeWordActivity = useCallback(
+        async (id: string | undefined | null, active: boolean) => {
+            if (id) {
+                await updateWord({ variables: { id, data: { active } } });
+            }
+        },
+        [updateWord]
+    )
 
     return <Container>
         <ListName />

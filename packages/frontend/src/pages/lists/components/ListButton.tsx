@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo, memo } from "react";
 import { Link } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import { styled } from "@mui/material";
@@ -31,17 +31,29 @@ const LockStyled = styled('div')`
     }
 `
 
+const opacityMin = 0.1
+const roofPoints = 30
 
-export const ListButton: FC<ListEntity> = ({ id, attributes }) => {
-    const opacityMin = 0.1
-    const roofPoints = 30
-    const pointsSum = attributes?.words?.data?.map(it => it?.attributes?.point ?? 0)?.reduce((a,b) => a + b, 0)
-    const avaragePoints = (pointsSum ?? 0) / (attributes?.words?.data?.length ?? 1)
+export const ListButton: FC<ListEntity> = memo(({ id, attributes }) => {
+    const { pointsSum, avaragePoints } = useMemo(() => {
+        const points = attributes?.words?.data?.map(it => it?.attributes?.point ?? 0) || [];
+        const sum = points.reduce((a, b) => a + b, 0);
+        const average = sum / (points.length || 1);
+        return { pointsSum: sum, avaragePoints: average };
+    }, [attributes?.words?.data]);
 
-    const dates = attributes?.words?.data?.map(a => a?.attributes?.updatedAt)?.filter(Boolean)
-    const isToday = dates?.some(date => dayjs(date).isSame(dayjs(), 'day'));
+    const isToday = useMemo(() => {
+        const dates = attributes?.words?.data?.map(a => a?.attributes?.updatedAt)?.filter(Boolean);
+        return dates?.some(date => dayjs(date).isSame(dayjs(), "day"));
+    }, [attributes?.words?.data]);
 
-    return <Link to={id ?? ''} style={{ opacity: Math.abs(((1 / roofPoints) * avaragePoints) - 1) + opacityMin }}>
+    const linkStyle = useMemo(() => {
+        const opacity = Math.abs(((1 / roofPoints) * avaragePoints) - 1) + opacityMin;
+        return { opacity };
+    }, [avaragePoints]);
+
+
+    return <Link to={id ?? ''} style={linkStyle}>
         <Button variant={attributes?.words?.data && attributes?.words?.data?.length > 0 ? "contained" : "outlined"} style={{ overflow: 'hidden', height: '100px', width: '200px', fontSize: 20 }}>
             {attributes?.name}
             <DateStyled>
@@ -62,4 +74,4 @@ export const ListButton: FC<ListEntity> = ({ id, attributes }) => {
             }
         </Button>
     </Link>
-}
+})

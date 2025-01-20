@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, memo } from "react";
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import ListItem from '@mui/material/ListItem';
@@ -14,7 +14,7 @@ import List from "..";
 import { wordPointState } from "components/point-mark/wordPointState";
 import { PointMark } from "components/point-mark";
 
-export const ListRow: FC<{ data: WordEntity, changeWordActivity: ChangeWordActivityType }> = ({ data: value, changeWordActivity }) => {
+export const ListRow: FC<{ data: WordEntity, changeWordActivity: ChangeWordActivityType }> = memo(({ data: value, changeWordActivity }) => {
     const { setUpdateWord, setChosenWord, setDeleteWord } = List.useContext()
 
     return <Fragment>
@@ -56,4 +56,4 @@ export const ListRow: FC<{ data: WordEntity, changeWordActivity: ChangeWordActiv
         </ListItem>
         <Divider/>
     </Fragment>
-}
+})

@@ -140,6 +140,26 @@ export function useCheckSentencesMutation(baseOptions?: Apollo.MutationHookOptio
       }
 export type CheckSentencesMutationHookResult = ReturnType<typeof useCheckSentencesMutation>;
 export type CheckSentencesMutationResult = Apollo.MutationResult<CheckSentencesMutation>;
+export const CompareDocument = gql`
+    mutation compare($input: CompareInput!) {
+  compare(input: $input) {
+    text
+  }
+}
+    `;
+export type CompareMutationFn = Apollo.MutationFunction<CompareMutation, CompareMutationVariables>;
+export type CompareComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CompareMutation, CompareMutationVariables>, 'mutation'>;
+
+    export const CompareComponent = (props: CompareComponentProps) => (
+      <ApolloReactComponents.Mutation<CompareMutation, CompareMutationVariables> mutation={CompareDocument} {...props} />
+    );
+    
+export function useCompareMutation(baseOptions?: Apollo.MutationHookOptions<CompareMutation, CompareMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CompareMutation, CompareMutationVariables>(CompareDocument, options);
+      }
+export type CompareMutationHookResult = ReturnType<typeof useCompareMutation>;
+export type CompareMutationResult = Apollo.MutationResult<CompareMutation>;
 export const CreateInfinitiveListDocument = gql`
     mutation createInfinitiveList($input: InfinitiveListInput!) {
   createInfinitiveList(input: $input) {

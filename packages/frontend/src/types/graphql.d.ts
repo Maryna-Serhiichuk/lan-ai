@@ -53,6 +53,14 @@ type BooleanFilterInput = {
   startsWith?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+type CompareInput = {
+  words?: InputMaybe<Scalars['String']['input']>;
+};
+
+type CompareResponse = {
+  text?: Maybe<Scalars['String']['output']>;
+};
+
 type ComponentContextDynamic = {
   id: Scalars['ID']['output'];
   language?: Maybe<Scalars['String']['output']>;
@@ -393,6 +401,7 @@ type Mutation = {
   changeVerbsPoint?: Maybe<VerbEntityResponseCollection>;
   changeWordsPoint?: Maybe<WordEntityResponseCollection>;
   checkSentences?: Maybe<SentencesResultResponse>;
+  compare?: Maybe<CompareResponse>;
   createInfinitiveList?: Maybe<VerbsListEntityResponse>;
   createList?: Maybe<ListEntityResponse>;
   createPrompt?: Maybe<PromptEntityResponse>;
@@ -471,6 +480,11 @@ type MutationChangeWordsPointArgs = {
 
 type MutationCheckSentencesArgs = {
   data?: InputMaybe<Array<InputMaybe<SentenceInput>>>;
+};
+
+
+type MutationCompareArgs = {
+  input: CompareInput;
 };
 
 
@@ -730,6 +744,7 @@ type PaginationArg = {
 type Prompt = {
   ask?: Maybe<Scalars['String']['output']>;
   check?: Maybe<Scalars['String']['output']>;
+  compare?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   name?: Maybe<Scalars['String']['output']>;
@@ -757,6 +772,7 @@ type PromptFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<PromptFiltersInput>>>;
   ask?: InputMaybe<StringFilterInput>;
   check?: InputMaybe<StringFilterInput>;
+  compare?: InputMaybe<StringFilterInput>;
   createdAt?: InputMaybe<DateTimeFilterInput>;
   description?: InputMaybe<StringFilterInput>;
   id?: InputMaybe<IdFilterInput>;
@@ -772,6 +788,7 @@ type PromptFiltersInput = {
 type PromptInput = {
   ask?: InputMaybe<Scalars['String']['input']>;
   check?: InputMaybe<Scalars['String']['input']>;
+  compare?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
@@ -1742,6 +1759,13 @@ type CheckSentencesMutationVariables = Exact<{
 
 
 type CheckSentencesMutation = { checkSentences?: { data?: Array<{ id?: string | null | undefined, explain?: string | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
+type CompareMutationVariables = Exact<{
+  input: CompareInput;
+}>;
+
+
+type CompareMutation = { compare?: { text?: string | null | undefined } | null | undefined };
 
 type CreateInfinitiveListMutationVariables = Exact<{
   input: InfinitiveListInput;

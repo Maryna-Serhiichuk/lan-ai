@@ -7,6 +7,7 @@ declare module '@mui/material/styles' {
     mainColorTheme: ColorTypeOption,
     mainColor: string,
     textColor: string,
+    bodyColor: string,
     listShadow: {
       borderRadius?: number,
       boxShadow?: string
@@ -22,6 +23,7 @@ declare module '@mui/material/styles' {
     mainColorTheme: ColorTypeOption,
     mainColor: string,
     textColor: string,
+    bodyColor: string,
     listShadow: {
       borderRadius?: number,
       boxShadow?: string
@@ -74,7 +76,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
       palette: '#D9CDC3',
       color: '#E9E2D9',
       textColor: '#1F1E1C',
-      bodyColor: 'rgba(255, 247, 237, .5)',
+      bodyColor: '#FFF8F1',
       shadowListInsertOpacity: '.3',
       button: {
         text: {
@@ -99,6 +101,7 @@ function ThemeConfigProvider({ children }: ConfigProviderProps) {
 
   const theme = useMemo(() => createTheme({
     textColor: colorThemeResult?.textColor,
+    bodyColor: colorThemeResult?.bodyColor,
     input: {
       background: 'rgba(255,255,255,.1)',
       borderColor: 'rgba(0, 0, 0, 0.23)',

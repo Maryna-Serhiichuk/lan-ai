@@ -31,6 +31,9 @@
     },
     "story": {
       "type": "text"
+    },
+    "compare": {
+      "type": "text"
     }
   }
 }

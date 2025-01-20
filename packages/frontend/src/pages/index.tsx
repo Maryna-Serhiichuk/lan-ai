@@ -52,7 +52,7 @@ const authRoutes: RouteObject[] = [
     children: [
       {
         // element: <Navigate to={'setting/1'} replace />,
-        element: <Navigate to={'verbs'} replace />,
+        element: <Navigate to={'list'} replace />,
         children: [{path: ''},{path: '*'}]
       },
       {
